@@ -44,6 +44,34 @@ float padding = 20.0f;
 float lod_distance = 200.0f;
 float no_render_distance = 1000.0f;
 
+//SDL_GetTicks();
+
+class Base {
+public:
+	//int a;
+	virtual void Foo(){};
+};
+
+class Child :public Base {
+	void Foo() override{};
+};
+
+class Prop {
+	int id;
+	Mesh* mesh;
+	Texture* texture;
+};
+Prop props[20];
+
+class Entity {
+public:
+	Matrix44 model;
+	Mesh* mesh;
+	Texture* texture;
+};
+
+std::vector<Entity*> entities;
+
 Game::Game(int window_width, int window_height, SDL_Window* window)
 {
 	this->window_width = window_width;
@@ -57,6 +85,9 @@ Game::Game(int window_width, int window_height, SDL_Window* window)
 	time = 0.0f;
 	elapsed_time = 0.0f;
 	mouse_locked = false;
+
+	std::cout << sizeof(Base) << std::endl;
+	std::cout << sizeof(Child) << std::endl;
 
 	//OpenGL flags
 	glEnable(GL_CULL_FACE); //render both sides of every triangle
@@ -193,6 +224,28 @@ void RenderPlanes() {
 	shader->disable();
 }
 
+
+void AddEntityInFront(Camera* cam) {
+	Vector2 mouse = Input::mouse_position;
+	Game* g = Game::instance;
+	Vector3 dir = cam->getRayDirection(mouse.x, mouse.y, g->window_width, g->window_height);
+	Vector3 rayOrigin = cam->eye;
+
+
+	Vector3 spawnPos = RayPlaneCollision(Vector3(), Vector3(0, 1, 0), rayOrigin, dir);
+	Matrix44 model;
+	model.translate(spawnPos.x, spawnPos.y, spawnPos.z);
+	model.scale(3.0f, 3.0f, 3.0f);
+
+	Entity* entity = new Entity();
+	entity->model = model;
+	entity->mesh = Mesh::Get("data/carro.obj");
+	entity->texture = Texture::Get("data/carro.png");
+	entities.push_back(entity);
+
+
+}
+
 //what to do when the image has to be draw
 void Game::render(void)
 {
@@ -221,7 +274,7 @@ void Game::render(void)
 	/*Matrix44 islandmodel;
 	RenderMesh(islandmodel, mesh, texture, shader, camera);*/
 	RenderMesh(planeModel, planeMesh, planeTexture, shader, camera);
-	RenderPlanes();
+	//RenderPlanes();
 	//RenderMesh(bombModel, bombMesh, bombTexture, shader, camera);
 
 	//create model matrix for cube
@@ -236,7 +289,12 @@ void Game::render(void)
 
 	//RenderIslands();
 
+	for (size_t i = 0; i < entities.size(); i++)
+	{
+		Entity* entity = entities[i];
+		RenderMesh(entity->model, entity->mesh, entity->texture, shader, camera);
 
+	}
 
 	//mesh->renderBounding(islandmodel);
 
@@ -322,6 +380,7 @@ void Game::onKeyDown(SDL_KeyboardEvent event)
 	{
 	case SDLK_ESCAPE: must_exit = true; break; //ESC key, kill the app
 	case SDLK_F1: Shader::ReloadAll(); break;
+	case SDLK_2: AddEntityInFront(camera); break;
 	}
 }
 
