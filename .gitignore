@@ -11,6 +11,11 @@ visualstudio/visualstudio/Debug
 visualstudio/visualstudio/Release
 visualstudio/VS2015/Debug
 visualstudio/VS2015/Release
+visualstudio/VS2015/visualstudio.vcxproj.user
+visualstudio/.vs/visualstudio/v17/.suo
 *.ipch
 *.db
 *.exe
+.vs
+game.pdb
+
