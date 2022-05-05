@@ -86,8 +86,8 @@ Game::Game(int window_width, int window_height, SDL_Window* window)
 	elapsed_time = 0.0f;
 	mouse_locked = false;
 
-	std::cout << sizeof(Base) << std::endl;
-	std::cout << sizeof(Child) << std::endl;
+	/*std::cout << sizeof(Base) << std::endl;
+	std::cout << sizeof(Child) << std::endl;*/
 
 	//OpenGL flags
 	glEnable(GL_CULL_FACE); //render both sides of every triangle
