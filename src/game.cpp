@@ -105,12 +105,12 @@ Game::Game(int window_width, int window_height, SDL_Window* window)
 	//texture->load("data/texture.tga");
 
 	// example of loading Mesh from Mesh Manager
-	/*mesh = Mesh::Get("data/isla/island.ASE");
-	texture = Texture::Get("data/isla/island_color.tga");*/
+	mesh = Mesh::Get("data/lab.obj");
+	texture = Texture::Get("data/lab.tga");
 	//mesh2 = Mesh::Get("data/sphere.obj");
 
-	planeMesh = Mesh::Get("data/spitfire/spitfire.ASE");
-	planeTexture = Texture::Get("data/spitfire/spitfire_color_spec.tga");
+	//planeMesh = Mesh::Get("data/spitfire/spitfire.ASE");
+	//planeTexture = Texture::Get("data/spitfire/spitfire_color_spec.tga");
 
 	//bombMesh = Mesh::Get("data/torpedo_bullet/torpedo.ASE");
 	//bombTexture = Texture::Get("data/torpedo_bullet/torpedo.tga");
@@ -271,9 +271,9 @@ void Game::render(void)
 		camera->lookAt(eye, center, up);
 	}
 
-	/*Matrix44 islandmodel;
-	RenderMesh(islandmodel, mesh, texture, shader, camera);*/
-	RenderMesh(planeModel, planeMesh, planeTexture, shader, camera);
+	Matrix44 islandmodel;
+	RenderMesh(islandmodel, mesh, texture, shader, camera);
+	//RenderMesh(planeModel, planeMesh, planeTexture, shader, camera);
 	//RenderPlanes();
 	//RenderMesh(bombModel, bombMesh, bombTexture, shader, camera);
 
