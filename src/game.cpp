@@ -9,6 +9,8 @@
 
 #include <cmath>
 
+#include "entity.h"
+
 bool test = true;
 
 //some globals
@@ -16,12 +18,12 @@ Mesh* mesh = NULL;
 //Mesh* mesh2 = NULL;
 Texture* texture = NULL;
 Shader* shader = NULL;
-
+//
 Mesh* planeMesh = NULL;
 Texture* planeTexture = NULL;
 Matrix44 planeModel;
 
-bool cameralocked = true;
+bool cameralocked = false;
 
 //Mesh* bombMesh = NULL;
 //Texture* bombTexture = NULL;
@@ -56,21 +58,23 @@ class Child :public Base {
 	void Foo() override{};
 };
 
-class Prop {
-	int id;
-	Mesh* mesh;
-	Texture* texture;
-};
-Prop props[20];
+//class Prop {
+//	int id;
+//	Mesh* mesh;
+//	Texture* texture;
+//};
+//Prop props[20];
+//
+//class Entity {
+//public:
+//	Matrix44 model;
+//	Mesh* mesh;
+//	Texture* texture;
+//};
 
-class Entity {
-public:
-	Matrix44 model;
-	Mesh* mesh;
-	Texture* texture;
-};
+//std::vector<Entity*> entities;
 
-std::vector<Entity*> entities;
+Lab* lab;
 
 Game::Game(int window_width, int window_height, SDL_Window* window)
 {
@@ -108,6 +112,8 @@ Game::Game(int window_width, int window_height, SDL_Window* window)
 	mesh = Mesh::Get("data/lab.obj");
 	texture = Texture::Get("data/lab.tga");
 	//mesh2 = Mesh::Get("data/sphere.obj");
+	Matrix44 model;
+	lab = new Lab(model, mesh, texture);
 
 	//planeMesh = Mesh::Get("data/spitfire/spitfire.ASE");
 	//planeTexture = Texture::Get("data/spitfire/spitfire_color_spec.tga");
@@ -224,27 +230,27 @@ void RenderPlanes() {
 	shader->disable();
 }
 
-
-void AddEntityInFront(Camera* cam) {
-	Vector2 mouse = Input::mouse_position;
-	Game* g = Game::instance;
-	Vector3 dir = cam->getRayDirection(mouse.x, mouse.y, g->window_width, g->window_height);
-	Vector3 rayOrigin = cam->eye;
-
-
-	Vector3 spawnPos = RayPlaneCollision(Vector3(), Vector3(0, 1, 0), rayOrigin, dir);
-	Matrix44 model;
-	model.translate(spawnPos.x, spawnPos.y, spawnPos.z);
-	model.scale(3.0f, 3.0f, 3.0f);
-
-	Entity* entity = new Entity();
-	entity->model = model;
-	entity->mesh = Mesh::Get("data/carro.obj");
-	entity->texture = Texture::Get("data/carro.png");
-	entities.push_back(entity);
-
-
-}
+//
+//void AddEntityInFront(Camera* cam) {
+//	Vector2 mouse = Input::mouse_position;
+//	Game* g = Game::instance;
+//	Vector3 dir = cam->getRayDirection(mouse.x, mouse.y, g->window_width, g->window_height);
+//	Vector3 rayOrigin = cam->eye;
+//
+//
+//	Vector3 spawnPos = RayPlaneCollision(Vector3(), Vector3(0, 1, 0), rayOrigin, dir);
+//	Matrix44 model;
+//	model.translate(spawnPos.x, spawnPos.y, spawnPos.z);
+//	model.scale(3.0f, 3.0f, 3.0f);
+//
+//	Entity* entity = new Entity();
+//	entity->model = model;
+//	entity->mesh = Mesh::Get("data/carro.obj");
+//	entity->texture = Texture::Get("data/carro.png");
+//	entities.push_back(entity);
+//
+//
+//}
 
 //what to do when the image has to be draw
 void Game::render(void)
@@ -264,17 +270,21 @@ void Game::render(void)
 	glDisable(GL_CULL_FACE);
 
 
-	if (cameralocked) {
-		Vector3 eye = planeModel * Vector3(0.0f, 9.0f, 16.0f);
-		Vector3 center = planeModel * Vector3(0.0f, 0.0f, -20.0f);
-		Vector3 up = planeModel.rotateVector(Vector3(0.0f, 1.0f, 0.0f));
-		camera->lookAt(eye, center, up);
-	}
+	//RenderMesh(lab->getModel(), lab->getMesh(), lab->getTexture(), shader, camera);
 
-	Matrix44 islandmodel;
-	RenderMesh(islandmodel, mesh, texture, shader, camera);
-	//RenderMesh(planeModel, planeMesh, planeTexture, shader, camera);
-	//RenderPlanes();
+	lab->Render(shader, camera);
+
+	//if (cameralocked) {
+	//	Vector3 eye = planeModel * Vector3(0.0f, 9.0f, 16.0f);
+	//	Vector3 center = planeModel * Vector3(0.0f, 0.0f, -20.0f);
+	//	Vector3 up = planeModel.rotateVector(Vector3(0.0f, 1.0f, 0.0f));
+	//	camera->lookAt(eye, center, up);
+	//}
+
+	//Matrix44 islandmodel;
+	//RenderMesh(islandmodel, mesh, texture, shader, camera);
+	////RenderMesh(planeModel, planeMesh, planeTexture, shader, camera);
+	////RenderPlanes();
 	//RenderMesh(bombModel, bombMesh, bombTexture, shader, camera);
 
 	//create model matrix for cube
@@ -289,12 +299,12 @@ void Game::render(void)
 
 	//RenderIslands();
 
-	for (size_t i = 0; i < entities.size(); i++)
-	{
-		Entity* entity = entities[i];
-		RenderMesh(entity->model, entity->mesh, entity->texture, shader, camera);
+	//for (size_t i = 0; i < entities.size(); i++)
+	//{
+	//	Entity* entity = entities[i];
+	//	RenderMesh(entity->model, entity->mesh, entity->texture, shader, camera);
 
-	}
+	//}
 
 	//mesh->renderBounding(islandmodel);
 
@@ -380,7 +390,7 @@ void Game::onKeyDown(SDL_KeyboardEvent event)
 	{
 	case SDLK_ESCAPE: must_exit = true; break; //ESC key, kill the app
 	case SDLK_F1: Shader::ReloadAll(); break;
-	case SDLK_2: AddEntityInFront(camera); break;
+	//case SDLK_2: AddEntityInFront(camera); break;
 	}
 }
 
