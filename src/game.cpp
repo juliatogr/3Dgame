@@ -110,7 +110,7 @@ Game::Game(int window_width, int window_height, SDL_Window* window)
 
 	// example of loading Mesh from Mesh Manager
 	mesh = Mesh::Get("data/lab.obj");
-	texture = Texture::Get("data/lab.tga");
+	texture = Texture::Get("data/lab.png");
 	//mesh2 = Mesh::Get("data/sphere.obj");
 	Matrix44 model;
 	lab = new Lab(model, mesh, texture);
@@ -256,7 +256,7 @@ void RenderPlanes() {
 void Game::render(void)
 {
 	//set the clear color (the background color)
-	glClearColor(1.0, 1.0, 1.0, 1.0);			// white background to simulate the ceiling
+	glClearColor(0.0, 0.0, 0.0, 1.0);			// white background to simulate the ceiling
 
 	// Clear the window and the depth buffer
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
