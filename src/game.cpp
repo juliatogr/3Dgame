@@ -127,9 +127,9 @@ Game::Game(int window_width, int window_height, SDL_Window* window)
 	SDL_ShowCursor(!mouse_locked); //hide or show the mouse
 }
 
-void RenderMesh(Matrix44 model, Mesh* a_mash, Texture* tex, Shader* a_shader, Camera* cam) {
+void RenderMesh(Matrix44 model, Mesh* a_mesh, Texture* tex, Shader* a_shader, Camera* cam) {
 
-	assert(a_mesh != Null, "mesh in renderMesh was null");
+	assert(a_mesh != NULL, "mesh in renderMesh was null");
 	if (!a_shader) return;
 
 	//enable shader
@@ -142,7 +142,7 @@ void RenderMesh(Matrix44 model, Mesh* a_mash, Texture* tex, Shader* a_shader, Ca
 	a_shader->setUniform("u_model", model);
 	a_shader->setUniform("u_time", time);
 
-	a_mash->render(GL_TRIANGLES);
+	a_mesh->render(GL_TRIANGLES);
 
 	//disable shader
 	a_shader->disable();

@@ -24,7 +24,7 @@ Texture* Lab::getTexture()
 
 void Lab::Render( Shader* a_shader, Camera* cam)
 {
-	assert(a_mesh != Null, "mesh in renderMesh was null");
+	assert(this->mesh != NULL, "mesh in renderMesh was null");
 	if (!a_shader) return;
 
 	//enable shader
