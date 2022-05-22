@@ -110,7 +110,7 @@ Game::Game(int window_width, int window_height, SDL_Window* window)
 
 	// example of loading Mesh from Mesh Manager
 	mesh = Mesh::Get("data/lab.obj");
-	texture = Texture::Get("data/lab.tga");
+	texture = Texture::Get("data/lab.png");
 	//mesh2 = Mesh::Get("data/sphere.obj");
 	Matrix44 model;
 	lab = new Lab(model, mesh, texture);
