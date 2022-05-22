@@ -1,0 +1,5 @@
+Entities 4
+MESH data/Floor1.obj TEXTURE data/Floor1.png 0.000,0.000,0.000 0.000,0.000,0.000 1.000,1.000,1.000
+MESH data/Wall1.obj TEXTURE data/Wall1.png 1.000,0.000,0.000 0.000,0.000,0.000 1.000,1.000,1.000
+MESH data/cartHigh.obj TEXTURE data/cartHigh.png 2.000,0.000,0.000 0.000,0.000,0.000 1.000,1.000,1.000
+MESH data/Wall1.obj TEXTURE data/Wall1.png 3.000,0.000,0.000 0.000,0.000,0.000 1.000,1.000,1.000

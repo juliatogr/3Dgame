@@ -72,9 +72,138 @@ class Child :public Base {
 //	Texture* texture;
 //};
 
-//std::vector<Entity*> entities;
+std::vector<Entity*> entities;
+
+
 
 Lab* lab;
+
+/*
+Vector3 Lerp(Vector3 a, Vector3 b, float t) {
+	Vector3 ab = b-a;
+	retunr a + (ab * t);
+
+}
+*/
+
+std::string ReadMeshPath(std::stringstream& ss) {
+
+	std::string meshPath;
+	std::string type;
+	ss >> type;
+	if (ss.peek() == ' ') ss.ignore();
+	ss >> meshPath;
+	if (ss.peek() == ' ') ss.ignore();
+	return meshPath;
+}
+
+std::string ReadTextPath(std::stringstream& ss) {
+
+	std::string textPath;
+
+	std::string type;
+	ss >> type;
+	if (ss.peek() == ' ') ss.ignore();
+	ss >> textPath;
+	if (ss.peek() == ' ') ss.ignore();
+	return textPath;
+}
+
+
+std::string ReadNEntities(std::stringstream& ss) {
+
+	std::string type;
+
+	std::string count;
+	ss >> type;
+	if (ss.peek() == ' ') ss.ignore();
+	ss >> count;
+	if (ss.peek() == ' ') ss.ignore();
+	return count;
+}
+
+Vector3 ReadVector3(std::stringstream& ss) {
+	Vector3 vec;
+	ss >> vec.x;
+	if (ss.peek() == ',') ss.ignore();
+	ss >> vec.y;
+	if (ss.peek() == ',') ss.ignore();
+	ss >> vec.z;
+	return vec;
+}
+
+void LoadPropEditorScene(const char* path, std::vector<Entity*>& entities) {
+	std::string content = "";
+	readFile(path, content);
+	std::stringstream ss(content);
+	int nEntities = std::stoi(ReadNEntities(ss));
+	int count = 0;
+	while (count!=nEntities) { 
+		
+		std::string meshPath = ReadMeshPath(ss);
+		const char* c = &meshPath[0];
+		std::string textPath = ReadTextPath(ss);
+		const char* t = &textPath[0];
+		Vector3 pos = ReadVector3(ss);
+		Vector3 rot = ReadVector3(ss);
+		Vector3 scl = ReadVector3(ss);
+
+		std::cout << c << std::endl;
+		std::cout << t << std::endl;
+
+		//create and add the entity;
+		Entity* entity = new Entity();
+		entity->mesh = Mesh::Get(c);
+		entity->texture = Texture::Get(t);
+		Matrix44 model;
+		model.translate(pos.x, pos.y, pos.z);
+		model.rotate(rot.x * DEG2RAD, Vector3(1, 0, 0));
+		model.rotate(rot.y * DEG2RAD, Vector3(0, 1, 0));
+		model.rotate(rot.z * DEG2RAD, Vector3(0, 0, 1));
+		model.scale(scl.x, scl.y, scl.z);
+
+		entity->model = model;
+
+		entities.push_back(entity);
+		count++;
+	}
+}
+
+
+//void LoadPropEditorScene(const char* path,  std::vector<Entity*>& entities) {
+//	std::string content = "";
+//	readFile(path, content);
+//	std::stringstream ss(content);
+//	int nEnts;
+//
+//	ss >> nEnts;
+//
+//	int idEnt = -1;
+//
+//	while (!ss.eof()) {
+//		//read stuff for that entity
+//		std::string meshPath = ReadMeshPath(ss);
+//		const char* c = &meshPath[0];
+//		std::string textPath = ReadTextPath(ss);
+//		const char* t = &textPath[0];
+//		Vector3 pos = ReadVector3(ss);
+//		Vector3 rot = ReadVector3(ss);
+//		ss >> idEnt;
+//
+//		//create and add the entity;
+//		Entity* entity = new Entity();
+//		entity->mesh = Mesh::Get(c);
+//		entity->texture = Texture::Get(t);
+//		entity->model.translate(pos.x, pos.y, pos.z);
+//		entity->model.rotate(rot.x * DEG2RAD, Vector3(1, 0, 0));
+//		entity->model.rotate(rot.y * DEG2RAD, Vector3(0, 1, 0));
+//		entity->model.rotate(rot.z * DEG2RAD, Vector3(0, 0, 1));
+//
+//		entities.push_back(entity);
+//
+//	}
+//}
+
 
 Game::Game(int window_width, int window_height, SDL_Window* window)
 {
@@ -108,12 +237,14 @@ Game::Game(int window_width, int window_height, SDL_Window* window)
 	//texture = new Texture();
 	//texture->load("data/texture.tga");
 
+	LoadPropEditorScene("data/export3.scene", entities);
+
 	// example of loading Mesh from Mesh Manager
-	mesh = Mesh::Get("data/lab.obj");
-	texture = Texture::Get("data/lab.png");
+	//mesh = Mesh::Get("data/lab.obj");
+	//texture = Texture::Get("data/lab.png");
 	//mesh2 = Mesh::Get("data/sphere.obj");
 	Matrix44 model;
-	lab = new Lab(model, mesh, texture);
+	//lab = new Lab(model, mesh, texture);
 
 	//planeMesh = Mesh::Get("data/spitfire/spitfire.ASE");
 	//planeTexture = Texture::Get("data/spitfire/spitfire_color_spec.tga");
@@ -230,27 +361,27 @@ void RenderPlanes() {
 	shader->disable();
 }
 
-//
-//void AddEntityInFront(Camera* cam) {
-//	Vector2 mouse = Input::mouse_position;
-//	Game* g = Game::instance;
-//	Vector3 dir = cam->getRayDirection(mouse.x, mouse.y, g->window_width, g->window_height);
-//	Vector3 rayOrigin = cam->eye;
-//
-//
-//	Vector3 spawnPos = RayPlaneCollision(Vector3(), Vector3(0, 1, 0), rayOrigin, dir);
-//	Matrix44 model;
-//	model.translate(spawnPos.x, spawnPos.y, spawnPos.z);
-//	model.scale(3.0f, 3.0f, 3.0f);
-//
-//	Entity* entity = new Entity();
-//	entity->model = model;
-//	entity->mesh = Mesh::Get("data/carro.obj");
-//	entity->texture = Texture::Get("data/carro.png");
-//	entities.push_back(entity);
-//
-//
-//}
+
+void AddEntityInFront(Camera* cam) {
+	Vector2 mouse = Input::mouse_position;
+	Game* g = Game::instance;
+	Vector3 dir = cam->getRayDirection(mouse.x, mouse.y, g->window_width, g->window_height);
+	Vector3 rayOrigin = cam->eye;
+
+
+	Vector3 spawnPos = RayPlaneCollision(Vector3(), Vector3(0, 1, 0), rayOrigin, dir);
+	Matrix44 model;
+	model.translate(spawnPos.x, spawnPos.y, spawnPos.z);
+	model.scale(3.0f, 3.0f, 3.0f);
+
+	Entity* entity = new Entity();
+	entity->model = model;
+	entity->mesh = Mesh::Get("data/road.obj");
+	entity->texture = Texture::Get("data/road.png");
+	entities.push_back(entity);
+
+
+}
 
 //what to do when the image has to be draw
 void Game::render(void)
@@ -272,7 +403,7 @@ void Game::render(void)
 
 	//RenderMesh(lab->getModel(), lab->getMesh(), lab->getTexture(), shader, camera);
 
-	lab->Render(shader, camera);
+	//lab->Render(shader, camera);
 
 	//if (cameralocked) {
 	//	Vector3 eye = planeModel * Vector3(0.0f, 9.0f, 16.0f);
@@ -299,12 +430,12 @@ void Game::render(void)
 
 	//RenderIslands();
 
-	//for (size_t i = 0; i < entities.size(); i++)
-	//{
-	//	Entity* entity = entities[i];
-	//	RenderMesh(entity->model, entity->mesh, entity->texture, shader, camera);
+	for (size_t i = 0; i < entities.size(); i++)
+	{
+		Entity* entity = entities[i];
+		RenderMesh(entity->model, entity->mesh, entity->texture, shader, camera);
 
-	//}
+	}
 
 	//mesh->renderBounding(islandmodel);
 
@@ -397,7 +528,7 @@ void Game::onKeyDown(SDL_KeyboardEvent event)
 	{
 	case SDLK_ESCAPE: must_exit = true; break; //ESC key, kill the app
 	case SDLK_F1: Shader::ReloadAll(); break;
-	//case SDLK_2: AddEntityInFront(camera); break;
+	case SDLK_2: AddEntityInFront(camera); break;
 	}
 }
 
