@@ -1,0 +1,21 @@
+Entities 3
+MESH data/Estructuras/Floors/Floor1.obj 
+TEXTURE data/Estructuras/Floors/Floor1.tga 
+0.000,0.000,0.000 
+0.000,0.000,0.000 
+1.000,1.000,1.000
+MESH data/Estructuras/Floors/Floor1.obj 
+TEXTURE data/Estructuras/Floors/Floor1.tga 
+0.990,0.000,0.000 
+0.000,0.000,0.000 
+1.000,1.000,1.000
+MESH data/Estructuras/Floors/Floor1.obj 
+TEXTURE data/Estructuras/Floors/Floor1.tga 
+1.980,0.000,1.990 
+0.000,0.000,0.000 
+1.000,1.000,1.000
+MESH data/Estructuras/Floors/Floor1.obj 
+TEXTURE data/Estructuras/Floors/Floor1.tga 
+2.970,0.000,1.990 
+0.000,0.000,0.000 
+1.000,1.000,1.000
