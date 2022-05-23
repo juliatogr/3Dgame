@@ -1,0 +1,11 @@
+Entities 2
+MESH data/MachineLab/Objetos/chairDesk.obj 
+TEXTURE data/MachineLab/Texturas/chairDesk.png
+0.000,0.000,0.000 
+0.000,0.000,0.000 
+1.000,1.000,1.000
+MESH data/MachineLab/Objetos/cutterMachine.obj 
+TEXTURE data/MachineLab/Texturas/cutterMachine.tga
+0.000,0.000,-1.000 
+0.000,270.000,0.000 
+0.050,0.050,0.050
