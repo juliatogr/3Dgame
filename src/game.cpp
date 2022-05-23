@@ -237,7 +237,7 @@ Game::Game(int window_width, int window_height, SDL_Window* window)
 	//texture = new Texture();
 	//texture->load("data/texture.tga");
 
-	LoadPropEditorScene("data/export.scene", entities);
+	LoadPropEditorScene("data/MachineLab/test.scene", entities);
 
 	// example of loading Mesh from Mesh Manager
 	//mesh = Mesh::Get("data/lab.obj");
