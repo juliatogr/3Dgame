@@ -376,12 +376,34 @@ void AddEntityInFront(Camera* cam) {
 
 	Entity* entity = new Entity();
 	entity->model = model;
-	entity->mesh = Mesh::Get("data/road.obj");
-	entity->texture = Texture::Get("data/road.png");
+	entity->mesh = Mesh::Get("data/MachineLab/Objetos/chairDesk.obj");
+	entity->texture = Texture::Get("data/MachineLab/Texturas/chairDesk.png");
 	entities.push_back(entity);
 
-
 }
+
+boolean RayPickCheck(Camera* cam) {
+
+	boolean hasCol = false;
+
+	Vector2 mouse = Input::mouse_position;
+	Game* g = Game::instance;
+	Vector3 dir = cam->getRayDirection(cam->eye.x, cam->eye.y, g->window_width, g->window_height);
+	Vector3 rayOrigin = cam->eye;
+
+	for (size_t i = 0; i < entities.size(); i++) {
+		Entity* entity = entities[i];
+		Vector3 pos;
+		Vector3 normal;
+		if (entity->mesh->testRayCollision(entity->model, rayOrigin, dir, pos, normal)) {
+
+			hasCol = true;
+		}
+	}
+	return hasCol;
+}
+
+
 
 //what to do when the image has to be draw
 void Game::render(void)
@@ -490,14 +512,27 @@ void Game::update(double seconds_elapsed)
 	}
 	else {
 		//async input to move the camera around
+		Vector3 movement;
 
 		if (Input::isKeyPressed(SDL_SCANCODE_LSHIFT)) speed *= 5; //move faster with left shift
-		if (Input::isKeyPressed(SDL_SCANCODE_W) || Input::isKeyPressed(SDL_SCANCODE_UP)) camera->move(Vector3(0.0f, 0.0f, 1.0f) * speed);
-		if (Input::isKeyPressed(SDL_SCANCODE_S) || Input::isKeyPressed(SDL_SCANCODE_DOWN)) camera->move(Vector3(0.0f, 0.0f, -1.0f) * speed);
-		if (Input::isKeyPressed(SDL_SCANCODE_A) || Input::isKeyPressed(SDL_SCANCODE_LEFT)) camera->move(Vector3(1.0f, 0.0f, 0.0f) * speed);
-		if (Input::isKeyPressed(SDL_SCANCODE_D) || Input::isKeyPressed(SDL_SCANCODE_RIGHT)) camera->move(Vector3(-1.0f, 0.0f, 0.0f) * speed);
-		if (Input::isKeyPressed(SDL_SCANCODE_E)) camera->move(Vector3(0.0f, -1.0f, 0.0f) * speed);
-		if (Input::isKeyPressed(SDL_SCANCODE_Q)) camera->move(Vector3(0.0f, 1.0f, 0.0f) * speed);
+		if (Input::isKeyPressed(SDL_SCANCODE_W) || Input::isKeyPressed(SDL_SCANCODE_UP)) movement.z = 1.0f;
+		if (Input::isKeyPressed(SDL_SCANCODE_S) || Input::isKeyPressed(SDL_SCANCODE_DOWN)) movement.z = -1.0f;
+		if (Input::isKeyPressed(SDL_SCANCODE_A) || Input::isKeyPressed(SDL_SCANCODE_LEFT)) movement.x = 1.0f;
+		if (Input::isKeyPressed(SDL_SCANCODE_D) || Input::isKeyPressed(SDL_SCANCODE_RIGHT)) movement.x = -1.0f;
+		if (Input::isKeyPressed(SDL_SCANCODE_E)) movement.y = -1.0f;
+		if (Input::isKeyPressed(SDL_SCANCODE_Q)) movement.y = 1.0f;
+
+		Camera* aux = new Camera();
+		aux->eye = camera->eye;
+		aux->far_plane = camera->far_plane;
+		aux->center= camera->center;
+		aux->fov = camera->fov;
+		aux->move(Vector3(movement.x, movement.y, movement.z) * speed);
+
+		if (!RayPickCheck(aux)) {
+			camera->move(Vector3(movement.x, movement.y, movement.z) * speed);
+		}
+		
 	}
 
 	if (camera->eye.y >= 0.5) {
