@@ -1,5 +1,126 @@
-Entities 4
-MESH data/Floor1.obj TEXTURE data/Floor1.png 0.000,0.000,0.000 0.000,0.000,0.000 1.000,1.000,1.000
-MESH data/Wall1.obj TEXTURE data/Wall1.png 1.000,0.000,0.000 0.000,0.000,0.000 1.000,1.000,1.000
-MESH data/cartHigh.obj TEXTURE data/cartHigh.png 2.000,0.000,0.000 0.000,0.000,0.000 1.000,1.000,1.000
-MESH data/Wall1.obj TEXTURE data/Wall1.png 3.000,0.000,0.000 0.000,0.000,0.000 1.000,1.000,1.000
+Entities 25
+MESH data/Estructuras/Floor1.obj 
+TEXTURE data/Estructuras/Floor1.png 
+0.000,0.000,0.000 
+0.000,0.000,0.000 
+1.000,1.000,1.000
+MESH data/Estructuras/Wall1.obj 
+TEXTURE data/Estructuras/Wall1.tga 
+2.500,0.000,0.000 
+0.000,90.000,0.000 
+1.000,1.000,1.000
+MESH data/Estructuras/Wall1.obj 
+TEXTURE data/Estructuras/Wall1.tga 
+2.500,0.000,1.000 
+0.000,90.000,0.000 
+1.000,1.000,1.000
+MESH data/Estructuras/Wall1.obj 
+TEXTURE data/Estructuras/Wall1.tga 
+2.500,0.000,2.000 
+0.000,90.000,0.000 
+1.000,1.000,1.000
+MESH data/Estructuras/Wall1.obj 
+TEXTURE data/Estructuras/Wall1.tga 
+2.500,0.000,3.000 
+0.000,90.000,0.000 
+1.000,1.000,1.000
+MESH data/Estructuras/Wall1.obj 
+TEXTURE data/Estructuras/Wall1.tga 
+2.500,0.000,-1.000 
+0.000,90.000,0.000 
+1.000,1.000,1.000
+MESH data/Estructuras/Wall1.obj 
+TEXTURE data/Estructuras/Wall1.tga 
+2.500,0.000,-2.000 
+0.000,90.000,0.000 
+1.000,1.000,1.000
+MESH data/Estructuras/Wall1.obj 
+TEXTURE data/Estructuras/Wall1.tga 
+2.500,0.000,-3.000 
+0.000,90.000,0.000 
+1.000,1.000,1.000
+MESH data/Estructuras/Wall1.obj 
+TEXTURE data/Estructuras/Wall1.tga 
+-2.500,0.000,0.000 
+0.000,270.000,0.000 
+1.000,1.000,1.000
+MESH data/Estructuras/Wall1.obj 
+TEXTURE data/Estructuras/Wall1.tga 
+-2.500,0.000,1.000 
+0.000,270.000,0.000 
+1.000,1.000,1.000
+MESH data/Estructuras/Wall1.obj 
+TEXTURE data/Estructuras/Wall1.tga 
+-2.500,0.000,2.000 
+0.000,270.000,0.000 
+1.000,1.000,1.000
+MESH data/Estructuras/Wall1.obj 
+TEXTURE data/Estructuras/Wall1.tga 
+-2.500,0.000,3.000 
+0.000,270.000,0.000
+1.000,1.000,1.000
+MESH data/Estructuras/Wall1.obj 
+TEXTURE data/Estructuras/Wall1.tga 
+-2.500,0.000,-1.000 
+0.000,270.000,0.000
+1.000,1.000,1.000
+MESH data/Estructuras/Wall1.obj 
+TEXTURE data/Estructuras/Wall1.tga 
+-2.500,0.000,-2.000 
+0.000,270.000,0.000
+1.000,1.000,1.000
+MESH data/Estructuras/Wall1.obj 
+TEXTURE data/Estructuras/Wall1.tga 
+-2.500,0.000,-3.000 
+0.000,270.000,0.000
+1.000,1.000,1.000
+MESH data/Estructuras/Wall1.obj 
+TEXTURE data/Estructuras/Wall1.tga 
+0.000,0.000,3.500 
+0.000,180.000,0.000 
+1.000,1.000,1.000
+MESH data/Estructuras/Wall1.obj 
+TEXTURE data/Estructuras/Wall1.tga 
+1.000,0.000,3.500 
+0.000,180.000,0.000 
+1.000,1.000,1.000
+MESH data/Estructuras/Wall1.obj 
+TEXTURE data/Estructuras/Wall1.tga 
+2.000,0.000,3.500 
+0.000,180.000,0.000
+1.000,1.000,1.000
+MESH data/Estructuras/Wall1.obj 
+TEXTURE data/Estructuras/Wall1.tga 
+-1.000,0.000,3.500 
+0.000,180.000,0.000
+1.000,1.000,1.000
+MESH data/Estructuras/Wall1.obj 
+TEXTURE data/Estructuras/Wall1.tga 
+-2.000,0.000,3.500 
+0.000,180.000,0.000 
+1.000,1.000,1.000
+MESH data/Estructuras/Wall1.obj 
+TEXTURE data/Estructuras/Wall1.tga 
+0.000,0.000,-3.500 
+0.000,0.000,0.000 
+1.000,1.000,1.000
+MESH data/Estructuras/Wall1.obj 
+TEXTURE data/Estructuras/Wall1.tga 
+1.000,0.000,-3.500 
+0.000,0.000,0.000
+1.000,1.000,1.000
+MESH data/Estructuras/Wall1.obj 
+TEXTURE data/Estructuras/Wall1.tga 
+2.000,0.000,-3.500 
+0.000,0.000,0.000
+1.000,1.000,1.000
+MESH data/Estructuras/Wall1.obj 
+TEXTURE data/Estructuras/Wall1.tga 
+-1.000,0.000,-3.500 
+0.000,0.000,0.000
+1.000,1.000,1.000
+MESH data/Estructuras/Wall1.obj
+TEXTURE data/Estructuras/Wall1.tga
+-2.000,0.000,-3.500
+0.000,0.000,0.000
+1.000,1.000,1.000
