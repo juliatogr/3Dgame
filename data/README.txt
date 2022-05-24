@@ -7,3 +7,5 @@ email: mercedesfranchesca.gonzalez01@estudiant.upf.edu
 Júlia Tortosa
 NIA: 227215
 email: julia.tortosa01@estudiant.upf.edu
+
+Video de Seguimiento: https://youtu.be/0wuMokrpsD4
