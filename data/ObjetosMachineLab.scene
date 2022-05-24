@@ -1,0 +1,26 @@
+Entities 5
+MESH data/MachineLab/Objetos/cables.obj 
+TEXTURE data/MachineLab/Texturas/cables.tga
+0.000,0.000,0.000 
+0.000,0.000,0.000 
+0.010,0.010,0.010
+MESH data/MachineLab/Objetos/mouse.obj 
+TEXTURE data/MachineLab/Texturas/mouse.tga
+0.000,0.000,0.000 
+0.000,0.000,0.000 
+0.500,0.500,0.500
+MESH data/MachineLab/Objetos/keyboard.obj 
+TEXTURE data/MachineLab/Texturas/keyboard.tga
+0.000,0.000,0.000 
+0.000,0.000,0.000 
+0.500,0.500,0.500
+MESH data/MachineLab/Objetos/PC.obj 
+TEXTURE data/MachineLab/Texturas/PC.tga
+0.300,0.500,0.000 
+0.000,0.000,0.000 
+0.0015,0.0015,0.0015
+MESH data/MachineLab/Objetos/monitors.obj 
+TEXTURE data/MachineLab/Texturas/monitors.tga
+0.000,0.000,0.000 
+0.000,0.000,0.000 
+0.010,0.010,0.010
