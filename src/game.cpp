@@ -24,6 +24,7 @@ Texture* planeTexture = NULL;
 Matrix44 planeModel;
 
 bool cameralocked = false;
+bool isUp = true;
 
 //Mesh* bombMesh = NULL;
 //Texture* bombTexture = NULL;
@@ -230,17 +231,16 @@ Game::Game(int window_width, int window_height, SDL_Window* window)
 
 	//create our camera
 	camera = new Camera();
-	camera->lookAt(Vector3(0.f, 0.65f, 1.f), Vector3(0.f, 0.5f, 0.f), Vector3(0.f, 1.f, 0.f)); //position the camera and point to 0,0,0
-	camera->setPerspective(30.f, window_width / (float)window_height, 0.1f, 100000.f); //set the projection, we want to be perspective
+	camera->lookAt(Vector3(-6.8f, 0.6f, -5.0f), Vector3(0.f, 0.5f, 0.f), Vector3(0.f, 1.f, 0.f)); //position the camera and point to 0,0,0
+	camera->setPerspective(35.f, window_width / (float)window_height, 0.1f, 100000.f); //set the projection, we want to be perspective
 
 	//load one texture without using the Texture Manager (Texture::Get would use the manager)
 	//texture = new Texture();
 	//texture->load("data/texture.tga");
 
+	LoadPropEditorScene("data/EstructuraPasillo.scene", entities);
 	LoadPropEditorScene("data/EstructuraChemicalLab.scene", entities);
 	LoadPropEditorScene("data/ObjetosChemicalLab.scene", entities);
-	
-
 	LoadPropEditorScene("data/EstructuraMachineLab.scene", entities);
 	LoadPropEditorScene("data/ObjetosMachineLab.scene", entities);
 	LoadPropEditorScene("data/InteractiveObjects.scene", entities);
@@ -411,7 +411,7 @@ boolean RayPickCheck(Camera* cam, Vector3 movement) {
 		Entity* entity = entities[i];
 		Vector3 pos;
 		Vector3 normal;
-		if (entity->mesh->testRayCollision(entity->model, rayOrigin, dir, pos, normal, 0.5)) {
+		if (entity->mesh->testRayCollision(entity->model, rayOrigin, dir, pos, normal, 0.3)) {
 
 			hasCol = true;
 		}
@@ -572,12 +572,8 @@ void Game::update(double seconds_elapsed)
 		
 	}
 
-	/*if (camera->eye.y >= 0.65) {
-		camera->eye.y = 0.65;
-	}
-	else if (camera->eye.y <= 0.2) {
-		camera->eye.y = 0.2;
-	}*/
+	camera->eye.y = isUp ? 0.6 : 0.3;
+
 	/*if (Input::wasKeyPressed(SDL_SCANCODE_F)) {
 		bombAttached = false;
 	}
@@ -608,6 +604,10 @@ void Game::onKeyDown(SDL_KeyboardEvent event)
 
 void Game::onKeyUp(SDL_KeyboardEvent event)
 {
+	switch (event.keysym.sym)
+	{
+	case SDLK_SPACE: isUp = !isUp; break;
+	} 
 }
 
 void Game::onGamepadButtonDown(SDL_JoyButtonEvent event)
