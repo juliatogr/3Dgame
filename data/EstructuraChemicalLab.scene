@@ -1,4 +1,4 @@
-Entities 33
+Entities 32
 MESH data/Estructuras/Floors/Floor1.obj 
 TEXTURE data/Estructuras/Floors/Floor1.tga 
 0.000,0.000,0.000 
@@ -157,10 +157,5 @@ TEXTURE data/Estructuras/WallDoors/WallDoor1.tga
 MESH data/Estructuras/Pasillos/Pasillo.obj 
 TEXTURE data/Estructuras/Pasillos/Pasillo.tga 
 -2.910,0.000,1.220 
-0.000,90.000,0.000 
-1.000,1.000,1.000
-MESH data/Estructuras/Doors/Door.obj 
-TEXTURE data/Estructuras/Doors/Door.tga 
--1.950,0.000,1.220 
 0.000,90.000,0.000 
 1.000,1.000,1.000

@@ -230,8 +230,8 @@ Game::Game(int window_width, int window_height, SDL_Window* window)
 
 	//create our camera
 	camera = new Camera();
-	camera->lookAt(Vector3(0.f, 0.5f, 1.f), Vector3(0.f, 0.5f, 0.f), Vector3(0.f, 1.f, 0.f)); //position the camera and point to 0,0,0
-	camera->setPerspective(50.f, window_width / (float)window_height, 0.1f, 100000.f); //set the projection, we want to be perspective
+	camera->lookAt(Vector3(0.f, 0.65f, 1.f), Vector3(0.f, 0.5f, 0.f), Vector3(0.f, 1.f, 0.f)); //position the camera and point to 0,0,0
+	camera->setPerspective(30.f, window_width / (float)window_height, 0.1f, 100000.f); //set the projection, we want to be perspective
 
 	//load one texture without using the Texture Manager (Texture::Get would use the manager)
 	//texture = new Texture();
@@ -239,7 +239,11 @@ Game::Game(int window_width, int window_height, SDL_Window* window)
 
 	LoadPropEditorScene("data/EstructuraChemicalLab.scene", entities);
 	LoadPropEditorScene("data/ObjetosChemicalLab.scene", entities);
+	
 
+	LoadPropEditorScene("data/EstructuraMachineLab.scene", entities);
+	LoadPropEditorScene("data/ObjetosMachineLab.scene", entities);
+	LoadPropEditorScene("data/InteractiveObjects.scene", entities);
 	// example of loading Mesh from Mesh Manager
 	//mesh = Mesh::Get("data/lab.obj");
 	//texture = Texture::Get("data/lab.png");
@@ -279,6 +283,15 @@ void RenderMesh(Matrix44 model, Mesh* a_mesh, Texture* tex, Shader* a_shader, Ca
 	//disable shader
 	a_shader->disable();
 
+}
+
+void moveChemDoor() {
+	float speed = 0.02f;
+	entities[entities.size() - 2]->model.translate(1.0f * speed,0.0f,0.0f) ;
+}
+void moveMachDoor() {
+	float speed = 0.02f;
+	entities[entities.size() - 1]->model.translate(-1.0f * speed, 0.0f, 0.0f);
 }
 
 void RenderIslands() {
@@ -383,20 +396,43 @@ void AddEntityInFront(Camera* cam) {
 
 }
 
-boolean RayPickCheck(Camera* cam) {
+boolean RayPickCheck(Camera* cam, Vector3 movement) {
 
 	boolean hasCol = false;
 
 	Vector2 mouse = Input::mouse_position;
 	Game* g = Game::instance;
-	Vector3 dir = cam->getRayDirection(cam->eye.x, cam->eye.y, g->window_width, g->window_height);
+	movement.x = movement.x / movement.z;
+	movement.y = movement.y / movement.z;
+	Vector3 dir = cam->getRayDirection(movement.x, movement.y, g->window_width, g->window_height);
 	Vector3 rayOrigin = cam->eye;
 
 	for (size_t i = 0; i < entities.size(); i++) {
 		Entity* entity = entities[i];
 		Vector3 pos;
 		Vector3 normal;
-		if (entity->mesh->testRayCollision(entity->model, rayOrigin, dir, pos, normal)) {
+		if (entity->mesh->testRayCollision(entity->model, rayOrigin, dir, pos, normal, 0.5)) {
+
+			hasCol = true;
+		}
+	}
+	return hasCol;
+}
+
+boolean SpherePickCheck(Camera* cam) {
+
+	boolean hasCol = false;
+
+	Vector2 mouse = Input::mouse_position;
+	Game* g = Game::instance;
+	Vector3 dir = cam->getRayDirection(cam->eye.x, cam->eye.y, g->window_width, g->window_height);
+	Vector3 center = cam->eye + Vector3(0.0f,-5.0f, 0.0f);
+
+	for (size_t i = 0; i < entities.size(); i++) {
+		Entity* entity = entities[i];
+		Vector3 pos;
+		Vector3 normal;
+		if (entity->mesh->testSphereCollision(entity->model, center, 5.0f, pos, normal)) {
 
 			hasCol = true;
 		}
@@ -410,7 +446,7 @@ boolean RayPickCheck(Camera* cam) {
 void Game::render(void)
 {
 	//set the clear color (the background color)
-	glClearColor(0.0, 0.0, 0.0, 1.0);			// white background to simulate the ceiling
+	glClearColor(0.7, 0.7, 0.8, 1.0);			// white background to simulate the ceiling
 
 	// Clear the window and the depth buffer
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -530,18 +566,18 @@ void Game::update(double seconds_elapsed)
 		aux->fov = camera->fov;
 		aux->move(Vector3(movement.x, movement.y, movement.z) * speed);
 
-		if (!RayPickCheck(aux)) {
+		if (!RayPickCheck(camera, movement)) {
 			camera->move(Vector3(movement.x, movement.y, movement.z) * speed);
 		}
 		
 	}
 
-	if (camera->eye.y >= 0.5) {
-		camera->eye.y = 0.5;
+	/*if (camera->eye.y >= 0.65) {
+		camera->eye.y = 0.65;
 	}
 	else if (camera->eye.y <= 0.2) {
 		camera->eye.y = 0.2;
-	}
+	}*/
 	/*if (Input::wasKeyPressed(SDL_SCANCODE_F)) {
 		bombAttached = false;
 	}
@@ -565,6 +601,8 @@ void Game::onKeyDown(SDL_KeyboardEvent event)
 	case SDLK_ESCAPE: must_exit = true; break; //ESC key, kill the app
 	case SDLK_F1: Shader::ReloadAll(); break;
 	case SDLK_2: AddEntityInFront(camera); break;
+	case SDLK_3: moveChemDoor(); break;
+	case SDLK_4: moveMachDoor(); break;
 	}
 }
 
