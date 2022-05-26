@@ -141,5 +141,8 @@
     <Filter Include="utils">
       <UniqueIdentifier>{feb78646-9d96-43df-8d00-2397429ea3ef}</UniqueIdentifier>
     </Filter>
+    <Filter Include="essentials">
+      <UniqueIdentifier>{ce535408-e4e9-401e-9b9e-524d8f2ae29e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>

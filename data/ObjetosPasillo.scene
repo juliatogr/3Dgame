@@ -1,0 +1,11 @@
+Entities 2
+MESH data/MachineLab/Objetos/table.obj 
+TEXTURE data/MachineLab/Texturas/table.tga
+-5.630,0.300,-3.280
+0.000,0.000,0.000 
+0.024,0.024,0.024
+MESH data/MachineLab/Objetos/LegalPad.obj 
+TEXTURE data/MachineLab/Texturas/hallNote.tga
+-6.000,0.300,-3.350
+0.000,180.000,0.000
+0.050,0.050,0.050

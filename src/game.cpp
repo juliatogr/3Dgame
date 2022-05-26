@@ -25,7 +25,6 @@ Matrix44 planeModel;
 
 bool cameralocked = false;
 bool isUp = true;
-
 //Mesh* bombMesh = NULL;
 //Texture* bombTexture = NULL;
 //Matrix44 bombModel;
@@ -59,6 +58,7 @@ class Child :public Base {
 	void Foo() override{};
 };
 
+
 //class Prop {
 //	int id;
 //	Mesh* mesh;
@@ -73,11 +73,11 @@ class Child :public Base {
 //	Texture* texture;
 //};
 
-std::vector<Entity*> entities;
+std::vector<Door*> doors;
 
 
 
-Lab* lab;
+Lab* lab = new Lab();
 
 /*
 Vector3 Lerp(Vector3 a, Vector3 b, float t) {
@@ -87,88 +87,7 @@ Vector3 Lerp(Vector3 a, Vector3 b, float t) {
 }
 */
 
-std::string ReadMeshPath(std::stringstream& ss) {
 
-	std::string meshPath;
-	std::string type;
-	ss >> type;
-	if (ss.peek() == ' ') ss.ignore();
-	ss >> meshPath;
-	if (ss.peek() == ' ') ss.ignore();
-	return meshPath;
-}
-
-std::string ReadTextPath(std::stringstream& ss) {
-
-	std::string textPath;
-
-	std::string type;
-	ss >> type;
-	if (ss.peek() == ' ') ss.ignore();
-	ss >> textPath;
-	if (ss.peek() == ' ') ss.ignore();
-	return textPath;
-}
-
-
-std::string ReadNEntities(std::stringstream& ss) {
-
-	std::string type;
-
-	std::string count;
-	ss >> type;
-	if (ss.peek() == ' ') ss.ignore();
-	ss >> count;
-	if (ss.peek() == ' ') ss.ignore();
-	return count;
-}
-
-Vector3 ReadVector3(std::stringstream& ss) {
-	Vector3 vec;
-	ss >> vec.x;
-	if (ss.peek() == ',') ss.ignore();
-	ss >> vec.y;
-	if (ss.peek() == ',') ss.ignore();
-	ss >> vec.z;
-	return vec;
-}
-
-void LoadPropEditorScene(const char* path, std::vector<Entity*>& entities) {
-	std::string content = "";
-	readFile(path, content);
-	std::stringstream ss(content);
-	int nEntities = std::stoi(ReadNEntities(ss));
-	int count = 0;
-	while (count!=nEntities) { 
-		
-		std::string meshPath = ReadMeshPath(ss);
-		const char* c = &meshPath[0];
-		std::string textPath = ReadTextPath(ss);
-		const char* t = &textPath[0];
-		Vector3 pos = ReadVector3(ss);
-		Vector3 rot = ReadVector3(ss);
-		Vector3 scl = ReadVector3(ss);
-
-		std::cout << c << std::endl;
-		std::cout << t << std::endl;
-
-		//create and add the entity;
-		Entity* entity = new Entity();
-		entity->mesh = Mesh::Get(c);
-		entity->texture = Texture::Get(t);
-		Matrix44 model;
-		model.translate(pos.x, pos.y, pos.z);
-		model.rotate(rot.x * DEG2RAD, Vector3(1, 0, 0));
-		model.rotate(rot.y * DEG2RAD, Vector3(0, 1, 0));
-		model.rotate(rot.z * DEG2RAD, Vector3(0, 0, 1));
-		model.scale(scl.x, scl.y, scl.z);
-
-		entity->model = model;
-
-		entities.push_back(entity);
-		count++;
-	}
-}
 
 
 //void LoadPropEditorScene(const char* path,  std::vector<Entity*>& entities) {
@@ -231,19 +150,14 @@ Game::Game(int window_width, int window_height, SDL_Window* window)
 
 	//create our camera
 	camera = new Camera();
-	camera->lookAt(Vector3(-6.8f, 0.6f, -5.0f), Vector3(0.f, 0.5f, 0.f), Vector3(0.f, 1.f, 0.f)); //position the camera and point to 0,0,0
+	
+	camera->lookAt(Vector3(-6.5f, 0.6f, -8.8f), Vector3(-6.5f, 0.6f, -6.0f), Vector3(0.f, 1.f, 0.f)); //position the camera and point to 0,0,0
 	camera->setPerspective(35.f, window_width / (float)window_height, 0.1f, 100000.f); //set the projection, we want to be perspective
 
 	//load one texture without using the Texture Manager (Texture::Get would use the manager)
 	//texture = new Texture();
 	//texture->load("data/texture.tga");
 
-	LoadPropEditorScene("data/EstructuraPasillo.scene", entities);
-	LoadPropEditorScene("data/EstructuraChemicalLab.scene", entities);
-	LoadPropEditorScene("data/ObjetosChemicalLab.scene", entities);
-	LoadPropEditorScene("data/EstructuraMachineLab.scene", entities);
-	LoadPropEditorScene("data/ObjetosMachineLab.scene", entities);
-	LoadPropEditorScene("data/InteractiveObjects.scene", entities);
 	// example of loading Mesh from Mesh Manager
 	//mesh = Mesh::Get("data/lab.obj");
 	//texture = Texture::Get("data/lab.png");
@@ -285,14 +199,7 @@ void RenderMesh(Matrix44 model, Mesh* a_mesh, Texture* tex, Shader* a_shader, Ca
 
 }
 
-void moveChemDoor() {
-	float speed = 0.02f;
-	entities[entities.size() - 2]->model.translate(1.0f * speed,0.0f,0.0f) ;
-}
-void moveMachDoor() {
-	float speed = 0.02f;
-	entities[entities.size() - 1]->model.translate(-1.0f * speed, 0.0f, 0.0f);
-}
+
 
 void RenderIslands() {
 
@@ -375,7 +282,7 @@ void RenderPlanes() {
 	shader->disable();
 }
 
-
+/*
 void AddEntityInFront(Camera* cam) {
 	Vector2 mouse = Input::mouse_position;
 	Game* g = Game::instance;
@@ -394,7 +301,7 @@ void AddEntityInFront(Camera* cam) {
 	entity->texture = Texture::Get("data/MachineLab/Texturas/chairDesk.png");
 	entities.push_back(entity);
 
-}
+*/
 
 boolean RayPickCheck(Camera* cam, Vector3 movement) {
 
@@ -407,36 +314,18 @@ boolean RayPickCheck(Camera* cam, Vector3 movement) {
 	Vector3 dir = cam->getRayDirection(movement.x, movement.y, g->window_width, g->window_height);
 	Vector3 rayOrigin = cam->eye;
 
-	for (size_t i = 0; i < entities.size(); i++) {
-		Entity* entity = entities[i];
-		Vector3 pos;
-		Vector3 normal;
-		if (entity->mesh->testRayCollision(entity->model, rayOrigin, dir, pos, normal, 0.3)) {
+	for (int r = 0; r < lab->numRooms; r++) {
+		for (size_t i = 0; i < lab->rooms[r]->entities.size(); i++) {
+			Entity* entity = lab->rooms[r]->entities[i];
+			Vector3 pos;
+			Vector3 normal;
+			if (entity->mesh->testRayCollision(entity->model, rayOrigin, dir, pos, normal, 0.3)) {
 
-			hasCol = true;
+				hasCol = true;
+			}
 		}
 	}
-	return hasCol;
-}
-
-boolean SpherePickCheck(Camera* cam) {
-
-	boolean hasCol = false;
-
-	Vector2 mouse = Input::mouse_position;
-	Game* g = Game::instance;
-	Vector3 dir = cam->getRayDirection(cam->eye.x, cam->eye.y, g->window_width, g->window_height);
-	Vector3 center = cam->eye + Vector3(0.0f,-5.0f, 0.0f);
-
-	for (size_t i = 0; i < entities.size(); i++) {
-		Entity* entity = entities[i];
-		Vector3 pos;
-		Vector3 normal;
-		if (entity->mesh->testSphereCollision(entity->model, center, 5.0f, pos, normal)) {
-
-			hasCol = true;
-		}
-	}
+	
 	return hasCol;
 }
 
@@ -489,12 +378,15 @@ void Game::render(void)
 
 	//RenderIslands();
 
-	for (size_t i = 0; i < entities.size(); i++)
-	{
-		Entity* entity = entities[i];
-		RenderMesh(entity->model, entity->mesh, entity->texture, shader, camera);
+	for (int r = 0; r < lab->numRooms; r++) {
+		for (size_t i = 0; i < lab->rooms[r]->entities.size(); i++)
+			{
+				Entity* entity = lab->rooms[r]->entities[i];
+				RenderMesh(entity->model, entity->mesh, entity->texture, shader, camera);
 
+			}
 	}
+	
 
 	//mesh->renderBounding(islandmodel);
 
@@ -596,9 +488,10 @@ void Game::onKeyDown(SDL_KeyboardEvent event)
 	{
 	case SDLK_ESCAPE: must_exit = true; break; //ESC key, kill the app
 	case SDLK_F1: Shader::ReloadAll(); break;
-	case SDLK_2: AddEntityInFront(camera); break;
-	case SDLK_3: moveChemDoor(); break;
-	case SDLK_4: moveMachDoor(); break;
+	//case SDLK_2: AddEntityInFront(camera); break;
+	case SDLK_3: lab->doors[0]->Move(shader,camera); break;
+	case SDLK_4: lab->doors[1]->Move(shader, camera); break;
+	case SDLK_5: lab->doors[2]->Move(shader, camera); break;
 	}
 }
 
