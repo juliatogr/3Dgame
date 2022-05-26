@@ -77,7 +77,7 @@ std::vector<Door*> doors;
 
 
 
-Lab* lab = new Lab();
+Lab* lab;
 
 /*
 Vector3 Lerp(Vector3 a, Vector3 b, float t) {
@@ -157,7 +157,7 @@ Game::Game(int window_width, int window_height, SDL_Window* window)
 	//load one texture without using the Texture Manager (Texture::Get would use the manager)
 	//texture = new Texture();
 	//texture->load("data/texture.tga");
-
+	lab = new Lab();
 	// example of loading Mesh from Mesh Manager
 	//mesh = Mesh::Get("data/lab.obj");
 	//texture = Texture::Get("data/lab.png");
@@ -385,6 +385,13 @@ void Game::render(void)
 				RenderMesh(entity->model, entity->mesh, entity->texture, shader, camera);
 
 			}
+	}
+
+	for (size_t i = 0; i < lab->doors.size(); i++)
+	{
+		Door* door = lab->doors[i];
+		RenderMesh(door->model, door->mesh, door->texture, shader, camera);
+
 	}
 	
 
