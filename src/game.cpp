@@ -506,7 +506,7 @@ void Game::onKeyUp(SDL_KeyboardEvent event)
 {
 	switch (event.keysym.sym)
 	{
-	case SDLK_SPACE: isUp = !isUp; break;
+	case SDLK_LCTRL: isUp = !isUp; break;
 	} 
 }
 
