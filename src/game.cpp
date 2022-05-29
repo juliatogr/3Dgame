@@ -171,21 +171,7 @@ void Game::update(double seconds_elapsed)
 	if (cameralocked) {
 		float planeSpeed = 50.0f * elapsed_time;
 		float rotSpeed = 90.0f * DEG2RAD * elapsed_time;
-		if (Input::isKeyPressed(SDL_SCANCODE_W)) planeModel.translate(0.0f, 0.0f, -planeSpeed);
-		if (Input::isKeyPressed(SDL_SCANCODE_S)) planeModel.translate(0.0f, 0.0f, planeSpeed);
 
-		if (Input::isKeyPressed(SDL_SCANCODE_A)) {
-			planeModel.rotate(-rotSpeed, Vector3(0.0, 1.0f, 0.0f));
-		}
-		if (Input::isKeyPressed(SDL_SCANCODE_D)) {
-			planeModel.rotate(rotSpeed, Vector3(0.0, 1.0f, 0.0f));
-		}
-		if (Input::isKeyPressed(SDL_SCANCODE_E)) {
-			planeModel.rotate(rotSpeed, Vector3(0.0, 0.0f, 1.0f));
-		}
-		if (Input::isKeyPressed(SDL_SCANCODE_Q)) {
-			planeModel.rotate(-rotSpeed, Vector3(0.0, 0.0f, 1.0f));
-		}
 	}
 	else {
 		//async input to move the camera around
