@@ -6,31 +6,10 @@
 #include "shader.h"
 #include "input.h"
 #include "animation.h"
-/*
-Lab::Lab(Matrix44 model, Mesh* mesh, Texture* texture)
-{
-	this->model = model;
-	this->mesh = mesh;
-	this->texture = texture;
-}
 
-Matrix44 Lab::getModel()
-{
-	return this->model;
-}
 
-Mesh* Lab::getMesh()
-{
-	return this->mesh;
-}
+void Entity::RenderMesh(Shader* a_shader, Camera* cam) {
 
-Texture* Lab::getTexture()
-{
-	return this->texture;
-}
-
-void Lab::Render( Shader* a_shader, Camera* cam)
-{
 	assert(this->mesh != NULL, "mesh in renderMesh was null");
 	if (!a_shader) return;
 
@@ -48,7 +27,8 @@ void Lab::Render( Shader* a_shader, Camera* cam)
 
 	//disable shader
 	a_shader->disable();
-}*/
+
+}
 
 std::string ReadMeshPath(std::stringstream& ss) {
 

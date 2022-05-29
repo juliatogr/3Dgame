@@ -14,23 +14,10 @@
 bool test = true;
 
 //some globals
-Mesh* mesh = NULL;
-//Mesh* mesh2 = NULL;
-Texture* texture = NULL;
 Shader* shader = NULL;
-//
-Mesh* planeMesh = NULL;
-Texture* planeTexture = NULL;
-Matrix44 planeModel;
 
 bool cameralocked = false;
 bool isUp = true;
-//Mesh* bombMesh = NULL;
-//Texture* bombTexture = NULL;
-//Matrix44 bombModel;
-//Matrix44 bombOffset;
-//bool bombAttached = true;
-
 
 Animation* anim = NULL;
 float angle = 0;
@@ -48,81 +35,9 @@ float no_render_distance = 1000.0f;
 
 //SDL_GetTicks();
 
-class Base {
-public:
-	//int a;
-	virtual void Foo(){};
-};
-
-class Child :public Base {
-	void Foo() override{};
-};
-
-
-//class Prop {
-//	int id;
-//	Mesh* mesh;
-//	Texture* texture;
-//};
-//Prop props[20];
-//
-//class Entity {
-//public:
-//	Matrix44 model;
-//	Mesh* mesh;
-//	Texture* texture;
-//};
-
-std::vector<Door*> doors;
-
 
 
 Lab* lab;
-
-/*
-Vector3 Lerp(Vector3 a, Vector3 b, float t) {
-	Vector3 ab = b-a;
-	retunr a + (ab * t);
-
-}
-*/
-
-
-
-
-//void LoadPropEditorScene(const char* path,  std::vector<Entity*>& entities) {
-//	std::string content = "";
-//	readFile(path, content);
-//	std::stringstream ss(content);
-//	int nEnts;
-//
-//	ss >> nEnts;
-//
-//	int idEnt = -1;
-//
-//	while (!ss.eof()) {
-//		//read stuff for that entity
-//		std::string meshPath = ReadMeshPath(ss);
-//		const char* c = &meshPath[0];
-//		std::string textPath = ReadTextPath(ss);
-//		const char* t = &textPath[0];
-//		Vector3 pos = ReadVector3(ss);
-//		Vector3 rot = ReadVector3(ss);
-//		ss >> idEnt;
-//
-//		//create and add the entity;
-//		Entity* entity = new Entity();
-//		entity->mesh = Mesh::Get(c);
-//		entity->texture = Texture::Get(t);
-//		entity->model.translate(pos.x, pos.y, pos.z);
-//		entity->model.rotate(rot.x * DEG2RAD, Vector3(1, 0, 0));
-//		entity->model.rotate(rot.y * DEG2RAD, Vector3(0, 1, 0));
-//		entity->model.rotate(rot.z * DEG2RAD, Vector3(0, 0, 1));
-//
-//		entities.push_back(entity);
-//
-//	}
-//}
 
 
 Game::Game(int window_width, int window_height, SDL_Window* window)
@@ -139,14 +54,9 @@ Game::Game(int window_width, int window_height, SDL_Window* window)
 	elapsed_time = 0.0f;
 	mouse_locked = false;
 
-	/*std::cout << sizeof(Base) << std::endl;
-	std::cout << sizeof(Child) << std::endl;*/
-
 	//OpenGL flags
 	glEnable(GL_CULL_FACE); //render both sides of every triangle
 	glEnable(GL_DEPTH_TEST); //check the occlusions using the Z buffer
-
-//	bombOffset.setTranslation(0.0f, -2.0f, 0.0f);
 
 	//create our camera
 	camera = new Camera();
@@ -155,153 +65,13 @@ Game::Game(int window_width, int window_height, SDL_Window* window)
 	camera->setPerspective(35.f, window_width / (float)window_height, 0.1f, 100000.f); //set the projection, we want to be perspective
 
 	//load one texture without using the Texture Manager (Texture::Get would use the manager)
-	//texture = new Texture();
-	//texture->load("data/texture.tga");
+
 	lab = new Lab();
-	// example of loading Mesh from Mesh Manager
-	//mesh = Mesh::Get("data/lab.obj");
-	//texture = Texture::Get("data/lab.png");
-	//mesh2 = Mesh::Get("data/sphere.obj");
-	Matrix44 model;
-	//lab = new Lab(model, mesh, texture);
-
-	//planeMesh = Mesh::Get("data/spitfire/spitfire.ASE");
-	//planeTexture = Texture::Get("data/spitfire/spitfire_color_spec.tga");
-
-	//bombMesh = Mesh::Get("data/torpedo_bullet/torpedo.ASE");
-	//bombTexture = Texture::Get("data/torpedo_bullet/torpedo.tga");
-
 	// example of shader loading using the shaders manager
 	shader = Shader::Get("data/shaders/basic.vs", "data/shaders/texture.fs");
 	//hide the cursor
 	SDL_ShowCursor(!mouse_locked); //hide or show the mouse
 }
-
-void RenderMesh(Matrix44 model, Mesh* a_mesh, Texture* tex, Shader* a_shader, Camera* cam) {
-
-	assert(a_mesh != NULL, "mesh in renderMesh was null");
-	if (!a_shader) return;
-
-	//enable shader
-	a_shader->enable();
-
-	//upload uniforms
-	a_shader->setUniform("u_color", Vector4(1, 1, 1, 1));
-	a_shader->setUniform("u_viewprojection", cam->viewprojection_matrix);
-	a_shader->setUniform("u_texture", tex, 0);
-	a_shader->setUniform("u_model", model);
-	a_shader->setUniform("u_time", time);
-
-	a_mesh->render(GL_TRIANGLES);
-
-	//disable shader
-	a_shader->disable();
-
-}
-
-
-
-void RenderIslands() {
-
-	if (shader)
-	{
-		//enable shader
-		shader->enable();
-
-		//upload uniforms
-		shader->setUniform("u_color", Vector4(1, 1, 1, 1));
-		shader->setUniform("u_viewprojection", Game::instance->camera->viewprojection_matrix);
-		shader->setUniform("u_texture", texture, 0);
-		//shader->setUniform("u_model", m);
-		shader->setUniform("u_time", time);
-
-		//float padding = 10000.0f;
-		Matrix44 m;
-		for (size_t i = 0; i < 10; i++) {
-			for (size_t j = 0; j < 10; j++) {
-				Vector3 size = mesh->box.halfsize * 2;
-				m.setTranslation(size.x * i, 0.0f, size.z * j);
-				shader->setUniform("u_model", m);
-				//do the draw call
-				mesh->render(GL_TRIANGLES);
-			}
-		}
-
-		//shader->setUniform("u_model", m2);
-		//mesh2->render(GL_TRIANGLES);
-
-
-		//disable shader
-		shader->disable();
-	}
-}
-
-void RenderPlanes() {
-
-	Camera* cam = Game::instance->camera;
-
-	shader->enable();
-
-	shader->setUniform("u_color", Vector4(1, 1, 1, 1));
-	shader->setUniform("u_viewprojection", cam->viewprojection_matrix);
-	shader->setUniform("u_texture", planeTexture, 0);
-	//enable shader
-	shader->setUniform("u_time", time);
-	for (size_t i = 0; i < planes_width; i++) {
-		for (size_t j = 0; j < planes_heigth; j++)
-		{
-			Matrix44 model;
-			model.translate(i * padding, 0.0f, j * padding);
-
-			Vector3 planePos = model.getTranslation();
-
-
-			Vector3 camPos = cam->eye;
-
-			float dist = planePos.distance(camPos);
-
-			if (dist > no_render_distance) {
-				continue;
-			}
-
-			Mesh* mesh = Mesh::Get("data/spitfire/spitfire_low2.ASE");
-			if (dist < lod_distance) {
-				mesh = Mesh::Get("data/spitfire/spitfire.ASE");
-			}
-			BoundingBox worldAABB = transformBoundingBox(model, mesh->box);
-			if (!cam->testBoxInFrustum(worldAABB.center, worldAABB.halfsize)) {
-				continue;
-			}
-			shader->setUniform("u_model", model);
-			mesh->render(GL_TRIANGLES);
-
-
-		}
-	}
-	//disable shader
-	shader->disable();
-}
-
-/*
-void AddEntityInFront(Camera* cam) {
-	Vector2 mouse = Input::mouse_position;
-	Game* g = Game::instance;
-	Vector3 dir = cam->getRayDirection(mouse.x, mouse.y, g->window_width, g->window_height);
-	Vector3 rayOrigin = cam->eye;
-
-
-	Vector3 spawnPos = RayPlaneCollision(Vector3(), Vector3(0, 1, 0), rayOrigin, dir);
-	Matrix44 model;
-	model.translate(spawnPos.x, spawnPos.y, spawnPos.z);
-	model.scale(3.0f, 3.0f, 3.0f);
-
-	Entity* entity = new Entity();
-	entity->model = model;
-	entity->mesh = Mesh::Get("data/MachineLab/Objetos/chairDesk.obj");
-	entity->texture = Texture::Get("data/MachineLab/Texturas/chairDesk.png");
-	entities.push_back(entity);
-
-*/
 
 boolean RayPickCheck(Camera* cam, Vector3 movement) {
 
@@ -349,40 +119,13 @@ void Game::render(void)
 	glDisable(GL_CULL_FACE);
 
 
-	//RenderMesh(lab->getModel(), lab->getMesh(), lab->getTexture(), shader, camera);
-
-	//lab->Render(shader, camera);
-
-	//if (cameralocked) {
-	//	Vector3 eye = planeModel * Vector3(0.0f, 9.0f, 16.0f);
-	//	Vector3 center = planeModel * Vector3(0.0f, 0.0f, -20.0f);
-	//	Vector3 up = planeModel.rotateVector(Vector3(0.0f, 1.0f, 0.0f));
-	//	camera->lookAt(eye, center, up);
-	//}
-
-	//Matrix44 islandmodel;
-	//RenderMesh(islandmodel, mesh, texture, shader, camera);
-	////RenderMesh(planeModel, planeMesh, planeTexture, shader, camera);
-	////RenderPlanes();
-	//RenderMesh(bombModel, bombMesh, bombTexture, shader, camera);
-
-	//create model matrix for cube
-	//Matrix44 m;
-	//m.rotate(angle * DEG2RAD, Vector3(0, 1, 0));
-
-	/*Matrix44 m2;
-	m2.translate(150, 0, 0);
-	m2.rotateGlobal(angle * DEG2RAD, Vector3(0, 1, 0));
-	m2.scale(40, 40, 40);*/
-
-
-	//RenderIslands();
 
 	for (int r = 0; r < lab->numRooms; r++) {
 		for (size_t i = 0; i < lab->rooms[r]->entities.size(); i++)
 			{
 				Entity* entity = lab->rooms[r]->entities[i];
-				RenderMesh(entity->model, entity->mesh, entity->texture, shader, camera);
+				entity->RenderMesh(shader, camera);
+				//RenderMesh(entity->model, entity->mesh, entity->texture, shader, camera);
 
 			}
 	}
@@ -390,13 +133,11 @@ void Game::render(void)
 	for (size_t i = 0; i < lab->doors.size(); i++)
 	{
 		Door* door = lab->doors[i];
-		RenderMesh(door->model, door->mesh, door->texture, shader, camera);
+		door->RenderMesh(shader,camera);
+		//RenderMesh(door->model, door->mesh, door->texture, shader, camera);
 
 	}
 	
-
-	//mesh->renderBounding(islandmodel);
-
 	//Draw the floor grid
 	drawGrid();
 
@@ -473,16 +214,7 @@ void Game::update(double seconds_elapsed)
 
 	camera->eye.y = isUp ? 0.6 : 0.3;
 
-	/*if (Input::wasKeyPressed(SDL_SCANCODE_F)) {
-		bombAttached = false;
-	}
-	if (bombAttached) {
-		bombModel = bombOffset * planeModel;
-	}
-	else {
-		bombModel.translateGlobal(0.0f,-9.8f * elapsed_time, 0.0f);
-	}*/
-
+	
 	//to navigate with the mouse fixed in the middle
 	if (mouse_locked)
 		Input::centerMouse();

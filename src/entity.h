@@ -1,4 +1,3 @@
-#pragma once
 #include "framework.h"
 #include "mesh.h"
 #include "texture.h"
@@ -10,13 +9,14 @@ public:
 	Matrix44 model;
 	Mesh* mesh;
 	Texture* texture;
+
+	void RenderMesh(Shader* a_shader, Camera* cam);
+
 };
 
-class Door : Entity {
+
+class Door : public Entity {
 public:
-	Matrix44 model;
-	Mesh* mesh;
-	Texture* texture;
 	bool blocked = true;
 	bool isOpen = false;
 	float speed = 0.02f;
@@ -24,21 +24,6 @@ public:
 	void Move(Shader* a_shader, Camera* cam);
 
 };
-
-/*
-class Lab : Entity {
-public:
-
-	Lab(Matrix44 model, Mesh* mesh, Texture* texture);
-	Matrix44 getModel();
-	Mesh* getMesh();
-	Texture* getTexture();
-
-	void Render(Shader* a_shader, Camera* cam);
-
-};*/
-
-
 
 class Room {
 public:
