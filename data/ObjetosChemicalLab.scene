@@ -1,0 +1,167 @@
+Entities 32
+MESH data/ObjetosEscena/Objetos/Impresora.obj 
+TEXTURE data/ObjetosEscena/Texturas/Impresora.png 
+0.000,0.000,2.993 
+0.000,180.000,0.000 
+1.000,1.000,1.000
+
+MESH data/ObjetosEscena/Objetos/Congelador.obj 
+TEXTURE data/ObjetosEscena/Texturas/Congelador.png 
+1.560,0.000,2.696 
+0.000,90.000,0.000 
+1.000,1.000,1.000
+MESH data/ObjetosEscena/Objetos/Congelador.obj 
+TEXTURE data/ObjetosEscena/Texturas/Congelador.png 
+1.560,0.000,2.0385 
+0.000,90.000,0.000 
+1.000,1.000,1.000
+
+MESH data/ObjetosEscena/Objetos/MesaCentro.obj 
+TEXTURE data/ObjetosEscena/Texturas/MesaCentro.png 
+1.689,0.000,1.357
+0.000,90.000,0.000 
+1.000,1.000,1.000
+MESH data/ObjetosEscena/Objetos/MesaCentro.obj 
+TEXTURE data/ObjetosEscena/Texturas/MesaCentro.png 
+1.689,0.000,0.681
+0.000,90.000,0.000 
+1.000,1.000,1.000
+
+MESH data/ObjetosEscena/Objetos/EstanteriaAerea.obj 
+TEXTURE data/ObjetosEscena/Texturas/EstanteriaAerea.png 
+1.662,0.201,1.453
+0.000,90.000,0.000 
+1.000,1.000,1.000
+MESH data/ObjetosEscena/Objetos/EstanteriaAerea.obj 
+TEXTURE data/ObjetosEscena/Texturas/EstanteriaAerea.png 
+1.662,0.201,0.996
+0.000,90.000,0.000 
+1.000,1.000,1.000
+MESH data/ObjetosEscena/Objetos/EstanteriaAerea.obj 
+TEXTURE data/ObjetosEscena/Texturas/EstanteriaAerea.png 
+1.662,0.201,0.538
+0.000,90.000,0.000 
+1.000,1.000,1.000
+MESH data/ObjetosEscena/Objetos/EstanteriaAerea.obj 
+TEXTURE data/ObjetosEscena/Texturas/EstanteriaAerea.png 
+1.662,0.201,0.081
+0.000,90.000,0.000 
+1.000,1.000,1.000
+
+MESH data/ObjetosEscena/Objetos/MesaBidet.obj 
+TEXTURE data/ObjetosEscena/Texturas/MesaBidet.png 
+-0.665,0.000, 0.199
+0.000,0.000,0.000 
+1.000,1.000,1.000
+MESH data/ObjetosEscena/Objetos/MesaBidet.obj 
+TEXTURE data/ObjetosEscena/Texturas/MesaBidet.png 
+-0.992,0.000, 0.199
+0.000,0.000,0.000 
+1.000,1.000,1.000
+MESH data/ObjetosEscena/Objetos/MesaBidet.obj 
+TEXTURE data/ObjetosEscena/Texturas/MesaBidet.png 
+-1.320,0.000, 0.199
+0.000,0.000,0.000 
+1.000,1.000,1.000
+MESH data/ObjetosEscena/Objetos/MesaBidet.obj 
+TEXTURE data/ObjetosEscena/Texturas/MesaBidet.png 
+-1.648,0.000, 0.199
+0.000,0.000,0.000 
+1.000,1.000,1.000
+MESH data/ObjetosEscena/Objetos/MesaBidet.obj 
+TEXTURE data/ObjetosEscena/Texturas/MesaBidet.png 
+-0.665,0.000, 0.000
+0.000,180.000,0.000 
+1.000,1.000,1.000
+MESH data/ObjetosEscena/Objetos/MesaBidet.obj 
+TEXTURE data/ObjetosEscena/Texturas/MesaBidet.png 
+-0.992,0.000, 0.000
+0.000,180.000,0.000 
+1.000,1.000,1.000
+MESH data/ObjetosEscena/Objetos/MesaBidet.obj 
+TEXTURE data/ObjetosEscena/Texturas/MesaBidet.png 
+-1.320,0.000, 0.000
+0.000,180.000,0.000 
+1.000,1.000,1.000
+MESH data/ObjetosEscena/Objetos/MesaBidet.obj 
+TEXTURE data/ObjetosEscena/Texturas/MesaBidet.png 
+-1.648,0.000, 0.000
+0.000,180.000,0.000 
+1.000,1.000,1.000
+MESH data/ObjetosEscena/Objetos/MesaBidet.obj 
+TEXTURE data/ObjetosEscena/Texturas/MesaBidet.png 
+-0.665,0.000, -1.191
+0.000,0.000,0.000 
+1.000,1.000,1.000
+MESH data/ObjetosEscena/Objetos/MesaBidet.obj 
+TEXTURE data/ObjetosEscena/Texturas/MesaBidet.png 
+-0.992,0.000, -1.191
+0.000,0.000,0.000 
+1.000,1.000,1.000
+MESH data/ObjetosEscena/Objetos/MesaBidet.obj 
+TEXTURE data/ObjetosEscena/Texturas/MesaBidet.png 
+-1.320,0.000, -1.191
+0.000,0.000,0.000 
+1.000,1.000,1.000
+MESH data/ObjetosEscena/Objetos/MesaBidet.obj 
+TEXTURE data/ObjetosEscena/Texturas/MesaBidet.png 
+-1.648,0.000, -1.191
+0.000,0.000,0.000 
+1.000,1.000,1.000
+MESH data/ObjetosEscena/Objetos/MesaBidet.obj 
+TEXTURE data/ObjetosEscena/Texturas/MesaBidet.png 
+-0.665,0.000, -1.391
+0.000,180.000,0.000 
+1.000,1.000,1.000
+MESH data/ObjetosEscena/Objetos/MesaBidet.obj 
+TEXTURE data/ObjetosEscena/Texturas/MesaBidet.png 
+-0.992,0.000, -1.391
+0.000,180.000,0.000 
+1.000,1.000,1.000
+MESH data/ObjetosEscena/Objetos/MesaBidet.obj 
+TEXTURE data/ObjetosEscena/Texturas/MesaBidet.png 
+-1.320,0.000, -1.391
+0.000,180.000,0.000 
+1.000,1.000,1.000
+MESH data/ObjetosEscena/Objetos/MesaBidet.obj 
+TEXTURE data/ObjetosEscena/Texturas/MesaBidet.png 
+-1.648,0.000, -1.391
+0.000,180.000,0.000 
+1.000,1.000,1.000
+
+MESH data/ObjetosEscena/Objetos/Pocion3.obj 
+TEXTURE data/ObjetosEscena/Texturas/Pocion3.png 
+1.769,0.470,1.464
+0.000,0.000,0.000 
+1.000,1.000,1.000
+MESH data/ObjetosEscena/Objetos/Pocion3.obj 
+TEXTURE data/ObjetosEscena/Texturas/Pocion3.png 
+-0.867,0.277,0.085
+0.000,0.000,0.000 
+1.000,1.000,1.000
+MESH data/ObjetosEscena/Objetos/Pocion3.obj 
+TEXTURE data/ObjetosEscena/Texturas/Pocion3.png 
+-0.652,0.277, -1.345
+0.000,0.000,0.000 
+1.000,1.000,1.000
+MESH data/ObjetosEscena/Objetos/Pocion3.obj 
+TEXTURE data/ObjetosEscena/Texturas/Pocion3.png 
+-1.026,0.277, -1.267
+0.000,0.000,0.000 
+1.000,1.000,1.000
+
+MESH data/ObjetosEscena/Objetos/Pocion2.obj 
+TEXTURE data/ObjetosEscena/Texturas/Pocion3.png 
+1.769,0.470,1.328
+0.000,0.000,0.000 
+1.000,1.000,1.000
+MESH data/ObjetosEscena/Objetos/Pocion2.obj 
+TEXTURE data/ObjetosEscena/Texturas/Pocion3.png 
+1.769,0.386, 1.227
+0.000,0.000,0.000 
+1.000,1.000,1.000
+MESH data/ObjetosEscena/Objetos/Pocion2.obj 
+TEXTURE data/ObjetosEscena/Texturas/Pocion3.png 
+-0.805,0.277, 0.123
+0.000,0.000,0.000 
+1.000,1.000,1.000

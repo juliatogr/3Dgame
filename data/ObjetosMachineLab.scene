@@ -1,0 +1,81 @@
+Entities 16
+MESH data/MachineLab/Objetos/cables.obj 
+TEXTURE data/MachineLab/Texturas/cables.tga
+-5.070,0.300,-2.850
+0.000,0.000,0.000 
+0.002,0.002,0.002
+MESH data/MachineLab/Objetos/mouse.obj 
+TEXTURE data/MachineLab/Texturas/mouse.tga
+-5.028,0.300,-2.860
+0.000,0.000,0.000 
+0.030,0.030,0.030
+MESH data/MachineLab/Objetos/keyboard.obj 
+TEXTURE data/MachineLab/Texturas/keyboard.tga
+-5.320,0.300,-2.790
+0.000,0.000,0.000 
+0.130,0.130,0.130
+MESH data/MachineLab/Objetos/PC.obj 
+TEXTURE data/MachineLab/Texturas/PC.tga
+-5.070,0.408,-2.840
+0.000,0.000,0.000 
+0.0003,0.0003,0.0003
+MESH data/MachineLab/Objetos/monitors.obj 
+TEXTURE data/MachineLab/Texturas/monitors.tga
+-5.070,0.300,-2.850
+0.000,0.000,0.000 
+0.002,0.002,0.002
+MESH data/MachineLab/Objetos/table.obj 
+TEXTURE data/MachineLab/Texturas/table.tga
+-5.050,0.300,-2.820
+0.000,0.000,0.000 
+0.024,0.024,0.024
+MESH data/MachineLab/Objetos/OfficeChair_Modern.obj 
+TEXTURE data/MachineLab/Texturas/OfficeChair.tga
+-5.300,0.000,-2.480
+0.000,180.000,0.000 
+0.004,0.004,0.004
+MESH data/MachineLab/Objetos/cables.obj 
+TEXTURE data/MachineLab/Texturas/cables.tga
+-5.770,0.300,-2.850
+0.000,0.000,0.000 
+0.002,0.002,0.002
+MESH data/MachineLab/Objetos/mouse.obj 
+TEXTURE data/MachineLab/Texturas/mouse.tga
+-5.728,0.300,-2.860
+0.000,0.000,0.000 
+0.030,0.030,0.030
+MESH data/MachineLab/Objetos/keyboard.obj 
+TEXTURE data/MachineLab/Texturas/keyboard.tga
+-6.020,0.300,-2.790
+0.000,0.000,0.000 
+0.130,0.130,0.130
+MESH data/MachineLab/Objetos/PC.obj 
+TEXTURE data/MachineLab/Texturas/PC.tga
+-5.770,0.408,-2.840
+0.000,0.000,0.000 
+0.0003,0.0003,0.0003
+MESH data/MachineLab/Objetos/monitors.obj 
+TEXTURE data/MachineLab/Texturas/monitors.tga
+-5.770,0.300,-2.850
+0.000,0.000,0.000 
+0.002,0.002,0.002
+MESH data/MachineLab/Objetos/table.obj 
+TEXTURE data/MachineLab/Texturas/table.tga
+-5.750,0.300,-2.820
+0.000,0.000,0.000 
+0.024,0.024,0.024
+MESH data/MachineLab/Objetos/OfficeChair_Modern.obj 
+TEXTURE data/MachineLab/Texturas/OfficeChair.tga
+-6.000,0.000,-2.480
+0.000,180.000,0.000 
+0.004,0.004,0.004
+MESH data/MachineLab/Objetos/cutterMachine.obj 
+TEXTURE data/MachineLab/Texturas/cutterMachine.tga
+-4.500,0.000,-2.580
+0.000,270.000,0.000 
+0.030,0.030,0.030
+MESH data/MachineLab/Objetos/OfficeChair_Modern.obj 
+TEXTURE data/MachineLab/Texturas/OfficeChair.tga
+-4.410,0.000,-2.080
+0.000,230.000,0.000 
+0.004,0.004,0.004
