@@ -71,7 +71,7 @@ Game::Game(int window_width, int window_height, SDL_Window* window)
 
 	camera->setPerspective(35.f, window_width / (float)window_height, 0.1f, 100000.f); //set the projection, we want to be perspective
 
-	player.pos = Vector3(-6.5f, 0.0f, -8.8f);
+	player.pos = Vector3(-1.f, 0.0f, -8.8f);
 	//load one texture without using the Texture Manager (Texture::Get would use the manager)
 
 	lab = new Lab();
