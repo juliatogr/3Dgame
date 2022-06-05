@@ -17,6 +17,8 @@ public:
 
 class Door : public Entity {
 public:
+
+
 	bool blocked = true;
 	bool isOpen = false;
 	float speed = 0.02f;
