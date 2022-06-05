@@ -41,7 +41,6 @@ struct sPlayer {
 	Vector3 pos;
 	float yaw;
 	float pitch;
-	bool isUp = true;
 };
 
 sPlayer player;
@@ -70,7 +69,7 @@ Game::Game(int window_width, int window_height, SDL_Window* window)
 	camera->lookAt(Vector3(-6.5f, 0.3f, -8.8f), Vector3(-6.5f, 0.6f, -6.0f), Vector3(0.f, 1.f, 0.f)); //position the camera and point to 0,0,0
 	camera->setPerspective(35.f, window_width / (float)window_height, 0.1f, 100000.f); //set the projection, we want to be perspective
 
-	player.pos = Vector3(-6.5f, 0.3f, -8.8f);
+	player.pos = Vector3(-6.5f, 0.0f, -8.8f);
 	//load one texture without using the Texture Manager (Texture::Get would use the manager)
 
 	lab = new Lab();
@@ -163,7 +162,7 @@ void Game::render(void)
 	Matrix44 camModel = playerModel;
 	camModel.rotate(player.pitch * DEG2RAD, Vector3(1, 0, 0));
 
-	Vector3 eye = playerModel * Vector3(0, 0.3, 0);
+	Vector3 eye = playerModel * Vector3(0, 0.6, 0);
 	Vector3 center = eye + camModel.rotateVector(Vector3(0, 0, -1));
 	Vector3 up = camModel.rotateVector(Vector3(0, 1, 0));
 
@@ -238,9 +237,8 @@ void Game::update(double seconds_elapsed)
 	if (Input::isKeyPressed(SDL_SCANCODE_A)) playerVel = playerVel - (right * playerSpeed);
 
 	Vector3 nextPos = player.pos + playerVel;
-	nextPos.y = player.isUp ? 0.3 : 0.2;
 	//calculamos el centro de la esfera de colisión del player elevandola hasta la cintura
-	Vector3 character_center = nextPos + Vector3(0, 0.1, 0);
+	Vector3 character_center = nextPos + Vector3(0, 0.4, 0);
 	//para cada objecto de la escena...
 
 	for (int r = 0; r < 3; r++) {
@@ -250,7 +248,7 @@ void Game::update(double seconds_elapsed)
 		Vector3 collnorm;
 
 		//comprobamos si colisiona el objeto con la esfera (radio 3)
-		if (!entity->mesh->testSphereCollision(entity->model, character_center, 0.35f, coll, collnorm))
+		if (!entity->mesh->testSphereCollision(entity->model, character_center, 0.32f, coll, collnorm))
 			continue; //si no colisiona, pasamos al siguiente objeto
 
 		//si la esfera está colisionando muevela a su posicion anterior alejandola del objeto
@@ -280,7 +278,7 @@ void Game::update(double seconds_elapsed)
 
 		}
 	}
-	nextPos.y = player.isUp ? 0.3 : 0.2;
+	nextPos.y = 0.0;
 
 	player.pos = nextPos;
 }
@@ -306,7 +304,6 @@ void Game::onKeyUp(SDL_KeyboardEvent event)
 {
 	switch (event.keysym.sym)
 	{
-	case SDLK_LCTRL: player.isUp = !player.isUp; break;
 	} 
 }
 
