@@ -1,111 +1,126 @@
-Entities 22
+Entities 25
 MESH data/Estructuras/Floors/Floor1.obj 
 TEXTURE data/Estructuras/Floors/Floor1.tga 
--5.820,0.000,-6.100 
+-0.003,0.000,-8.262 
 0.000,0.000,0.000
 1.000,1.000,1.000
 MESH data/Estructuras/Floors/Floor1.obj 
 TEXTURE data/Estructuras/Floors/Floor1.tga 
--7.040,0.000,-6.100 
+-1.223,0.000,-8.262 
 0.000,180.000,0.000 
 1.000,1.000,1.000
 MESH data/Estructuras/Floors/Floor1.obj 
 TEXTURE data/Estructuras/Floors/Floor1.tga 
--5.82,0.000,-4.880 
+-0.003,0.000,-7.042 
 0.000,180.000,0.000 
 1.000,1.000,1.000
 MESH data/Estructuras/Floors/Floor1.obj 
 TEXTURE data/Estructuras/Floors/Floor1.tga 
--7.040,0.000,-4.880 
+-1.223,0.000,-7.042 
 0.000,180.000,0.000 
 1.000,1.000,1.000
 MESH data/Estructuras/Floors/Floor1.obj 
 TEXTURE data/Estructuras/Floors/Floor1.tga 
--5.820,0.000,-7.320 
+-0.003,0.000,-9.482 
 0.000,180.000,0.000 
 1.000,1.000,1.000
 MESH data/Estructuras/Floors/Floor1.obj 
 TEXTURE data/Estructuras/Floors/Floor1.tga 
--7.040,0.000,-7.320
+-1.223,0.000,-9.482
 0.000,180.000,0.000
 1.000,1.000,1.000
 MESH data/Estructuras/Floors/Floor1.obj 
 TEXTURE data/Estructuras/Floors/Floor1.tga 
--5.82,0.000,-3.660 
+-0.003,0.000,-5.822 
 0.000,180.000,0.000 
 1.000,1.000,1.000
 MESH data/Estructuras/Floors/Floor1.obj 
 TEXTURE data/Estructuras/Floors/Floor1.tga 
--7.040,0.000,-3.660 
+-1.223,0.000,-5.822 
 0.000,180.000,0.000 
 1.000,1.000,1.000
 MESH data/Estructuras/Floors/Floor1.obj 
 TEXTURE data/Estructuras/Floors/Floor1.tga 
--5.820,0.000,-8.540 
+-0.003,0.000,-10.702 
 0.000,180.000,0.000 
 1.000,1.000,1.000
 MESH data/Estructuras/Floors/Floor1.obj 
 TEXTURE data/Estructuras/Floors/Floor1.tga 
--7.040,0.000,-8.540 
+-1.223,0.000,-10.702 
 0.000,180.000,0.000 
 1.000,1.000,1.000
 MESH data/Estructuras/Walls/Wall1_2.obj 
 TEXTURE data/Estructuras/Walls/Wall2.tga 
--5.205,0.000,-8.540
+0.607,0.000,-10.702
 0.000,270.000,0.000 
 1.000,1.000,1.000
 MESH data/Estructuras/Walls/Wall1_2.obj 
 TEXTURE data/Estructuras/Walls/Wall2.tga 
--5.205,0.000,-7.320 
+0.607,0.000,-9.482 
 0.000,270.000,0.000 
 1.000,1.000,1.000
 MESH data/Estructuras/Walls/Wall1_2.obj 
 TEXTURE data/Estructuras/Walls/Wall2.tga 
--5.205,0.000,-6.100 
+0.607,0.000,-8.262 
 0.000,270.000,0.000 
 1.000,1.000,1.000
 MESH data/Estructuras/Walls/Wall1_2.obj 
 TEXTURE data/Estructuras/Walls/Wall2.tga 
--5.205,0.000,-4.880 
+0.607,0.000,-7.042 
 0.000,270.000,0.000 
 1.000,1.000,1.000
 MESH data/Estructuras/Walls/Wall1_2.obj 
 TEXTURE data/Estructuras/Walls/Wall2.tga 
--5.205,0.000,-3.660 
+0.607,0.000,-5.822 
 0.000,270.000,0.000 
 1.000,1.000,1.000
 MESH data/Estructuras/Walls/Wall1_2.obj 
 TEXTURE data/Estructuras/Walls/Wall2.tga 
--7.640,0.000,-8.540 
+-1.823,0.000,-10.702 
 0.000,270.000,0.000 
 1.000,1.000,1.000
 MESH data/Estructuras/Walls/Wall1_2.obj 
 TEXTURE data/Estructuras/Walls/Wall2.tga 
--7.640,0.000,-6.100 
+-1.823,0.000,-8.262 
 0.000,270.000,0.000 
 1.000,1.000,1.000
 MESH data/Estructuras/Walls/Wall1_2.obj 
 TEXTURE data/Estructuras/Walls/Wall2.tga 
--7.640,0.000,-4.880 
+-1.823,0.000,-7.042 
 0.000,270.000,0.000 
 1.000,1.000,1.000
 MESH data/Estructuras/Walls/Wall1_2.obj 
 TEXTURE data/Estructuras/Walls/Wall2.tga 
--7.640,0.000,-3.660 
+-1.823,0.000,-5.822
 0.000,270.000,0.000 
 1.000,1.000,1.000
 MESH data/Estructuras/Walls/Wall1_2.obj 
 TEXTURE data/Estructuras/Walls/Wall2.tga 
--7.640,0.000,-7.320 
+-1.823,0.000,-9.482
 0.000,270.000,0.000 
 1.000,1.000,1.000
 MESH data/Estructuras/Walls/Wall1_2.obj 
 TEXTURE data/Estructuras/Walls/Wall2.tga 
--5.82,0.000,-9.150 
+-0.003,0.000,-11.312
 0.000,180.000,0.000 
 1.000,1.000,1.000
 MESH data/Estructuras/Walls/Wall1_2.obj 
 TEXTURE data/Estructuras/Walls/Wall2.tga 
--7.040,0.000,-9.150 
+-1.223,0.000,-11.312 
 0.000,180.000,0.000 
+1.000,1.000,1.000
+MESH data/Estructuras/Walls/Wall1_2.obj 
+TEXTURE data/Estructuras/Walls/Wall2_Letter.tga 
+-0.003,0.000,-5.212
+0.000,180.000,0.000 
+1.000,1.000,1.000
+MESH data/Estructuras/WallDoors/WallDoor1.obj 
+TEXTURE data/Estructuras/WallDoors/WallDoor2.tga
+-1.223,0.000,-5.212 
+0.000,180.000,0.000 
+1.000,1.000,1.000
+MESH data/Estructuras/Pasillos/Pasillo.obj 
+TEXTURE data/Estructuras/Pasillos/Pasillo.tga 
+-1.220,0.000,-4.122 
+0.000,0.000,0.000 
 1.000,1.000,1.000

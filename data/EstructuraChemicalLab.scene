@@ -99,8 +99,8 @@ TEXTURE data/Estructuras/Walls/Wall1.tga
 1.220,0.000,-3.050 
 0.000,0.000,0.000 
 1.000,1.000,1.000
-MESH data/Estructuras/Walls/Wall1.obj 
-TEXTURE data/Estructuras/Walls/Wall1.tga 
+MESH data/Estructuras/WallDoors/WallDoor1.obj 
+TEXTURE data/Estructuras/WallDoors/WallDoor1.tga 
 -1.220,0.000,-3.050 
 0.000,0.000,0.000 
 1.000,1.000,1.000

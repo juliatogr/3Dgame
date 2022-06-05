@@ -41,6 +41,7 @@ public:
 		CHEM = 2
 	};
 	int numRooms = 3;
+	int numDoors = 4;
 
 	std::vector<Room*> rooms;
 	std::vector<Door*> doors;

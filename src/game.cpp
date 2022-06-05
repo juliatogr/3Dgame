@@ -66,7 +66,9 @@ Game::Game(int window_width, int window_height, SDL_Window* window)
 	//create our camera
 	camera = new Camera();
 	
-	camera->lookAt(Vector3(-6.5f, 0.3f, -8.8f), Vector3(-6.5f, 0.6f, -6.0f), Vector3(0.f, 1.f, 0.f)); //position the camera and point to 0,0,0
+
+	camera->lookAt(Vector3(-1.f, 0.6f, -8.8f), Vector3(-6.5f, 0.6f, -6.0f), Vector3(0.f, 1.f, 0.f)); //position the camera and point to 0,0,0
+
 	camera->setPerspective(35.f, window_width / (float)window_height, 0.1f, 100000.f); //set the projection, we want to be perspective
 
 	player.pos = Vector3(-6.5f, 0.0f, -8.8f);
@@ -237,7 +239,7 @@ void Game::update(double seconds_elapsed)
 	if (Input::isKeyPressed(SDL_SCANCODE_A)) playerVel = playerVel - (right * playerSpeed);
 
 	Vector3 nextPos = player.pos + playerVel;
-	//calculamos el centro de la esfera de colisión del player elevandola hasta la cintura
+	//calculamos el centro de la esfera de colisiÃ³n del player elevandola hasta la cintura
 	Vector3 character_center = nextPos + Vector3(0, 0.4, 0);
 	//para cada objecto de la escena...
 
@@ -251,7 +253,7 @@ void Game::update(double seconds_elapsed)
 		if (!entity->mesh->testSphereCollision(entity->model, character_center, 0.32f, coll, collnorm))
 			continue; //si no colisiona, pasamos al siguiente objeto
 
-		//si la esfera está colisionando muevela a su posicion anterior alejandola del objeto
+		//si la esfera estÃ¡ colisionando muevela a su posicion anterior alejandola del objeto
 		Vector3 push_away = normalize(coll - character_center) * elapsed_time;
 
 		nextPos = player.pos - push_away; //move to previous pos but a little bit further
@@ -269,7 +271,7 @@ void Game::update(double seconds_elapsed)
 			if (!entity->mesh->testSphereCollision(entity->model, character_center, 0.32f, coll, collnorm)) {
 				continue;
 			}
-			//si la esfera está colisionando muevela a su posicion anterior alejandola del objeto
+			//si la esfera estÃ¡ colisionando muevela a su posicion anterior alejandola del objeto
 			Vector3 push_away = normalize(coll - character_center) * elapsed_time;
 
 			nextPos = player.pos - push_away; //move to previous pos but a little bit further
@@ -294,9 +296,13 @@ void Game::onKeyDown(SDL_KeyboardEvent event)
 	case SDLK_3: lab->doors[0]->Move(shader,camera); break;
 	case SDLK_4: lab->doors[1]->Move(shader, camera); break;
 	case SDLK_5: lab->doors[2]->Move(shader, camera); break;
-	case SDLK_6: RayPick(camera); break; 
+
+	case SDLK_6: lab->doors[3]->Move(shader, camera); break;
+
+	case SDLK_7: RayPick(camera); break; 
 	case SDLK_KP_PLUS: RotateSelected(10.0f); break;
 	case SDLK_KP_MINUS: RotateSelected(10.0f); break;
+
 	}
 }
 
