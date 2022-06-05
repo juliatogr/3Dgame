@@ -27,7 +27,6 @@ void Entity::RenderMesh(Shader* a_shader, Camera* cam) {
 
 	//disable shader
 	a_shader->disable();
-
 }
 
 std::string ReadMeshPath(std::stringstream& ss) {

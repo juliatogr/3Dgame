@@ -4,7 +4,7 @@ TEXTURE data/MachineLab/Texturas/table.tga
 0.187,0.300,-3.280
 0.000,0.000,0.000 
 0.024,0.024,0.024
-MESH data/MachineLab/Objetos/LegalPad.obj 
+MESH data/MachineLab/Objetos/hallNote.obj 
 TEXTURE data/MachineLab/Texturas/hallNote.tga
 -0.183,0.300,-3.350
 0.000,180.000,0.000
