@@ -17,7 +17,6 @@ bool test = true;
 Shader* shader = NULL;
 
 bool cameralocked = false;
-bool isUp = true;
 
 Animation* anim = NULL;
 float angle = 0;
@@ -25,6 +24,7 @@ float mouse_speed = 100.0f;
 FBO* fbo = NULL;
 
 Game* Game::instance = NULL;
+Entity* selectedEntity = NULL;
 
 const int planes_width = 200;
 const int planes_heigth = 200;
@@ -35,10 +35,16 @@ float no_render_distance = 1000.0f;
 
 //SDL_GetTicks();
 
-
-
 Lab* lab;
 
+struct sPlayer {
+	Vector3 pos;
+	float yaw;
+	float pitch;
+	bool isUp = true;
+};
+
+sPlayer player;
 
 Game::Game(int window_width, int window_height, SDL_Window* window)
 {
@@ -61,9 +67,10 @@ Game::Game(int window_width, int window_height, SDL_Window* window)
 	//create our camera
 	camera = new Camera();
 	
-	camera->lookAt(Vector3(-6.5f, 0.6f, -8.8f), Vector3(-6.5f, 0.6f, -6.0f), Vector3(0.f, 1.f, 0.f)); //position the camera and point to 0,0,0
+	camera->lookAt(Vector3(-6.5f, 0.3f, -8.8f), Vector3(-6.5f, 0.6f, -6.0f), Vector3(0.f, 1.f, 0.f)); //position the camera and point to 0,0,0
 	camera->setPerspective(35.f, window_width / (float)window_height, 0.1f, 100000.f); //set the projection, we want to be perspective
 
+	player.pos = Vector3(-6.5f, 0.3f, -8.8f);
 	//load one texture without using the Texture Manager (Texture::Get would use the manager)
 
 	lab = new Lab();
@@ -90,13 +97,44 @@ boolean RayPickCheck(Camera* cam, Vector3 movement) {
 			Vector3 pos;
 			Vector3 normal;
 			if (entity->mesh->testRayCollision(entity->model, rayOrigin, dir, pos, normal, 0.3)) {
-
+				std::cout << "Col" << std::endl;
 				hasCol = true;
 			}
 		}
 	}
 	
 	return hasCol;
+}
+
+//RayPickCheck v2
+void RayPick(Camera* cam) {
+
+	Vector2 mouse = Input::mouse_position;
+	Game* g = Game::instance;
+	Vector3 dir = cam->getRayDirection(mouse.x, mouse.y, g->window_width, g->window_height);
+	Vector3 rayOrigin = cam->eye;
+
+	for (int r = 0; r < lab->numRooms; r++) {
+		for (size_t i = 0; i < lab->rooms[r]->entities.size(); i++) {
+			Entity* entity = lab->rooms[r]->entities[i];
+			Vector3 pos;
+			Vector3 normal;
+			if (entity->mesh->testRayCollision(entity->model, rayOrigin, dir, pos, normal)) {
+
+				selectedEntity = entity;
+				break;
+			}
+		}
+	}
+}
+
+
+void RotateSelected(float angleDegrees) {
+	if (selectedEntity == NULL) {
+		return;
+	}
+	
+	selectedEntity->model.rotate(angleDegrees * DEG2RAD, Vector3(0,1,0));
 }
 
 
@@ -118,7 +156,18 @@ void Game::render(void)
 	glEnable(GL_DEPTH_TEST);
 	glDisable(GL_CULL_FACE);
 
+	Matrix44 playerModel;
+	playerModel.translate(player.pos.x, player.pos.y, player.pos.z);
+	playerModel.rotate(player.yaw * DEG2RAD, Vector3(0, 1, 0));
 
+	Matrix44 camModel = playerModel;
+	camModel.rotate(player.pitch * DEG2RAD, Vector3(1, 0, 0));
+
+	Vector3 eye = playerModel * Vector3(0, 0.3, 0);
+	Vector3 center = eye + camModel.rotateVector(Vector3(0, 0, -1));
+	Vector3 up = camModel.rotateVector(Vector3(0, 1, 0));
+
+	camera->lookAt(eye, center, up);
 
 	for (int r = 0; r < lab->numRooms; r++) {
 		for (size_t i = 0; i < lab->rooms[r]->entities.size(); i++)
@@ -168,42 +217,72 @@ void Game::update(double seconds_elapsed)
 	if (Input::wasKeyPressed(SDL_SCANCODE_TAB)) {
 		cameralocked = !cameralocked;
 	}
-	if (cameralocked) {
-		float planeSpeed = 50.0f * elapsed_time;
-		float rotSpeed = 90.0f * DEG2RAD * elapsed_time;
+	float playerSpeed = 5.0f * elapsed_time;
+	float rotSpeed = 200.0f * DEG2RAD * elapsed_time;
 
+	player.yaw += -Input::mouse_delta.x * 10.0f * elapsed_time;
+	player.pitch += -Input::mouse_delta.y * 10.0f * elapsed_time;
+	Input::centerMouse();
+	SDL_ShowCursor(false);
+
+	Matrix44 playerRotation;
+	playerRotation.rotate(player.yaw * DEG2RAD, Vector3(0, 1, 0));
+
+	Vector3 forward = playerRotation.rotateVector(Vector3(0, 0, 1));
+	Vector3 right = playerRotation.rotateVector(Vector3(1, 0, 0));
+	Vector3 playerVel;
+
+	if (Input::isKeyPressed(SDL_SCANCODE_S)) playerVel = playerVel + (forward * playerSpeed);
+	if (Input::isKeyPressed(SDL_SCANCODE_W)) playerVel = playerVel - (forward * playerSpeed);
+	if (Input::isKeyPressed(SDL_SCANCODE_D)) playerVel = playerVel + (right * playerSpeed);
+	if (Input::isKeyPressed(SDL_SCANCODE_A)) playerVel = playerVel - (right * playerSpeed);
+
+	Vector3 nextPos = player.pos + playerVel;
+	nextPos.y = player.isUp ? 0.3 : 0.2;
+	//calculamos el centro de la esfera de colisión del player elevandola hasta la cintura
+	Vector3 character_center = nextPos + Vector3(0, 0.1, 0);
+	//para cada objecto de la escena...
+
+	for (int r = 0; r < 3; r++) {
+		Entity* entity = lab->doors[r];
+
+		Vector3 coll;
+		Vector3 collnorm;
+
+		//comprobamos si colisiona el objeto con la esfera (radio 3)
+		if (!entity->mesh->testSphereCollision(entity->model, character_center, 0.35f, coll, collnorm))
+			continue; //si no colisiona, pasamos al siguiente objeto
+
+		//si la esfera está colisionando muevela a su posicion anterior alejandola del objeto
+		Vector3 push_away = normalize(coll - character_center) * elapsed_time;
+
+		nextPos = player.pos - push_away; //move to previous pos but a little bit further
+		//reflejamos el vector velocidad para que de la sensacion de que rebota en la pared
+		//velocity = reflect(velocity, collnorm) * 0.95;
 	}
-	else {
-		//async input to move the camera around
-		Vector3 movement;
 
-		if (Input::isKeyPressed(SDL_SCANCODE_LSHIFT)) speed *= 5; //move faster with left shift
-		if (Input::isKeyPressed(SDL_SCANCODE_W) || Input::isKeyPressed(SDL_SCANCODE_UP)) movement.z = 1.0f;
-		if (Input::isKeyPressed(SDL_SCANCODE_S) || Input::isKeyPressed(SDL_SCANCODE_DOWN)) movement.z = -1.0f;
-		if (Input::isKeyPressed(SDL_SCANCODE_A) || Input::isKeyPressed(SDL_SCANCODE_LEFT)) movement.x = 1.0f;
-		if (Input::isKeyPressed(SDL_SCANCODE_D) || Input::isKeyPressed(SDL_SCANCODE_RIGHT)) movement.x = -1.0f;
-		if (Input::isKeyPressed(SDL_SCANCODE_E)) movement.y = -1.0f;
-		if (Input::isKeyPressed(SDL_SCANCODE_Q)) movement.y = 1.0f;
+	for (int r = 0; r < lab->numRooms; r++) {
+		for (size_t i = 0; i < lab->rooms[r]->entities.size(); i++) {
+			Entity* entity = lab->rooms[r]->entities[i];
 
-		Camera* aux = new Camera();
-		aux->eye = camera->eye;
-		aux->far_plane = camera->far_plane;
-		aux->center= camera->center;
-		aux->fov = camera->fov;
-		aux->move(Vector3(movement.x, movement.y, movement.z) * speed);
+			Vector3 coll;
+			Vector3 collnorm;
 
-		if (!RayPickCheck(camera, movement)) {
-			camera->move(Vector3(movement.x, movement.y, movement.z) * speed);
+			if (!entity->mesh->testSphereCollision(entity->model, character_center, 0.32f, coll, collnorm)) {
+				continue;
+			}
+			//si la esfera está colisionando muevela a su posicion anterior alejandola del objeto
+			Vector3 push_away = normalize(coll - character_center) * elapsed_time;
+
+			nextPos = player.pos - push_away; //move to previous pos but a little bit further
+			//reflejamos el vector velocidad para que de la sensacion de que rebota en la pared
+			//velocity = reflect(velocity, collnorm) * 0.95;
+
 		}
-		
 	}
+	nextPos.y = player.isUp ? 0.3 : 0.2;
 
-	camera->eye.y = isUp ? 0.6 : 0.3;
-
-	
-	//to navigate with the mouse fixed in the middle
-	if (mouse_locked)
-		Input::centerMouse();
+	player.pos = nextPos;
 }
 
 //Keyboard event handler (sync input)
@@ -217,6 +296,9 @@ void Game::onKeyDown(SDL_KeyboardEvent event)
 	case SDLK_3: lab->doors[0]->Move(shader,camera); break;
 	case SDLK_4: lab->doors[1]->Move(shader, camera); break;
 	case SDLK_5: lab->doors[2]->Move(shader, camera); break;
+	case SDLK_6: RayPick(camera); break; 
+	case SDLK_KP_PLUS: RotateSelected(10.0f); break;
+	case SDLK_KP_MINUS: RotateSelected(10.0f); break;
 	}
 }
 
@@ -224,7 +306,7 @@ void Game::onKeyUp(SDL_KeyboardEvent event)
 {
 	switch (event.keysym.sym)
 	{
-	case SDLK_LCTRL: isUp = !isUp; break;
+	case SDLK_LCTRL: player.isUp = !player.isUp; break;
 	} 
 }
 
