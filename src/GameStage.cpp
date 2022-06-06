@@ -92,6 +92,62 @@ void GameStage::Colision(double seconds_elapsed, boolean cameralocked, float ela
 	//	}
 
 	//}
+	// 
+	
+	
+
+}
+
+STAGE_ID PlayStage::GetId()
+{
+	return STAGE_ID::PLAY;
+}
+
+PlayStage::PlayStage()
+{
+	this->lab = new Lab();
+	this->player = new Player();
+
+}
+
+
+void PlayStage::Render(Shader* a_shader, Camera* cam)
+{
+	Matrix44 playerModel;
+	playerModel.translate(this->player->pos.x, this->player->pos.y, this->player->pos.z);
+	playerModel.rotate(this->player->yaw * DEG2RAD, Vector3(0, 1, 0));
+
+	Matrix44 camModel = playerModel;
+	camModel.rotate(this->player->pitch * DEG2RAD, Vector3(1, 0, 0));
+
+	Vector3 eye = playerModel * Vector3(0, 0.6, 0);
+	Vector3 center = eye + camModel.rotateVector(Vector3(0, 0, -1));
+	Vector3 up = camModel.rotateVector(Vector3(0, 1, 0));
+
+	cam->lookAt(eye, center, up);
+	
+
+	for (int r = 0; r < this->lab->numRooms; r++) {
+		for (size_t i = 0; i < this->lab->rooms[r]->entities.size(); i++)
+		{
+			Entity* entity = this->lab->rooms[r]->entities[i];
+			entity->RenderMesh(a_shader, cam);
+			//RenderMesh(entity->model, entity->mesh, entity->texture, shader, camera);
+
+		}
+	}
+
+	for (size_t i = 0; i < this->lab->doors.size(); i++)
+	{
+		Door* door = this->lab->doors[i];
+		door->RenderMesh(a_shader, cam);
+		//RenderMesh(door->model, door->mesh, door->texture, shader, camera);
+
+	}
+}
+
+void PlayStage::Update(double seconds_elapsed, boolean cameralocked, float elapsed_time, float speed, Camera* camera, bool mouse_locked)
+{
 	//mouse input to rotate the cam
 	if ((Input::mouse_state & SDL_BUTTON_LEFT) || mouse_locked) //is left button pressed?
 	{
@@ -103,8 +159,6 @@ void GameStage::Colision(double seconds_elapsed, boolean cameralocked, float ela
 	if (Input::wasKeyPressed(SDL_SCANCODE_TAB)) {
 		cameralocked = !cameralocked;
 	}
-
-	
 	float playerSpeed = 5.0f * elapsed_time;
 	float rotSpeed = 200.0f * DEG2RAD * elapsed_time;
 
@@ -132,6 +186,8 @@ void GameStage::Colision(double seconds_elapsed, boolean cameralocked, float ela
 	//calculamos el centro de la esfera de colisión del player elevandola hasta la cintura
 	Vector3 character_center = nextPos + Vector3(0, 0.4, 0);
 	//para cada objecto de la escena...
+
+
 
 	for (int r = 0; r < 3; r++) {
 		Entity* entity = this->lab->doors[r];
@@ -174,58 +230,7 @@ void GameStage::Colision(double seconds_elapsed, boolean cameralocked, float ela
 
 	this->player->pos = nextPos;
 
-}
-
-STAGE_ID PlayStage::GetId()
-{
-	return STAGE_ID::PLAY;
-}
-
-PlayStage::PlayStage()
-{
-	this->lab = new Lab();
-	this->player = new Player();
-
-}
-
-
-void PlayStage::Render(Shader* a_shader, Camera* cam)
-{
-	Matrix44 playerModel = this->player->model;
-	playerModel.translate(this->player->pos.x, this->player->pos.y, this->player->pos.z);
-	playerModel.rotate(this->player->yaw * DEG2RAD, Vector3(0, 1, 0));
-
-	Matrix44 camModel = playerModel;
-	camModel.rotate(this->player->pitch * DEG2RAD, Vector3(1, 0, 0));
-
-	Vector3 eye = playerModel * Vector3(0, 0.6, 0);
-	Vector3 center = eye + camModel.rotateVector(Vector3(0, 0, -1));
-	Vector3 up = camModel.rotateVector(Vector3(0, 1, 0));
-
-	cam->lookAt(eye, center, up);
-
-	for (int r = 0; r < this->lab->numRooms; r++) {
-		for (size_t i = 0; i < this->lab->rooms[r]->entities.size(); i++)
-		{
-			Entity* entity = this->lab->rooms[r]->entities[i];
-			entity->RenderMesh(a_shader, cam);
-			//RenderMesh(entity->model, entity->mesh, entity->texture, shader, camera);
-
-		}
-	}
-
-	for (size_t i = 0; i < this->lab->doors.size(); i++)
-	{
-		Door* door = this->lab->doors[i];
-		door->RenderMesh(a_shader, cam);
-		//RenderMesh(door->model, door->mesh, door->texture, shader, camera);
-
-	}
-}
-
-void PlayStage::Update(double seconds_elapsed, boolean cameralocked, float elapsed_time, float speed, Camera* camera, bool mouse_locked)
-{
-	this->Colision(seconds_elapsed, cameralocked, elapsed_time, speed, camera, mouse_locked);
+	//this->Colision(seconds_elapsed, cameralocked, elapsed_time, speed, camera, mouse_locked);
 }
 
 STAGE_ID IntroStage::GetId()

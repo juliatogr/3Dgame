@@ -186,9 +186,11 @@ void Game::render(void)
 	glEnable(GL_DEPTH_TEST);
 	glDisable(GL_CULL_FACE);
 
-	
-	GetCurrentStage()->Render(shader, camera);
+	if (GetCurrentStage()->GetId() == PLAY){
+		
 
+		GetCurrentStage()->Render(shader, camera);
+	}
 	//Draw the floor grid
 	drawGrid();
 
@@ -287,9 +289,10 @@ void Game::update(double seconds_elapsed)
 	//nextPos.y = 0.0;
 
 	//player.pos = nextPos;
+	if (GetCurrentStage()->GetId() == PLAY) {
 
-	GetCurrentStage()->Update(seconds_elapsed, cameralocked, elapsed_time, speed, camera, mouse_locked);
-
+		GetCurrentStage()->Update(seconds_elapsed, cameralocked, elapsed_time, speed, camera, mouse_locked);
+	}
 }
 
 //Keyboard event handler (sync input)
