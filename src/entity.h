@@ -1,3 +1,4 @@
+#pragma once
 #include "framework.h"
 #include "mesh.h"
 #include "texture.h"

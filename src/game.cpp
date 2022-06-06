@@ -10,6 +10,8 @@
 #include <cmath>
 
 #include "entity.h"
+#include "GameStage.h"
+#include "Player.h"
 
 bool test = true;
 
@@ -33,17 +35,43 @@ float padding = 20.0f;
 float lod_distance = 200.0f;
 float no_render_distance = 1000.0f;
 
+/*Stages*/
+std::vector<GameStage*> stages;
+STAGE_ID currentStage = STAGE_ID::PLAY;
+
+
+GameStage* GetStage(STAGE_ID id) {
+	return stages[(int)id];
+}
+
+GameStage* GetCurrentStage() {
+	return GetStage(currentStage);
+}
+
+void SetStage(STAGE_ID id) {
+	currentStage = id;
+}
+
+void InitStages() {
+	stages.reserve(5);
+	//stages.size();//0
+	//stages.capacity();//4
+	stages.push_back(new IntroStage());
+	stages.push_back(new TutorialStage());
+	stages.push_back(new PlayStage());
+	stages.push_back(new EndStage());
+	stages.push_back(new WinStage());
+
+	//stages.size();//4
+
+}
+
 //SDL_GetTicks();
 
-Lab* lab;
+//Lab* lab;
 
-struct sPlayer {
-	Vector3 pos;
-	float yaw;
-	float pitch;
-};
+Player player;
 
-sPlayer player;
 
 Game::Game(int window_width, int window_height, SDL_Window* window)
 {
@@ -74,13 +102,16 @@ Game::Game(int window_width, int window_height, SDL_Window* window)
 	player.pos = Vector3(-1.f, 0.0f, -8.8f);
 	//load one texture without using the Texture Manager (Texture::Get would use the manager)
 
-	lab = new Lab();
+	//lab = new Lab();
+	//init
+	InitStages();
+	
 	// example of shader loading using the shaders manager
 	shader = Shader::Get("data/shaders/basic.vs", "data/shaders/texture.fs");
 	//hide the cursor
 	SDL_ShowCursor(!mouse_locked); //hide or show the mouse
 }
-
+/*
 boolean RayPickCheck(Camera* cam, Vector3 movement) {
 
 	boolean hasCol = false;
@@ -105,8 +136,8 @@ boolean RayPickCheck(Camera* cam, Vector3 movement) {
 	}
 	
 	return hasCol;
-}
-
+}*/
+/*
 //RayPickCheck v2
 void RayPick(Camera* cam) {
 
@@ -136,7 +167,7 @@ void RotateSelected(float angleDegrees) {
 	}
 	
 	selectedEntity->model.rotate(angleDegrees * DEG2RAD, Vector3(0,1,0));
-}
+}*/
 
 
 
@@ -157,7 +188,7 @@ void Game::render(void)
 	glEnable(GL_DEPTH_TEST);
 	glDisable(GL_CULL_FACE);
 
-	Matrix44 playerModel;
+	/*Matrix44 playerModel;
 	playerModel.translate(player.pos.x, player.pos.y, player.pos.z);
 	playerModel.rotate(player.yaw * DEG2RAD, Vector3(0, 1, 0));
 
@@ -168,26 +199,12 @@ void Game::render(void)
 	Vector3 center = eye + camModel.rotateVector(Vector3(0, 0, -1));
 	Vector3 up = camModel.rotateVector(Vector3(0, 1, 0));
 
-	camera->lookAt(eye, center, up);
+	camera->lookAt(eye, center, up);*/
 
-	for (int r = 0; r < lab->numRooms; r++) {
-		for (size_t i = 0; i < lab->rooms[r]->entities.size(); i++)
-			{
-				Entity* entity = lab->rooms[r]->entities[i];
-				entity->RenderMesh(shader, camera);
-				//RenderMesh(entity->model, entity->mesh, entity->texture, shader, camera);
 
-			}
-	}
 
-	for (size_t i = 0; i < lab->doors.size(); i++)
-	{
-		Door* door = lab->doors[i];
-		door->RenderMesh(shader,camera);
-		//RenderMesh(door->model, door->mesh, door->texture, shader, camera);
+	GetCurrentStage()->Render(shader, camera);
 
-	}
-	
 	//Draw the floor grid
 	drawGrid();
 
@@ -218,76 +235,16 @@ void Game::update(double seconds_elapsed)
 	if (Input::wasKeyPressed(SDL_SCANCODE_TAB)) {
 		cameralocked = !cameralocked;
 	}
-	float playerSpeed = 5.0f * elapsed_time;
-	float rotSpeed = 200.0f * DEG2RAD * elapsed_time;
 
-	player.yaw += -Input::mouse_delta.x * 10.0f * elapsed_time;
-	player.pitch += -Input::mouse_delta.y * 10.0f * elapsed_time;
-	Input::centerMouse();
-	SDL_ShowCursor(false);
 
-	Matrix44 playerRotation;
-	playerRotation.rotate(player.yaw * DEG2RAD, Vector3(0, 1, 0));
+	GetCurrentStage()->Update(seconds_elapsed, cameralocked, elapsed_time, speed, camera, player);
 
-	Vector3 forward = playerRotation.rotateVector(Vector3(0, 0, 1));
-	Vector3 right = playerRotation.rotateVector(Vector3(1, 0, 0));
-	Vector3 playerVel;
-
-	if (Input::isKeyPressed(SDL_SCANCODE_S)) playerVel = playerVel + (forward * playerSpeed);
-	if (Input::isKeyPressed(SDL_SCANCODE_W)) playerVel = playerVel - (forward * playerSpeed);
-	if (Input::isKeyPressed(SDL_SCANCODE_D)) playerVel = playerVel + (right * playerSpeed);
-	if (Input::isKeyPressed(SDL_SCANCODE_A)) playerVel = playerVel - (right * playerSpeed);
-
-	Vector3 nextPos = player.pos + playerVel;
-	//calculamos el centro de la esfera de colisión del player elevandola hasta la cintura
-	Vector3 character_center = nextPos + Vector3(0, 0.4, 0);
-	//para cada objecto de la escena...
-
-	for (int r = 0; r < 3; r++) {
-		Entity* entity = lab->doors[r];
-
-		Vector3 coll;
-		Vector3 collnorm;
-
-		//comprobamos si colisiona el objeto con la esfera (radio 3)
-		if (!entity->mesh->testSphereCollision(entity->model, character_center, 0.32f, coll, collnorm))
-			continue; //si no colisiona, pasamos al siguiente objeto
-
-		//si la esfera está colisionando muevela a su posicion anterior alejandola del objeto
-		Vector3 push_away = normalize(coll - character_center) * elapsed_time;
-
-		nextPos = player.pos - push_away; //move to previous pos but a little bit further
-		//reflejamos el vector velocidad para que de la sensacion de que rebota en la pared
-		//velocity = reflect(velocity, collnorm) * 0.95;
-	}
-
-	for (int r = 0; r < lab->numRooms; r++) {
-		for (size_t i = 0; i < lab->rooms[r]->entities.size(); i++) {
-			Entity* entity = lab->rooms[r]->entities[i];
-
-			Vector3 coll;
-			Vector3 collnorm;
-
-			if (!entity->mesh->testSphereCollision(entity->model, character_center, 0.32f, coll, collnorm)) {
-				continue;
-			}
-			//si la esfera está colisionando muevela a su posicion anterior alejandola del objeto
-			Vector3 push_away = normalize(coll - character_center) * elapsed_time;
-
-			nextPos = player.pos - push_away; //move to previous pos but a little bit further
-			//reflejamos el vector velocidad para que de la sensacion de que rebota en la pared
-			//velocity = reflect(velocity, collnorm) * 0.95;
-
-		}
-	}
-	nextPos.y = 0.0;
-
-	player.pos = nextPos;
 }
 
 //Keyboard event handler (sync input)
 void Game::onKeyDown(SDL_KeyboardEvent event)
 {
+	Lab* lab = GetCurrentStage()->lab;
 	switch (event.keysym.sym)
 	{
 	case SDLK_ESCAPE: must_exit = true; break; //ESC key, kill the app
@@ -299,11 +256,12 @@ void Game::onKeyDown(SDL_KeyboardEvent event)
 
 	case SDLK_6: lab->doors[3]->Move(shader, camera); break;
 
-	case SDLK_7: RayPick(camera); break; 
-	case SDLK_KP_PLUS: RotateSelected(10.0f); break;
-	case SDLK_KP_MINUS: RotateSelected(10.0f); break;
+	case SDLK_7: GetCurrentStage()->RayPick(camera); break; 
+	case SDLK_KP_PLUS: GetCurrentStage()->RotateSelected(10.0f); break;
+	case SDLK_KP_MINUS: GetCurrentStage()->RotateSelected(10.0f); break;
 
 	}
+
 }
 
 void Game::onKeyUp(SDL_KeyboardEvent event)

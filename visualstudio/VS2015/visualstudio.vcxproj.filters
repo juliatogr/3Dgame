@@ -71,6 +71,7 @@
     <ClCompile Include="..\..\src\Note.cpp" />
     <ClCompile Include="..\..\src\PopUpMessage.cpp" />
     <ClCompile Include="..\..\src\Tasks.cpp" />
+    <ClCompile Include="..\..\src\Player.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\camera.h" />
@@ -139,6 +140,7 @@
     <ClInclude Include="..\..\src\Note.h" />
     <ClInclude Include="..\..\src\PopUpMessage.h" />
     <ClInclude Include="..\..\src\Tasks.h" />
+    <ClInclude Include="..\..\src\Player.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="extra">

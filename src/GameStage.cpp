@@ -7,6 +7,35 @@ Lab* GameStage::GetLab()
 	return this->lab;
 }
 
+void GameStage::RayPick(Camera* cam) {
+
+	Vector2 mouse = Input::mouse_position;
+	Game* g = Game::instance;
+	Vector3 dir = cam->getRayDirection(mouse.x, mouse.y, g->window_width, g->window_height);
+	Vector3 rayOrigin = cam->eye;
+
+	for (int r = 0; r < this->lab->numRooms; r++) {
+		for (size_t i = 0; i < this->lab->rooms[r]->entities.size(); i++) {
+			Entity* entity = this->lab->rooms[r]->entities[i];
+			Vector3 pos;
+			Vector3 normal;
+			if (entity->mesh->testRayCollision(entity->model, rayOrigin, dir, pos, normal)) {
+
+				this->selectedEntity = entity;
+				break;
+			}
+		}
+	}
+}
+
+void GameStage::RotateSelected(float angleDegrees) {
+	if (this->selectedEntity == NULL) {
+		return;
+	}
+
+	this->selectedEntity->model.rotate(angleDegrees * DEG2RAD, Vector3(0, 1, 0));
+}
+
 boolean GameStage::RayPickCheck(Camera* cam, Vector3 movement) {
 
 	boolean hasCol = false;
@@ -33,36 +62,106 @@ boolean GameStage::RayPickCheck(Camera* cam, Vector3 movement) {
 	return hasCol;
 }
 
-void GameStage::Colision(double seconds_elapsed, boolean cameralocked, float elapsed_time, float speed, Camera* camera)
+void GameStage::Colision(double seconds_elapsed, boolean cameralocked, float elapsed_time, float speed, Camera* camera, Player player)
 {
-	if (cameralocked) {
-		float planeSpeed = 50.0f * elapsed_time;
-		float rotSpeed = 90.0f * DEG2RAD * elapsed_time;
+	//if (cameralocked) {
+	//	float planeSpeed = 50.0f * elapsed_time;
+	//	float rotSpeed = 90.0f * DEG2RAD * elapsed_time;
 
+	//}
+	//else {
+	//	//async input to move the camera around
+	//	Vector3 movement;
+
+	//	if (Input::isKeyPressed(SDL_SCANCODE_LSHIFT)) speed *= 5; //move faster with left shift
+	//	if (Input::isKeyPressed(SDL_SCANCODE_W) || Input::isKeyPressed(SDL_SCANCODE_UP)) movement.z = 1.0f;
+	//	if (Input::isKeyPressed(SDL_SCANCODE_S) || Input::isKeyPressed(SDL_SCANCODE_DOWN)) movement.z = -1.0f;
+	//	if (Input::isKeyPressed(SDL_SCANCODE_A) || Input::isKeyPressed(SDL_SCANCODE_LEFT)) movement.x = 1.0f;
+	//	if (Input::isKeyPressed(SDL_SCANCODE_D) || Input::isKeyPressed(SDL_SCANCODE_RIGHT)) movement.x = -1.0f;
+	//	if (Input::isKeyPressed(SDL_SCANCODE_E)) movement.y = -1.0f;
+	//	if (Input::isKeyPressed(SDL_SCANCODE_Q)) movement.y = 1.0f;
+
+	//	Camera* aux = new Camera();
+	//	aux->eye = camera->eye;
+	//	aux->far_plane = camera->far_plane;
+	//	aux->center = camera->center;
+	//	aux->fov = camera->fov;
+	//	aux->move(Vector3(movement.x, movement.y, movement.z) * speed);
+	//	if (!RayPickCheck(camera, movement)) {
+	//		camera->move(Vector3(movement.x, movement.y, movement.z) * speed);
+	//	}
+
+	//}
+
+	
+	float playerSpeed = 5.0f * elapsed_time;
+	float rotSpeed = 200.0f * DEG2RAD * elapsed_time;
+
+	this->player.yaw += -Input::mouse_delta.x * 10.0f * elapsed_time;
+	this->player.pitch += -Input::mouse_delta.y * 10.0f * elapsed_time;
+
+	Input::centerMouse();
+	SDL_ShowCursor(false);
+
+
+	Matrix44 playerRotation = this->player.model;
+	playerRotation.rotate(this->player.yaw * DEG2RAD, Vector3(0, 1, 0));
+
+	Vector3 forward = playerRotation.rotateVector(Vector3(0, 0, 1));
+	Vector3 right = playerRotation.rotateVector(Vector3(1, 0, 0));
+	Vector3 playerVel;
+
+	if (Input::isKeyPressed(SDL_SCANCODE_S)) playerVel = playerVel + (forward * playerSpeed);
+	if (Input::isKeyPressed(SDL_SCANCODE_W)) playerVel = playerVel - (forward * playerSpeed);
+	if (Input::isKeyPressed(SDL_SCANCODE_D)) playerVel = playerVel + (right * playerSpeed);
+	if (Input::isKeyPressed(SDL_SCANCODE_A)) playerVel = playerVel - (right * playerSpeed);
+
+	Vector3 nextPos = this->player.pos + playerVel;
+	//calculamos el centro de la esfera de colisión del player elevandola hasta la cintura
+	Vector3 character_center = nextPos + Vector3(0, 0.4, 0);
+	//para cada objecto de la escena...
+
+	for (int r = 0; r < 3; r++) {
+		Entity* entity = this->lab->doors[r];
+
+		Vector3 coll;
+		Vector3 collnorm;
+
+		//comprobamos si colisiona el objeto con la esfera (radio 3)
+		if (!entity->mesh->testSphereCollision(entity->model, character_center, 0.32f, coll, collnorm))
+			continue; //si no colisiona, pasamos al siguiente objeto
+
+		//si la esfera está colisionando muevela a su posicion anterior alejandola del objeto
+		Vector3 push_away = normalize(coll - character_center) * elapsed_time;
+
+		nextPos = player.pos - push_away; //move to previous pos but a little bit further
+		//reflejamos el vector velocidad para que de la sensacion de que rebota en la pared
+		//velocity = reflect(velocity, collnorm) * 0.95;
 	}
-	else {
-		//async input to move the camera around
-		Vector3 movement;
 
-		if (Input::isKeyPressed(SDL_SCANCODE_LSHIFT)) speed *= 5; //move faster with left shift
-		if (Input::isKeyPressed(SDL_SCANCODE_W) || Input::isKeyPressed(SDL_SCANCODE_UP)) movement.z = 1.0f;
-		if (Input::isKeyPressed(SDL_SCANCODE_S) || Input::isKeyPressed(SDL_SCANCODE_DOWN)) movement.z = -1.0f;
-		if (Input::isKeyPressed(SDL_SCANCODE_A) || Input::isKeyPressed(SDL_SCANCODE_LEFT)) movement.x = 1.0f;
-		if (Input::isKeyPressed(SDL_SCANCODE_D) || Input::isKeyPressed(SDL_SCANCODE_RIGHT)) movement.x = -1.0f;
-		if (Input::isKeyPressed(SDL_SCANCODE_E)) movement.y = -1.0f;
-		if (Input::isKeyPressed(SDL_SCANCODE_Q)) movement.y = 1.0f;
+	for (int r = 0; r < this->lab->numRooms; r++) {
+		for (size_t i = 0; i < this->lab->rooms[r]->entities.size(); i++) {
+			Entity* entity = this->lab->rooms[r]->entities[i];
 
-		Camera* aux = new Camera();
-		aux->eye = camera->eye;
-		aux->far_plane = camera->far_plane;
-		aux->center = camera->center;
-		aux->fov = camera->fov;
-		aux->move(Vector3(movement.x, movement.y, movement.z) * speed);
-		if (!RayPickCheck(camera, movement)) {
-			camera->move(Vector3(movement.x, movement.y, movement.z) * speed);
+			Vector3 coll;
+			Vector3 collnorm;
+
+			if (!entity->mesh->testSphereCollision(entity->model, character_center, 0.32f, coll, collnorm)) {
+				continue;
+			}
+			//si la esfera está colisionando muevela a su posicion anterior alejandola del objeto
+			Vector3 push_away = normalize(coll - character_center) * elapsed_time;
+
+			nextPos = this->player.pos - push_away; //move to previous pos but a little bit further
+			//reflejamos el vector velocidad para que de la sensacion de que rebota en la pared
+			//velocity = reflect(velocity, collnorm) * 0.95;
+
 		}
-
 	}
+	nextPos.y = 0.0;
+
+	this->player.pos = nextPos;
+
 }
 
 STAGE_ID PlayStage::GetId()
@@ -78,6 +177,8 @@ PlayStage::PlayStage()
 
 void PlayStage::Render(Shader* a_shader, Camera* cam)
 {
+	this->player.RenderPlayer(cam);
+
 	for (int r = 0; r < lab->numRooms; r++) {
 		for (size_t i = 0; i < this->lab->rooms[r]->entities.size(); i++)
 		{
@@ -97,9 +198,9 @@ void PlayStage::Render(Shader* a_shader, Camera* cam)
 	}
 }
 
-void PlayStage::Update(double seconds_elapsed, boolean cameralocked, float elapsed_time, float speed, Camera* camera)
+void PlayStage::Update(double seconds_elapsed, boolean cameralocked, float elapsed_time, float speed, Camera* camera, Player player)
 {
-	this->Colision(seconds_elapsed, cameralocked, elapsed_time, speed, camera);
+	this->Colision(seconds_elapsed, cameralocked, elapsed_time, speed, camera, player);
 }
 
 STAGE_ID IntroStage::GetId()
@@ -115,7 +216,7 @@ void IntroStage::Render(Shader* a_shader, Camera* cam)
 {
 }
 
-void IntroStage::Update(double seconds_elapsed, boolean cameralocked, float elapsed_time, float speed, Camera* camera)
+void IntroStage::Update(double seconds_elapsed, boolean cameralocked, float elapsed_time, float speed, Camera* camera, Player player)
 {
 }
 
@@ -132,7 +233,7 @@ void TutorialStage::Render(Shader* a_shader, Camera* cam)
 {
 }
 
-void TutorialStage::Update(double seconds_elapsed, boolean cameralocked, float elapsed_time, float speed, Camera* camera)
+void TutorialStage::Update(double seconds_elapsed, boolean cameralocked, float elapsed_time, float speed, Camera* camera, Player player)
 {
 }
 
@@ -149,7 +250,7 @@ void EndStage::Render(Shader* a_shader, Camera* cam)
 {
 }
 
-void EndStage::Update(double seconds_elapsed, boolean cameralocked, float elapsed_time, float speed, Camera* camera)
+void EndStage::Update(double seconds_elapsed, boolean cameralocked, float elapsed_time, float speed, Camera* camera, Player player)
 {
 }
 
@@ -166,6 +267,6 @@ void WinStage::Render(Shader* a_shader, Camera* cam)
 {
 }
 
-void WinStage::Update(double seconds_elapsed, boolean cameralocked, float elapsed_time, float speed, Camera* camera)
+void WinStage::Update(double seconds_elapsed, boolean cameralocked, float elapsed_time, float speed, Camera* camera, Player player)
 {
 }
