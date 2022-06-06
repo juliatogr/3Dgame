@@ -62,41 +62,6 @@ boolean GameStage::RayPickCheck(Camera* cam, Vector3 movement) {
 	return hasCol;
 }
 
-void GameStage::Colision(double seconds_elapsed, boolean cameralocked, float elapsed_time, float speed, Camera* camera, bool mouse_locked)
-{
-	//if (cameralocked) {
-	//	float planeSpeed = 50.0f * elapsed_time;
-	//	float rotSpeed = 90.0f * DEG2RAD * elapsed_time;
-
-	//}
-	//else {
-	//	//async input to move the camera around
-	//	Vector3 movement;
-
-	//	if (Input::isKeyPressed(SDL_SCANCODE_LSHIFT)) speed *= 5; //move faster with left shift
-	//	if (Input::isKeyPressed(SDL_SCANCODE_W) || Input::isKeyPressed(SDL_SCANCODE_UP)) movement.z = 1.0f;
-	//	if (Input::isKeyPressed(SDL_SCANCODE_S) || Input::isKeyPressed(SDL_SCANCODE_DOWN)) movement.z = -1.0f;
-	//	if (Input::isKeyPressed(SDL_SCANCODE_A) || Input::isKeyPressed(SDL_SCANCODE_LEFT)) movement.x = 1.0f;
-	//	if (Input::isKeyPressed(SDL_SCANCODE_D) || Input::isKeyPressed(SDL_SCANCODE_RIGHT)) movement.x = -1.0f;
-	//	if (Input::isKeyPressed(SDL_SCANCODE_E)) movement.y = -1.0f;
-	//	if (Input::isKeyPressed(SDL_SCANCODE_Q)) movement.y = 1.0f;
-
-	//	Camera* aux = new Camera();
-	//	aux->eye = camera->eye;
-	//	aux->far_plane = camera->far_plane;
-	//	aux->center = camera->center;
-	//	aux->fov = camera->fov;
-	//	aux->move(Vector3(movement.x, movement.y, movement.z) * speed);
-	//	if (!RayPickCheck(camera, movement)) {
-	//		camera->move(Vector3(movement.x, movement.y, movement.z) * speed);
-	//	}
-
-	//}
-	// 
-	
-	
-
-}
 
 STAGE_ID PlayStage::GetId()
 {
@@ -132,7 +97,6 @@ void PlayStage::Render(Shader* a_shader, Camera* cam)
 		{
 			Entity* entity = this->lab->rooms[r]->entities[i];
 			entity->RenderMesh(a_shader, cam);
-			//RenderMesh(entity->model, entity->mesh, entity->texture, shader, camera);
 
 		}
 	}
@@ -141,7 +105,6 @@ void PlayStage::Render(Shader* a_shader, Camera* cam)
 	{
 		Door* door = this->lab->doors[i];
 		door->RenderMesh(a_shader, cam);
-		//RenderMesh(door->model, door->mesh, door->texture, shader, camera);
 
 	}
 }
@@ -230,7 +193,6 @@ void PlayStage::Update(double seconds_elapsed, boolean cameralocked, float elaps
 
 	this->player->pos = nextPos;
 
-	//this->Colision(seconds_elapsed, cameralocked, elapsed_time, speed, camera, mouse_locked);
 }
 
 STAGE_ID IntroStage::GetId()

@@ -30,7 +30,6 @@ public:
 	virtual boolean RayPickCheck(Camera* cam, Vector3 movement);
 	virtual void RayPick(Camera* cam);
 	virtual void RotateSelected(float angleDegrees);
-	virtual void Colision(double seconds_elapsed, boolean cameralocked, float elapsed_time, float speed, Camera* camera, bool mouse_locked);
 	virtual void Render(Shader* a_shader, Camera* cam) = 0;
 	virtual void Update(double seconds_elapsed, boolean cameralocked, float elapsed_time, float speed, Camera* camera,  bool mouse_locked) = 0;
 };
