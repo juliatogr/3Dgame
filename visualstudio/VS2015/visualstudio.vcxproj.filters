@@ -65,6 +65,13 @@
       <Filter>extra</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\entity.cpp" />
+    <ClCompile Include="..\..\src\GameStage.cpp" />
+    <ClCompile Include="..\..\src\GameState.cpp" />
+    <ClCompile Include="..\..\src\Inventory.cpp" />
+    <ClCompile Include="..\..\src\Note.cpp" />
+    <ClCompile Include="..\..\src\PopUpMessage.cpp" />
+    <ClCompile Include="..\..\src\Tasks.cpp" />
+    <ClCompile Include="..\..\src\Player.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\camera.h" />
@@ -127,6 +134,13 @@
       <Filter>extra</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\entity.h" />
+    <ClInclude Include="..\..\src\GameStage.h" />
+    <ClInclude Include="..\..\src\GameState.h" />
+    <ClInclude Include="..\..\src\Inventory.h" />
+    <ClInclude Include="..\..\src\Note.h" />
+    <ClInclude Include="..\..\src\PopUpMessage.h" />
+    <ClInclude Include="..\..\src\Tasks.h" />
+    <ClInclude Include="..\..\src\Player.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="extra">

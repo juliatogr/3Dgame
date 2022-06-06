@@ -143,11 +143,18 @@
     <ClCompile Include="..\..\src\fbo.cpp" />
     <ClCompile Include="..\..\src\framework.cpp" />
     <ClCompile Include="..\..\src\game.cpp" />
+    <ClCompile Include="..\..\src\GameStage.cpp" />
+    <ClCompile Include="..\..\src\GameState.cpp" />
     <ClCompile Include="..\..\src\input.cpp" />
+    <ClCompile Include="..\..\src\Inventory.cpp" />
     <ClCompile Include="..\..\src\main.cpp" />
     <ClCompile Include="..\..\src\mesh.cpp" />
+    <ClCompile Include="..\..\src\Note.cpp" />
+    <ClCompile Include="..\..\src\Player.cpp" />
+    <ClCompile Include="..\..\src\PopUpMessage.cpp" />
     <ClCompile Include="..\..\src\rendertotexture.cpp" />
     <ClCompile Include="..\..\src\shader.cpp" />
+    <ClCompile Include="..\..\src\Tasks.cpp" />
     <ClCompile Include="..\..\src\texture.cpp" />
     <ClCompile Include="..\..\src\utils.cpp" />
   </ItemGroup>
@@ -167,11 +174,18 @@
     <ClInclude Include="..\..\src\fbo.h" />
     <ClInclude Include="..\..\src\framework.h" />
     <ClInclude Include="..\..\src\game.h" />
+    <ClInclude Include="..\..\src\GameStage.h" />
+    <ClInclude Include="..\..\src\GameState.h" />
     <ClInclude Include="..\..\src\includes.h" />
     <ClInclude Include="..\..\src\input.h" />
+    <ClInclude Include="..\..\src\Inventory.h" />
     <ClInclude Include="..\..\src\mesh.h" />
+    <ClInclude Include="..\..\src\Note.h" />
+    <ClInclude Include="..\..\src\Player.h" />
+    <ClInclude Include="..\..\src\PopUpMessage.h" />
     <ClInclude Include="..\..\src\rendertotexture.h" />
     <ClInclude Include="..\..\src\shader.h" />
+    <ClInclude Include="..\..\src\Tasks.h" />
     <ClInclude Include="..\..\src\texture.h" />
     <ClInclude Include="..\..\src\utils.h" />
   </ItemGroup>

@@ -6,6 +6,7 @@
 #include "shader.h"
 #include "input.h"
 #include "animation.h"
+#include "game.h"
 
 
 void Entity::RenderMesh(Shader* a_shader, Camera* cam) {
@@ -176,3 +177,4 @@ void Door::Move(Shader* a_shader, Camera* cam)
 	
 	this->model.translate(-1.0f * speed, 0.0f, 0.0f);
 }
+
