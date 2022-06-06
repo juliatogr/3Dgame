@@ -7,6 +7,6 @@ public:
 	float yaw;
 	float pitch;
 
-	void RenderPlayer(Camera* camera);
+	Player();
 
 };

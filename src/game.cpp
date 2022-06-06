@@ -70,7 +70,7 @@ void InitStages() {
 
 //Lab* lab;
 
-Player player;
+//Player player;
 
 
 Game::Game(int window_width, int window_height, SDL_Window* window)
@@ -99,13 +99,11 @@ Game::Game(int window_width, int window_height, SDL_Window* window)
 
 	camera->setPerspective(35.f, window_width / (float)window_height, 0.1f, 100000.f); //set the projection, we want to be perspective
 
-	player.pos = Vector3(-1.f, 0.0f, -8.8f);
 	//load one texture without using the Texture Manager (Texture::Get would use the manager)
 
 	//lab = new Lab();
 	//init
 	InitStages();
-	
 	// example of shader loading using the shaders manager
 	shader = Shader::Get("data/shaders/basic.vs", "data/shaders/texture.fs");
 	//hide the cursor
@@ -188,21 +186,7 @@ void Game::render(void)
 	glEnable(GL_DEPTH_TEST);
 	glDisable(GL_CULL_FACE);
 
-	/*Matrix44 playerModel;
-	playerModel.translate(player.pos.x, player.pos.y, player.pos.z);
-	playerModel.rotate(player.yaw * DEG2RAD, Vector3(0, 1, 0));
-
-	Matrix44 camModel = playerModel;
-	camModel.rotate(player.pitch * DEG2RAD, Vector3(1, 0, 0));
-
-	Vector3 eye = playerModel * Vector3(0, 0.6, 0);
-	Vector3 center = eye + camModel.rotateVector(Vector3(0, 0, -1));
-	Vector3 up = camModel.rotateVector(Vector3(0, 1, 0));
-
-	camera->lookAt(eye, center, up);*/
-
-
-
+	
 	GetCurrentStage()->Render(shader, camera);
 
 	//Draw the floor grid
@@ -221,23 +205,90 @@ void Game::render(void)
 void Game::update(double seconds_elapsed)
 {
 	float speed = 0.02*seconds_elapsed * mouse_speed; //the speed is defined by the seconds_elapsed so it goes constant
+	//Lab* lab = GetCurrentStage()->lab;
+	//if ((Input::mouse_state & SDL_BUTTON_LEFT) || mouse_locked) //is left button pressed?
+	//{
 
-	//example
-	angle += (float)seconds_elapsed * 10.0f;
+	//	camera->rotate(Input::mouse_delta.x * 0.005f, Vector3(0.0f, -1.0f, 0.0f));
+	//	camera->rotate(Input::mouse_delta.y * 0.005f, camera->getLocalVector(Vector3(-1.0f, 0.0f, 0.0f)));
+	//}
 
-	//mouse input to rotate the cam
-	if ((Input::mouse_state & SDL_BUTTON_LEFT) || mouse_locked) //is left button pressed?
-	{
-		camera->rotate(Input::mouse_delta.x * 0.005f, Vector3(0.0f, -1.0f, 0.0f));
-		camera->rotate(Input::mouse_delta.y * 0.005f, camera->getLocalVector(Vector3(-1.0f, 0.0f, 0.0f)));
-	}
-
-	if (Input::wasKeyPressed(SDL_SCANCODE_TAB)) {
-		cameralocked = !cameralocked;
-	}
+	//if (Input::wasKeyPressed(SDL_SCANCODE_TAB)) {
+	//	cameralocked = !cameralocked;
+	//}
 
 
-	GetCurrentStage()->Update(seconds_elapsed, cameralocked, elapsed_time, speed, camera, player);
+	//float playerSpeed = 5.0f * elapsed_time;
+	//float rotSpeed = 200.0f * DEG2RAD * elapsed_time;
+
+	//player.yaw += -Input::mouse_delta.x * 10.0f * elapsed_time;
+	//player.pitch += -Input::mouse_delta.y * 10.0f * elapsed_time;
+
+	////to navigate with the mouse fixed in the middle
+	//if (mouse_locked)
+	//	Input::centerMouse();
+	//SDL_ShowCursor(false);
+
+
+	//Matrix44 playerRotation = player.model;
+	//playerRotation.rotate(player.yaw * DEG2RAD, Vector3(0, 1, 0));
+
+	//Vector3 forward = playerRotation.rotateVector(Vector3(0, 0, 1));
+	//Vector3 right = playerRotation.rotateVector(Vector3(1, 0, 0));
+	//Vector3 playerVel;
+
+	//if (Input::isKeyPressed(SDL_SCANCODE_S)) playerVel = playerVel + (forward * playerSpeed);
+	//if (Input::isKeyPressed(SDL_SCANCODE_W)) playerVel = playerVel - (forward * playerSpeed);
+	//if (Input::isKeyPressed(SDL_SCANCODE_D)) playerVel = playerVel + (right * playerSpeed);
+	//if (Input::isKeyPressed(SDL_SCANCODE_A)) playerVel = playerVel - (right * playerSpeed);
+
+	//Vector3 nextPos = player.pos + playerVel;
+	////calculamos el centro de la esfera de colisión del player elevandola hasta la cintura
+	//Vector3 character_center = nextPos + Vector3(0, 0.4, 0);
+	////para cada objecto de la escena...
+
+	//for (int r = 0; r < 3; r++) {
+	//	Entity* entity = lab->doors[r];
+
+	//	Vector3 coll;
+	//	Vector3 collnorm;
+
+	//	//comprobamos si colisiona el objeto con la esfera (radio 3)
+	//	if (!entity->mesh->testSphereCollision(entity->model, character_center, 0.32f, coll, collnorm))
+	//		continue; //si no colisiona, pasamos al siguiente objeto
+
+	//	//si la esfera está colisionando muevela a su posicion anterior alejandola del objeto
+	//	Vector3 push_away = normalize(coll - character_center) * elapsed_time;
+
+	//	nextPos = player.pos - push_away; //move to previous pos but a little bit further
+	//	//reflejamos el vector velocidad para que de la sensacion de que rebota en la pared
+	//	//velocity = reflect(velocity, collnorm) * 0.95;
+	//}
+
+	//for (int r = 0; r < lab->numRooms; r++) {
+	//	for (size_t i = 0; i < lab->rooms[r]->entities.size(); i++) {
+	//		Entity* entity = lab->rooms[r]->entities[i];
+
+	//		Vector3 coll;
+	//		Vector3 collnorm;
+
+	//		if (!entity->mesh->testSphereCollision(entity->model, character_center, 0.32f, coll, collnorm)) {
+	//			continue;
+	//		}
+	//		//si la esfera está colisionando muevela a su posicion anterior alejandola del objeto
+	//		Vector3 push_away = normalize(coll - character_center) * elapsed_time;
+
+	//		nextPos = player.pos - push_away; //move to previous pos but a little bit further
+	//		//reflejamos el vector velocidad para que de la sensacion de que rebota en la pared
+	//		//velocity = reflect(velocity, collnorm) * 0.95;
+
+	//	}
+	//}
+	//nextPos.y = 0.0;
+
+	//player.pos = nextPos;
+
+	GetCurrentStage()->Update(seconds_elapsed, cameralocked, elapsed_time, speed, camera, mouse_locked);
 
 }
 
