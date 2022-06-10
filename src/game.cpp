@@ -166,12 +166,11 @@ void Game::onKeyDown(SDL_KeyboardEvent event)
 	case SDLK_3: lab->doors[0]->Move(shader,camera); break;
 	case SDLK_4: lab->doors[1]->Move(shader, camera); break;
 	case SDLK_5: lab->doors[2]->Move(shader, camera); break;
-
 	case SDLK_6: lab->doors[3]->Move(shader, camera); break;
-
-	case SDLK_7: GetCurrentStage()->RayPick(camera); break; 
+	case SDLK_7: lab->doors[4]->Move(shader, camera); break;
+	case SDLK_8: GetCurrentStage()->RayPick(camera); break; 
 	case SDLK_KP_PLUS: GetCurrentStage()->RotateSelected(10.0f); break;
-	case SDLK_KP_MINUS: GetCurrentStage()->RotateSelected(10.0f); break;
+	case SDLK_KP_MINUS: GetCurrentStage()->RotateSelected(-10.0f); break;
 
 	}
 

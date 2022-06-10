@@ -1,13 +1,8 @@
-Entities 31
+Entities 24
 MESH data/Estructuras/Floors/Floor1.obj 
 TEXTURE data/Estructuras/Floors/Floor1.tga 
 -5.820,0.000,0.000 
 0.000,0.000,0.000 
-1.000,1.000,1.000
-MESH data/Estructuras/Floors/Floor1.obj 
-TEXTURE data/Estructuras/Floors/Floor1.tga 
--7.040,0.000,0.000 
-0.000,180.000,0.000 
 1.000,1.000,1.000
 MESH data/Estructuras/Floors/Floor1.obj 
 TEXTURE data/Estructuras/Floors/Floor1.tga 
@@ -17,11 +12,6 @@ TEXTURE data/Estructuras/Floors/Floor1.tga
 MESH data/Estructuras/Floors/Floor1.obj 
 TEXTURE data/Estructuras/Floors/Floor1.tga 
 -5.82,0.000,1.220 
-0.000,180.000,0.000 
-1.000,1.000,1.000
-MESH data/Estructuras/Floors/Floor1.obj 
-TEXTURE data/Estructuras/Floors/Floor1.tga 
--7.040,0.000,1.220 
 0.000,180.000,0.000 
 1.000,1.000,1.000
 MESH data/Estructuras/Floors/Floor1.obj 
@@ -36,22 +26,12 @@ TEXTURE data/Estructuras/Floors/Floor1.tga
 1.000,1.000,1.000
 MESH data/Estructuras/Floors/Floor1.obj 
 TEXTURE data/Estructuras/Floors/Floor1.tga 
--7.040,0.000,-1.220 
-0.000,180.000,0.000 
-1.000,1.000,1.000
-MESH data/Estructuras/Floors/Floor1.obj 
-TEXTURE data/Estructuras/Floors/Floor1.tga 
 -4.600,0.000,-1.220 
 0.000,180.000,0.000 
 1.000,1.000,1.000
 MESH data/Estructuras/Floors/Floor1.obj 
 TEXTURE data/Estructuras/Floors/Floor1.tga 
 -5.82,0.000,2.440 
-0.000,180.000,0.000 
-1.000,1.000,1.000
-MESH data/Estructuras/Floors/Floor1.obj 
-TEXTURE data/Estructuras/Floors/Floor1.tga 
--7.040,0.000,2.440 
 0.000,180.000,0.000 
 1.000,1.000,1.000
 MESH data/Estructuras/Floors/Floor1.obj 
@@ -66,11 +46,6 @@ TEXTURE data/Estructuras/Floors/Floor1.tga
 1.000,1.000,1.000
 MESH data/Estructuras/Floors/Floor1.obj 
 TEXTURE data/Estructuras/Floors/Floor1.tga 
--7.040,0.000,-2.440 
-0.000,180.000,0.000 
-1.000,1.000,1.000
-MESH data/Estructuras/Floors/Floor1.obj 
-TEXTURE data/Estructuras/Floors/Floor1.tga 
 -4.600,0.000,-2.440 
 0.000,180.000,0.000 
 1.000,1.000,1.000
@@ -81,22 +56,12 @@ TEXTURE data/Estructuras/Walls/Wall2.tga
 1.000,1.000,1.000
 MESH data/Estructuras/Walls/Wall1_2.obj 
 TEXTURE data/Estructuras/Walls/Wall2.tga 
--7.040,0.000,3.050 
-0.000,180.000,0.000 
-1.000,1.000,1.000
-MESH data/Estructuras/Walls/Wall1_2.obj 
-TEXTURE data/Estructuras/Walls/Wall2.tga 
 -4.60,0.000,3.050 
 0.000,180.000,0.000 
 1.000,1.000,1.000
 MESH data/Estructuras/Walls/Wall1_2.obj 
 TEXTURE data/Estructuras/Walls/Wall2.tga 
 -5.82,0.000,-3.050 
-0.000,180.000,0.000 
-1.000,1.000,1.000
-MESH data/Estructuras/Walls/Wall1_2.obj 
-TEXTURE data/Estructuras/Walls/Wall2.tga 
--7.040,0.000,-3.050 
 0.000,180.000,0.000 
 1.000,1.000,1.000
 MESH data/Estructuras/Walls/Wall1_2.obj 
@@ -121,36 +86,36 @@ TEXTURE data/Estructuras/Walls/Wall2.tga
 1.000,1.000,1.000
 MESH data/Estructuras/Walls/Wall1_2.obj 
 TEXTURE data/Estructuras/Walls/Wall2.tga 
--7.640,0.000,-2.440 
-0.000,270.000,0.000 
-1.000,1.000,1.000
-MESH data/Estructuras/Walls/Wall1_2.obj 
-TEXTURE data/Estructuras/Walls/Wall2.tga 
--7.640,0.000,0.000 
-0.000,270.000,0.000 
-1.000,1.000,1.000
-MESH data/Estructuras/Walls/Wall1_2.obj 
-TEXTURE data/Estructuras/Walls/Wall2.tga 
--7.640,0.000,1.220 
-0.000,270.000,0.000 
-1.000,1.000,1.000
-MESH data/Estructuras/Walls/Wall1_2.obj 
-TEXTURE data/Estructuras/Walls/Wall2.tga 
--7.640,0.000,2.440 
-0.000,270.000,0.000 
-1.000,1.000,1.000
-MESH data/Estructuras/Walls/Wall1_2.obj 
-TEXTURE data/Estructuras/Walls/Wall2.tga 
--7.640,0.000,-1.220 
-0.000,270.000,0.000 
-1.000,1.000,1.000
-MESH data/Estructuras/Walls/Wall1_2.obj 
-TEXTURE data/Estructuras/Walls/Wall2.tga 
 -3.985,0.000,-2.440 
 0.000,270.000,0.000 
 1.000,1.000,1.000
 MESH data/Estructuras/WallDoors/WallDoor1.obj 
 TEXTURE data/Estructuras/WallDoors/WallDoor2.tga
 -3.985,0.000,1.220 
+0.000,270.000,0.000 
+1.000,1.000,1.000
+MESH data/Estructuras/Walls/Wall1_2.obj 
+TEXTURE data/Estructuras/Walls/Wall2.tga 
+-6.420,0.000,-2.440 
+0.000,270.000,0.000 
+1.000,1.000,1.000
+MESH data/Estructuras/Walls/Wall1_2.obj 
+TEXTURE data/Estructuras/Walls/Wall2.tga 
+-6.420,0.000,0.000 
+0.000,270.000,0.000 
+1.000,1.000,1.000
+MESH data/Estructuras/Walls/Wall1_2.obj 
+TEXTURE data/Estructuras/Walls/Wall2.tga 
+-6.420,0.000,1.220 
+0.000,270.000,0.000 
+1.000,1.000,1.000
+MESH data/Estructuras/Walls/Wall1_2.obj 
+TEXTURE data/Estructuras/Walls/Wall2.tga 
+-6.420,0.000,2.440 
+0.000,270.000,0.000 
+1.000,1.000,1.000
+MESH data/Estructuras/Walls/Wall1_2.obj 
+TEXTURE data/Estructuras/Walls/Wall2.tga 
+-6.420,0.000,-1.220 
 0.000,270.000,0.000 
 1.000,1.000,1.000
