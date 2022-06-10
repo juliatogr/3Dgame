@@ -27,7 +27,6 @@ public:
 	Player* player;
 
 	virtual STAGE_ID GetId() = 0;
-	virtual boolean RayPickCheck(Camera* cam, Vector3 movement);
 	virtual void RayPick(Camera* cam);
 	virtual void RotateSelected(float angleDegrees);
 	virtual void Render(Shader* a_shader, Camera* cam) = 0;

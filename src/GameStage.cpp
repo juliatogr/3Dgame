@@ -36,32 +36,6 @@ void GameStage::RotateSelected(float angleDegrees) {
 	this->selectedEntity->model.rotate(angleDegrees * DEG2RAD, Vector3(0, 1, 0));
 }
 
-boolean GameStage::RayPickCheck(Camera* cam, Vector3 movement) {
-
-	boolean hasCol = false;
-
-	Vector2 mouse = Input::mouse_position;
-	Game* g = Game::instance;
-	movement.x = movement.x / movement.z;
-	movement.y = movement.y / movement.z;
-	Vector3 dir = cam->getRayDirection(movement.x, movement.y, g->window_width, g->window_height);
-	Vector3 rayOrigin = cam->eye;
-
-	for (int r = 0; r < lab->numRooms; r++) {
-		for (size_t i = 0; i < lab->rooms[r]->entities.size(); i++) {
-			Entity* entity = lab->rooms[r]->entities[i];
-			Vector3 pos;
-			Vector3 normal;
-			if (entity->mesh->testRayCollision(entity->model, rayOrigin, dir, pos, normal, 0.3)) {
-
-				hasCol = true;
-			}
-		}
-	}
-
-	return hasCol;
-}
-
 
 STAGE_ID PlayStage::GetId()
 {
