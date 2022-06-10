@@ -151,8 +151,9 @@ void PlayStage::Update(double seconds_elapsed, boolean cameralocked, float elaps
 	//para cada objecto de la escena...
 
 
+	int numDoors = lab->doors.size();
 
-	for (int r = 0; r < 3; r++) {
+	for (int r = 0; r < numDoors; r++) {
 		Entity* entity = this->lab->doors[r];
 
 		Vector3 coll;
