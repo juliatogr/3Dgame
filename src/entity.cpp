@@ -6,7 +6,14 @@
 #include "shader.h"
 #include "input.h"
 #include "animation.h"
+#include "game.h"
 
+
+Ground::Ground() {
+	this->mesh = new Mesh();
+	this->mesh->createPlane(1000);
+	this->texture = Texture::Get("data/Estructuras/Floors/Floor1.tga");
+}
 
 void Entity::RenderMesh(Shader* a_shader, Camera* cam) {
 
@@ -27,7 +34,6 @@ void Entity::RenderMesh(Shader* a_shader, Camera* cam) {
 
 	//disable shader
 	a_shader->disable();
-
 }
 
 std::string ReadMeshPath(std::stringstream& ss) {
@@ -152,6 +158,7 @@ void Lab::LoadDoors(const char* path) {
 
 Lab::Lab() {
 	
+	this->ground = new Ground();
 	for (int i = 0; i < this->numRooms; i++) {
 		Room* room = new Room();
 		this->rooms.push_back(room);
@@ -177,3 +184,4 @@ void Door::Move(Shader* a_shader, Camera* cam)
 	
 	this->model.translate(-1.0f * speed, 0.0f, 0.0f);
 }
+

@@ -1,3 +1,4 @@
+#pragma once
 #include "framework.h"
 #include "mesh.h"
 #include "texture.h"
@@ -15,8 +16,16 @@ public:
 };
 
 
+class Ground : public Entity {
+public:
+
+	Ground();
+};
+
 class Door : public Entity {
 public:
+
+
 	bool blocked = true;
 	bool isOpen = false;
 	float speed = 0.02f;
@@ -39,7 +48,9 @@ public:
 		CHEM = 2
 	};
 	int numRooms = 3;
+	int numDoors = 4;
 
+	Ground* ground;
 	std::vector<Room*> rooms;
 	std::vector<Door*> doors;
 
