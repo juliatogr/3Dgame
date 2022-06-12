@@ -16,6 +16,12 @@ public:
 };
 
 
+class Ground : public Entity {
+public:
+
+	Ground();
+};
+
 class Door : public Entity {
 public:
 
@@ -44,6 +50,7 @@ public:
 	int numRooms = 3;
 	int numDoors = 4;
 
+	Ground* ground;
 	std::vector<Room*> rooms;
 	std::vector<Door*> doors;
 
