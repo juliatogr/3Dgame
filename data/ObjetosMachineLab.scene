@@ -1,246 +1,246 @@
 Entities 49
 MESH data/MachineLab/Objetos/cables.obj 
 TEXTURE data/MachineLab/Texturas/cables.tga
--5.070,0.300,-2.850
+-10.140,0.600,-5.700
 0.000,0.000,0.000 
-0.002,0.002,0.002
+0.004,0.004,0.004
 MESH data/MachineLab/Objetos/mouse.obj 
 TEXTURE data/MachineLab/Texturas/mouse.tga
--5.028,0.300,-2.860
+-10.056,0.600,-5.72
 0.000,0.000,0.000 
-0.030,0.030,0.030
+0.060,0.060,0.060
 MESH data/MachineLab/Objetos/keyboard.obj 
 TEXTURE data/MachineLab/Texturas/keyboard.tga
--5.320,0.300,-2.790
+-10.640,0.600,-5.580
 0.000,0.000,0.000 
-0.130,0.130,0.130
+0.260,0.260,0.260
 MESH data/MachineLab/Objetos/PC.obj 
 TEXTURE data/MachineLab/Texturas/PC.tga
--5.070,0.408,-2.840
-0.000,0.000,0.000 
-0.0003,0.0003,0.0003
+-10.140,0.816,-5.680
+0.000,0.000,0.000
+0.0006,0.0006,0.0006
 MESH data/MachineLab/Objetos/monitors.obj 
 TEXTURE data/MachineLab/Texturas/monitors.tga
--5.070,0.300,-2.850
+-10.140,0.600,-5.70
 0.000,0.000,0.000 
-0.002,0.002,0.002
+0.004,0.004,0.004
 MESH data/MachineLab/Objetos/table.obj 
 TEXTURE data/MachineLab/Texturas/table.tga
--5.050,0.300,-2.820
+-10.100,0.600,-5.640
 0.000,0.000,0.000 
-0.024,0.024,0.024
+0.048,0.048,0.048
 MESH data/MachineLab/Objetos/OfficeChair.obj 
 TEXTURE data/MachineLab/Texturas/OfficeChair.tga
--5.300,0.000,-2.480
+-10.600,0.000,-4.960
 0.000,180.000,0.000 
-0.004,0.004,0.004
+0.008,0.008,0.008
 MESH data/MachineLab/Objetos/cables.obj 
 TEXTURE data/MachineLab/Texturas/cables.tga
--5.770,0.300,-2.850
+-11.54,0.600,-5.700
 0.000,0.000,0.000 
-0.002,0.002,0.002
+0.004,0.004,0.004
 MESH data/MachineLab/Objetos/mouse.obj 
 TEXTURE data/MachineLab/Texturas/mouse.tga
--5.728,0.300,-2.860
+-11.426,0.600,-5.72
 0.000,0.000,0.000 
-0.030,0.030,0.030
+0.060,0.060,0.060
 MESH data/MachineLab/Objetos/keyboard.obj 
 TEXTURE data/MachineLab/Texturas/keyboard.tga
--6.020,0.300,-2.790
+-12.040,0.600,-5.58
 0.000,0.000,0.000 
-0.130,0.130,0.130
+0.260,0.260,0.260
 MESH data/MachineLab/Objetos/PC.obj 
 TEXTURE data/MachineLab/Texturas/PC.tga
--5.770,0.408,-2.840
+-11.540,0.816,-5.680
 0.000,0.000,0.000 
-0.0003,0.0003,0.0003
+0.0006,0.0006,0.0006
 MESH data/MachineLab/Objetos/monitors.obj 
 TEXTURE data/MachineLab/Texturas/monitors.tga
--5.770,0.300,-2.850
+-11.540,0.600,-5.70
 0.000,0.000,0.000 
-0.002,0.002,0.002
+0.004,0.004,0.004
 MESH data/MachineLab/Objetos/monitors.obj 
 TEXTURE data/MachineLab/Texturas/monitors.tga
--4.200,0.300,-1.000
+-8.400,0.600,-2.000
 0.000,90.000,0.000 
-0.002,0.002,0.002
+0.004,0.004,0.004
 MESH data/MachineLab/Objetos/table.obj 
 TEXTURE data/MachineLab/Texturas/table.tga
--5.750,0.300,-2.820
+-11.50,0.600,-5.640
 0.000,0.000,0.000 
-0.024,0.024,0.024
+0.048,0.048,0.048
 MESH data/MachineLab/Objetos/OfficeChair.obj 
 TEXTURE data/MachineLab/Texturas/OfficeChair.tga
--6.000,0.000,-2.480
+-12.000,0.000,-4.960
 0.000,180.000,0.000 
-0.004,0.004,0.004
+0.008,0.008,0.008
 MESH data/MachineLab/Objetos/cutterMachine.obj 
 TEXTURE data/MachineLab/Texturas/cutterMachine.tga
--4.500,0.000,-2.550
+-9.000,0.000,-5.100
 0.000,270.000,0.000 
-0.030,0.030,0.030
+0.060,0.060,0.060
 MESH data/MachineLab/Objetos/OfficeChair.obj 
 TEXTURE data/MachineLab/Texturas/OfficeChair.tga
--4.410,0.000,-2.080
+-8.820,0.000,-4.160
 0.000,230.000,0.000 
-0.004,0.004,0.004
+0.008,0.008,0.008
 MESH data/MachineLab/Objetos/Internet_Server.obj 
 TEXTURE data/MachineLab/Texturas/Internet_Server.tga
--4.200,0.300,-0.400
+-8.400,0.600,-0.800
 0.000,180.000,0.000 
-0.020,0.020,0.020
+0.040,0.040,0.040
 MESH data/MachineLab/Objetos/oscilloscope.obj 
 TEXTURE data/MachineLab/Texturas/oscilloscope.tga
--4.200,0.300,-0.625
+-8.400,0.600,-1.250
 0.000,90.000,0.000 
-0.007,0.007,0.007
+0.014,0.014,0.014
 MESH data/MachineLab/Objetos/Internet_Server.obj 
 TEXTURE data/MachineLab/Texturas/Internet_Server.tga
--4.200,0.330,-0.400
+-8.400,0.660,-0.800
 0.000,180.000,0.000 
-0.020,0.020,0.020
+0.040,0.040,0.040
 MESH data/MachineLab/Objetos/Internet_Server.obj 
 TEXTURE data/MachineLab/Texturas/Internet_Server.tga
--4.200,0.360,-0.400
+-8.400,0.720,-0.800
 0.000,180.000,0.000 
-0.020,0.020,0.020
+0.040,0.040,0.040
 MESH data/MachineLab/Objetos/Internet_Server.obj 
 TEXTURE data/MachineLab/Texturas/Internet_Server.tga
--4.200,0.390,-0.400
+-8.400,0.780,-0.800
 0.000,180.000,0.000 
-0.020,0.020,0.020
+0.040,0.040,0.040
 MESH data/MachineLab/Objetos/Internet_Server.obj 
 TEXTURE data/MachineLab/Texturas/Internet_Server.tga
--4.200,0.420,-0.400
+-8.400,0.840,-0.800
 0.000,180.000,0.000 
-0.020,0.020,0.020
+0.040,0.040,0.040
 MESH data/MachineLab/Objetos/Internet_Server.obj 
 TEXTURE data/MachineLab/Texturas/Internet_Server.tga
--4.200,0.450,-0.400
+-8.400,0.900,-0.800
 0.000,180.000,0.000 
-0.020,0.020,0.020
+0.040,0.040,0.040
 MESH data/MachineLab/Objetos/medicalConsole.obj 
 TEXTURE data/MachineLab/Texturas/medicalConsole.tga
--4.900,-0.020,-1.200
+-9.800,-0.040,-2.400
 0.000,90.000,0.000 
-0.008,0.008,0.008
+0.016,0.016,0.016
 MESH data/MachineLab/Objetos/rackServerDalam.obj 
 TEXTURE data/MachineLab/Texturas/rackServerDalam.tga
--4.200,0.420,3.300
+-8.400,0.840,6.600
 0.000,180.000,0.000 
-2.100,2.100,2.100
+4.200,4.200,4.200
 MESH data/MachineLab/Objetos/rackServerDalam.obj 
 TEXTURE data/MachineLab/Texturas/rackServerDalam.tga
--4.600,0.420,3.300
+-9.200,0.840,6.600
 0.000,180.000,0.000 
-2.100,2.100,2.100
+4.200,4.200,4.200
 MESH data/MachineLab/Objetos/rackServerDalam.obj 
 TEXTURE data/MachineLab/Texturas/rackServerDalam.tga
--5.000,0.420,3.300
+-10.000,0.840,6.600
 0.000,180.000,0.000 
-2.100,2.100,2.100
+4.200,4.200,4.200
 MESH data/MachineLab/Objetos/rackServerDalam.obj 
 TEXTURE data/MachineLab/Texturas/rackServerDalam.tga
--5.400,0.420,3.300
+-10.800,0.840,6.600
 0.000,180.000,0.000 
-2.100,2.100,2.100
+4.200,4.200,4.200
 MESH data/MachineLab/Objetos/rackServerDalam.obj 
 TEXTURE data/MachineLab/Texturas/rackServerDalam.tga
--5.800,0.420,3.300
+-11.600,0.840,6.600
 0.000,180.000,0.000 
-2.100,2.100,2.100
+4.200,4.200,4.200
 MESH data/MachineLab/Objetos/rackServerDalam.obj 
 TEXTURE data/MachineLab/Texturas/rackServerDalam.tga
--6.200,0.420,3.300
+-12.400,0.840,6.600
 0.000,180.000,0.000 
-2.100,2.100,2.100
+4.200,4.200,4.200
 MESH data/MachineLab/Objetos/ServerMaterial.obj 
 TEXTURE data/MachineLab/Texturas/ServerMaterial.tga
--6.250,0.500,1.200
+-12.500,1.000,2.400
 0.000,90.000,0.000 
-0.480,0.480,0.480
+0.960,0.960,0.960
 MESH data/MachineLab/Objetos/ServerMaterial.obj 
 TEXTURE data/MachineLab/Texturas/ServerMaterial.tga
--6.250,0.500,0.900
+-12.500,1.000,1.800
 0.000,90.000,0.000 
-0.480,0.480,0.480
+0.960,0.960,0.960
 MESH data/MachineLab/Objetos/ServerMaterial.obj 
 TEXTURE data/MachineLab/Texturas/ServerMaterial.tga
--6.250,0.500,0.600
+-12.500,1.000,1.200
 0.000,90.000,0.000 
-0.480,0.480,0.480
+0.960,0.960,0.960
 MESH data/MachineLab/Objetos/ServerMaterial.obj 
 TEXTURE data/MachineLab/Texturas/ServerMaterial.tga
--6.250,0.500,0.300
+-12.500,1.000,0.600
 0.000,90.000,0.000 
-0.480,0.480,0.480
+0.960,0.960,0.960
 MESH data/MachineLab/Objetos/ServerMaterial.obj 
 TEXTURE data/MachineLab/Texturas/ServerMaterial.tga
--6.250,0.500,0.000
+-12.500,1.000,0.000
 0.000,90.000,0.000 
-0.480,0.480,0.480
+0.960,0.960,0.960
 MESH data/MachineLab/Objetos/ServerMaterial.obj 
 TEXTURE data/MachineLab/Texturas/ServerMaterial.tga
--6.250,0.500,-0.300
+-12.500,1.000,-0.600
 0.000,90.000,0.000 
-0.480,0.480,0.480
+0.960,0.960,0.960
 MESH data/MachineLab/Objetos/ServerMaterial.obj 
 TEXTURE data/MachineLab/Texturas/ServerMaterial.tga
--6.250,0.500,-0.600
+-12.500,1.000,-1.200
 0.000,90.000,0.000 
-0.480,0.480,0.480
+0.960,0.960,0.960
 MESH data/MachineLab/Objetos/ServerMaterial.obj 
 TEXTURE data/MachineLab/Texturas/ServerMaterial.tga
--6.250,0.500,-0.900
+-12.500,1.000,-1.800
 0.000,90.000,0.000 
-0.480,0.480,0.480
+0.960,0.960,0.960
 MESH data/MachineLab/Objetos/ServerMaterial.obj 
 TEXTURE data/MachineLab/Texturas/ServerMaterial.tga
--6.250,0.500,-1.200
+-12.500,1.000,-2.400
 0.000,90.000,0.000 
-0.480,0.480,0.480
+0.960,0.960,0.960
 MESH data/MachineLab/Objetos/televisionModern.obj 
 TEXTURE data/MachineLab/Texturas/televisionModern.png
--4.100,0.300,0.300
+-8.200,0.600,0.600
 0.000,270.000,0.000 
-0.500,0.500,0.500
+1.000,1.000,1.000
 MESH data/MachineLab/Objetos/trashcan.obj 
 TEXTURE data/MachineLab/Texturas/trashcan.png
--6.400,0.000,-2.860
+-12.600,0.000,-5.720
 0.000,180.000,0.000 
-0.500,0.500,0.500
+1.000,1.000,1.000
 MESH data/MachineLab/Objetos/table.obj 
 TEXTURE data/MachineLab/Texturas/table.tga
--4.200,0.300,-1.000
+-8.400,0.600,-2.000
 0.000,90.000,0.000 
-0.024,0.024,0.024
+0.048,0.048,0.048
 MESH data/MachineLab/Objetos/table.obj 
 TEXTURE data/MachineLab/Texturas/table.tga
--4.200,0.300,-0.500
+-8.400,0.600,-1.000
 0.000,90.000,0.000 
-0.024,0.024,0.024
+0.048,0.048,0.048
 MESH data/MachineLab/Objetos/table.obj 
 TEXTURE data/MachineLab/Texturas/table.tga
--4.200,0.300,0.000
+-8.400,0.600,0.000
 0.000,90.000,0.000 
-0.024,0.024,0.024
+0.048,0.048,0.048
 MESH data/MachineLab/Objetos/table.obj 
 TEXTURE data/MachineLab/Texturas/table.tga
--4.200,0.300,0.500
+-8.400,0.600,1.00
 0.000,90.000,0.000 
-0.024,0.024,0.024
+0.048,0.048,0.048
 MESH data/MachineLab/Objetos/calculator1618.obj 
 TEXTURE data/MachineLab/Texturas/calculator1618.tga
--4.300,0.300,-0.100
+-8.600,0.600,-0.200
 0.000,0.000,0.000 
-0.040,0.040,0.040
+0.080,0.080,0.080
 MESH data/MachineLab/Objetos/OfficeChair.obj 
 TEXTURE data/MachineLab/Texturas/OfficeChair.tga
--4.300,0.000,-1.200
+-8.600,0.000,-2.400
 0.000,270.000,0.000 
-0.004,0.004,0.004
+0.008,0.008,0.008
 MESH data/MachineLab/Objetos/OfficeChair.obj 
 TEXTURE data/MachineLab/Texturas/OfficeChair.tga
--4.300,0.000,0.300
+-8.600,0.000,0.600
 0.000,270.000,0.000 
-0.004,0.004,0.004
+0.008,0.008,0.008

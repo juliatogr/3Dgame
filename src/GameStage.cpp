@@ -58,7 +58,7 @@ void PlayStage::Render(Shader* a_shader, Camera* cam)
 	Matrix44 camModel = playerModel;
 	camModel.rotate(this->player->pitch * DEG2RAD, Vector3(1, 0, 0));
 
-	Vector3 eye = playerModel * Vector3(0, 0.6, 0);
+	Vector3 eye = playerModel * Vector3(0, 1.2, 0);
 	Vector3 center = eye + camModel.rotateVector(Vector3(0, 0, -1));
 	Vector3 up = camModel.rotateVector(Vector3(0, 1, 0));
 
@@ -121,7 +121,7 @@ void PlayStage::Update(double seconds_elapsed, boolean cameralocked, float elaps
 
 	Vector3 nextPos = this->player->pos + playerVel;
 	//calculamos el centro de la esfera de colisión del player elevandola hasta la cintura
-	Vector3 character_center = nextPos + Vector3(0, 0.4, 0);
+	Vector3 character_center = nextPos + Vector3(0, 0.3, 0);
 	//para cada objecto de la escena...
 
 
@@ -134,7 +134,7 @@ void PlayStage::Update(double seconds_elapsed, boolean cameralocked, float elaps
 		Vector3 collnorm;
 
 		//comprobamos si colisiona el objeto con la esfera (radio 3)
-		if (!entity->mesh->testSphereCollision(entity->model, character_center, 0.32f, coll, collnorm))
+		if (!entity->mesh->testSphereCollision(entity->model, character_center, 0.05f, coll, collnorm))
 			continue; //si no colisiona, pasamos al siguiente objeto
 
 		//si la esfera está colisionando muevela a su posicion anterior alejandola del objeto
@@ -152,7 +152,7 @@ void PlayStage::Update(double seconds_elapsed, boolean cameralocked, float elaps
 			Vector3 coll;
 			Vector3 collnorm;
 
-			if (!entity->mesh->testSphereCollision(entity->model, character_center, 0.32f, coll, collnorm)) {
+			if (!entity->mesh->testSphereCollision(entity->model, character_center, 0.05f, coll, collnorm)) {
 				continue;
 			}
 			//si la esfera está colisionando muevela a su posicion anterior alejandola del objeto
