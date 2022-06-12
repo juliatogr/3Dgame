@@ -1,34 +1,4 @@
-Entities 17
-MESH data/Estructuras/Floors/Floor1.obj 
-TEXTURE data/Estructuras/Floors/Floor1.tga 
--0.003,0.000,-8.262 
-0.000,0.000,0.000
-1.000,1.000,1.000
-MESH data/Estructuras/Floors/Floor1.obj 
-TEXTURE data/Estructuras/Floors/Floor1.tga 
--1.223,0.000,-8.262 
-0.000,180.000,0.000 
-1.000,1.000,1.000
-MESH data/Estructuras/Floors/Floor1.obj 
-TEXTURE data/Estructuras/Floors/Floor1.tga 
--0.003,0.000,-7.042 
-0.000,180.000,0.000 
-1.000,1.000,1.000
-MESH data/Estructuras/Floors/Floor1.obj 
-TEXTURE data/Estructuras/Floors/Floor1.tga 
--1.223,0.000,-7.042 
-0.000,180.000,0.000 
-1.000,1.000,1.000
-MESH data/Estructuras/Floors/Floor1.obj 
-TEXTURE data/Estructuras/Floors/Floor1.tga 
--0.003,0.000,-5.822 
-0.000,180.000,0.000 
-1.000,1.000,1.000
-MESH data/Estructuras/Floors/Floor1.obj 
-TEXTURE data/Estructuras/Floors/Floor1.tga 
--1.223,0.000,-5.822 
-0.000,180.000,0.000 
-1.000,1.000,1.000
+Entities 11
 MESH data/Estructuras/Walls/Wall1_2.obj 
 TEXTURE data/Estructuras/Walls/Wall2.tga 
 0.607,0.000,-8.262 

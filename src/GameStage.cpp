@@ -46,7 +46,6 @@ PlayStage::PlayStage()
 {
 	this->lab = new Lab();
 	this->player = new Player();
-
 }
 
 
@@ -65,6 +64,7 @@ void PlayStage::Render(Shader* a_shader, Camera* cam)
 
 	cam->lookAt(eye, center, up);
 	
+	lab->ground->RenderMesh(a_shader, cam);
 
 	for (int r = 0; r < this->lab->numRooms; r++) {
 		for (size_t i = 0; i < this->lab->rooms[r]->entities.size(); i++)

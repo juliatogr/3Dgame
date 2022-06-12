@@ -9,6 +9,12 @@
 #include "game.h"
 
 
+Ground::Ground() {
+	this->mesh = new Mesh();
+	this->mesh->createPlane(1000);
+	this->texture = Texture::Get("data/Estructuras/Floors/Floor1.tga");
+}
+
 void Entity::RenderMesh(Shader* a_shader, Camera* cam) {
 
 	assert(this->mesh != NULL, "mesh in renderMesh was null");
@@ -152,6 +158,7 @@ void Lab::LoadDoors(const char* path) {
 
 Lab::Lab() {
 	
+	this->ground = new Ground();
 	for (int i = 0; i < this->numRooms; i++) {
 		Room* room = new Room();
 		this->rooms.push_back(room);
