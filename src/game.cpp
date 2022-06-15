@@ -94,6 +94,8 @@ Game::Game(int window_width, int window_height, SDL_Window* window)
 	camera->setPerspective(35.f, window_width / (float)window_height, 0.1f, 100000.f); //set the projection, we want to be perspective
 
 	//init
+	instance->gameState = new GameState();
+
 	InitStages();
 	// example of shader loading using the shaders manager
 	shader = Shader::Get("data/shaders/basic.vs", "data/shaders/texture.fs");
@@ -122,29 +124,53 @@ void Game::render(void)
 	glDisable(GL_CULL_FACE);
 
 	if (GetCurrentStage()->GetId() == PLAY){
-		
-
+	
 		GetCurrentStage()->Render(shader, camera);
-	}
-	//Draw the floor grid
-	drawGrid();
+		//Draw the floor grid
+		drawGrid();
 
-	if (test == true) {
-		//render the FPS, Draw Calls, etc
-		drawText(2, 2, getGPUStats(), Vector3(1, 1, 1), 2);
+		if (test == true) {
+			//render the FPS, Draw Calls, etc
+			drawText(2, 2, getGPUStats(), Vector3(1, 1, 1), 2);
+		}
 	}
+	
 	//swap between front buffer and back buffer
 	SDL_GL_SwapWindow(this->window);
 }
 
+void pickButton() {
+	Vector2 mouse = Input::mouse_position;
+	Game* g = Game::instance;
+	Vector3 dir = g->camera->getRayDirection(mouse.x, mouse.y, g->window_width, g->window_height);
+	Vector3 rayOrigin = g->camera->eye;
+
+	for (int r = 0; r < GetCurrentStage()->menu->Buttons.size(); r++) {
+
+		Button* button = GetCurrentStage()->menu->Buttons[r];
+		Vector3 pos;
+		Vector3 normal;
+		if (button->quad.testRayCollision(button->quadModel, rayOrigin, dir, pos, normal)) {
+
+			//this->selectedEntity = entity;
+			button->onClick = true;
+			break;
+		}
+
+	}
+
+
+}
 
 
 void Game::update(double seconds_elapsed)
 {
-	float speed = 0.02*seconds_elapsed * mouse_speed; //the speed is defined by the seconds_elapsed so it goes constant
-	
-	if (GetCurrentStage()->GetId() == PLAY) {
+	float speed = 0.02 * seconds_elapsed * mouse_speed; //the speed is defined by the seconds_elapsed so it goes constant
 
+	if (GetCurrentStage()->GetId() == PLAY) {
+		if (Game::instance->gameState->UIActive == true) {
+			pickButton();
+		}
 		GetCurrentStage()->Update(seconds_elapsed, cameralocked, elapsed_time, speed, camera, mouse_locked);
 	}
 }
@@ -166,6 +192,7 @@ void Game::onKeyDown(SDL_KeyboardEvent event)
 	case SDLK_8: GetCurrentStage()->RayPick(camera); break; 
 	case SDLK_KP_PLUS: GetCurrentStage()->RotateSelected(10.0f); break;
 	case SDLK_KP_MINUS: GetCurrentStage()->RotateSelected(-10.0f); break;
+	case SDLK_m: Game::gameState->UIActive = !Game::gameState->UIActive; break;
 
 	}
 
@@ -194,6 +221,19 @@ void Game::onMouseButtonDown(SDL_MouseButtonEvent event)
 	{
 		mouse_locked = !mouse_locked;
 		SDL_ShowCursor(!mouse_locked);
+	}
+	if (event.button == SDL_BUTTON_LEFT) //left mouse
+	{
+		if (GetCurrentStage()->GetId() == PLAY) {
+
+			if ((Game::instance->gameState->UIActive == true)) {
+				for (int i = 0; GetCurrentStage()->menu->Buttons.size(); i++) {
+					if (GetCurrentStage()->menu->Buttons[i]->onClick == true)
+						std::cout << "UIACTIVE" << std::endl;
+				}
+			}
+		}
+
 	}
 }
 

@@ -2,6 +2,7 @@
 #include "camera.h"
 #include "entity.h"
 #include "Player.h"
+#include "UI.h"
 
 
 
@@ -25,6 +26,7 @@ public:
 	Entity* selectedEntity = NULL;
 
 	Player* player;
+	Menu* menu;
 
 	virtual STAGE_ID GetId() = 0;
 	virtual void RayPick(Camera* cam);

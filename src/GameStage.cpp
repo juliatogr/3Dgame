@@ -46,6 +46,7 @@ PlayStage::PlayStage()
 {
 	this->lab = new Lab();
 	this->player = new Player();
+	this->menu = new Menu();
 }
 
 
@@ -81,93 +82,113 @@ void PlayStage::Render(Shader* a_shader, Camera* cam)
 		door->RenderMesh(a_shader, cam);
 
 	}
+	if (Game::instance->gameState->UIActive == true) {
+		//UI
+		glDisable(GL_DEPTH_TEST);
+		glDisable(GL_CULL_FACE);
+		glEnable(GL_BLEND);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+		this->menu->RenderMenu();
+
+
+		glEnable(GL_DEPTH_TEST);
+		glEnable(GL_CULL_FACE);
+		glDisable(GL_BLEND);
+	}
 }
 
 void PlayStage::Update(double seconds_elapsed, boolean cameralocked, float elapsed_time, float speed, Camera* camera, bool mouse_locked)
 {
-	//mouse input to rotate the cam
-	if ((Input::mouse_state & SDL_BUTTON_LEFT) || mouse_locked) //is left button pressed?
-	{
+	if (Game::instance->gameState->UIActive == false) {
+		//mouse input to rotate the cam
+		if ((Input::mouse_state & SDL_BUTTON_LEFT) || mouse_locked) //is left button pressed?
+		{
 
-		camera->rotate(Input::mouse_delta.x * 0.005f, Vector3(0.0f, -1.0f, 0.0f));
-		camera->rotate(Input::mouse_delta.y * 0.005f, camera->getLocalVector(Vector3(-1.0f, 0.0f, 0.0f)));
-	}
+			camera->rotate(Input::mouse_delta.x * 0.005f, Vector3(0.0f, -1.0f, 0.0f));
+			camera->rotate(Input::mouse_delta.y * 0.005f, camera->getLocalVector(Vector3(-1.0f, 0.0f, 0.0f)));
+		}
 
-	if (Input::wasKeyPressed(SDL_SCANCODE_TAB)) {
-		cameralocked = !cameralocked;
-	}
-	float playerSpeed = 5.0f * elapsed_time;
-	float rotSpeed = 200.0f * DEG2RAD * elapsed_time;
+		if (Input::wasKeyPressed(SDL_SCANCODE_TAB)) {
+			cameralocked = !cameralocked;
+		}
+		float playerSpeed = 5.0f * elapsed_time;
+		float rotSpeed = 200.0f * DEG2RAD * elapsed_time;
 
-	this->player->yaw += -Input::mouse_delta.x * 10.0f * elapsed_time;
-	this->player->pitch += -Input::mouse_delta.y * 10.0f * elapsed_time;
-
-
-	Input::centerMouse();
-	SDL_ShowCursor(false);
+		this->player->yaw += -Input::mouse_delta.x * 10.0f * elapsed_time;
+		this->player->pitch += -Input::mouse_delta.y * 10.0f * elapsed_time;
 
 
-	Matrix44 playerRotation = this->player->model;
-	playerRotation.rotate(this->player->yaw * DEG2RAD, Vector3(0, 1, 0));
-
-	Vector3 forward = playerRotation.rotateVector(Vector3(0, 0, 1));
-	Vector3 right = playerRotation.rotateVector(Vector3(1, 0, 0));
-	Vector3 playerVel;
-
-	if (Input::isKeyPressed(SDL_SCANCODE_S)) playerVel = playerVel + (forward * playerSpeed);
-	if (Input::isKeyPressed(SDL_SCANCODE_W)) playerVel = playerVel - (forward * playerSpeed);
-	if (Input::isKeyPressed(SDL_SCANCODE_D)) playerVel = playerVel + (right * playerSpeed);
-	if (Input::isKeyPressed(SDL_SCANCODE_A)) playerVel = playerVel - (right * playerSpeed);
-
-	Vector3 nextPos = this->player->pos + playerVel;
-	//calculamos el centro de la esfera de colisión del player elevandola hasta la cintura
-	Vector3 character_center = nextPos + Vector3(0, 0.3, 0);
-	//para cada objecto de la escena...
+		Input::centerMouse();
+		SDL_ShowCursor(false);
 
 
-	int numDoors = lab->doors.size();
+		Matrix44 playerRotation = this->player->model;
+		playerRotation.rotate(this->player->yaw * DEG2RAD, Vector3(0, 1, 0));
 
-	for (int r = 0; r < numDoors; r++) {
-		Entity* entity = this->lab->doors[r];
+		Vector3 forward = playerRotation.rotateVector(Vector3(0, 0, 1));
+		Vector3 right = playerRotation.rotateVector(Vector3(1, 0, 0));
+		Vector3 playerVel;
 
-		Vector3 coll;
-		Vector3 collnorm;
+		if (Input::isKeyPressed(SDL_SCANCODE_S)) playerVel = playerVel + (forward * playerSpeed);
+		if (Input::isKeyPressed(SDL_SCANCODE_W)) playerVel = playerVel - (forward * playerSpeed);
+		if (Input::isKeyPressed(SDL_SCANCODE_D)) playerVel = playerVel + (right * playerSpeed);
+		if (Input::isKeyPressed(SDL_SCANCODE_A)) playerVel = playerVel - (right * playerSpeed);
 
-		//comprobamos si colisiona el objeto con la esfera (radio 3)
-		if (!entity->mesh->testSphereCollision(entity->model, character_center, 0.05f, coll, collnorm))
-			continue; //si no colisiona, pasamos al siguiente objeto
+		Vector3 nextPos = this->player->pos + playerVel;
+		//calculamos el centro de la esfera de colisión del player elevandola hasta la cintura
+		Vector3 character_center = nextPos + Vector3(0, 0.3, 0);
+		//para cada objecto de la escena...
 
-		//si la esfera está colisionando muevela a su posicion anterior alejandola del objeto
-		Vector3 push_away = normalize(coll - character_center) * elapsed_time;
 
-		nextPos = this->player->pos - push_away; //move to previous pos but a little bit further
-		//reflejamos el vector velocidad para que de la sensacion de que rebota en la pared
-		//velocity = reflect(velocity, collnorm) * 0.95;
-	}
+		int numDoors = lab->doors.size();
 
-	for (int r = 0; r < this->lab->numRooms; r++) {
-		for (size_t i = 0; i < this->lab->rooms[r]->entities.size(); i++) {
-			Entity* entity = this->lab->rooms[r]->entities[i];
+		for (int r = 0; r < numDoors; r++) {
+			Entity* entity = this->lab->doors[r];
 
 			Vector3 coll;
 			Vector3 collnorm;
 
-			if (!entity->mesh->testSphereCollision(entity->model, character_center, 0.05f, coll, collnorm)) {
-				continue;
-			}
+			//comprobamos si colisiona el objeto con la esfera (radio 3)
+			if (!entity->mesh->testSphereCollision(entity->model, character_center, 0.05f, coll, collnorm))
+				continue; //si no colisiona, pasamos al siguiente objeto
+
 			//si la esfera está colisionando muevela a su posicion anterior alejandola del objeto
 			Vector3 push_away = normalize(coll - character_center) * elapsed_time;
 
 			nextPos = this->player->pos - push_away; //move to previous pos but a little bit further
 			//reflejamos el vector velocidad para que de la sensacion de que rebota en la pared
 			//velocity = reflect(velocity, collnorm) * 0.95;
-
 		}
+
+		for (int r = 0; r < this->lab->numRooms; r++) {
+			for (size_t i = 0; i < this->lab->rooms[r]->entities.size(); i++) {
+				Entity* entity = this->lab->rooms[r]->entities[i];
+
+				Vector3 coll;
+				Vector3 collnorm;
+
+				if (!entity->mesh->testSphereCollision(entity->model, character_center, 0.05f, coll, collnorm)) {
+					continue;
+				}
+				//si la esfera está colisionando muevela a su posicion anterior alejandola del objeto
+				Vector3 push_away = normalize(coll - character_center) * elapsed_time;
+
+				nextPos = this->player->pos - push_away; //move to previous pos but a little bit further
+				//reflejamos el vector velocidad para que de la sensacion de que rebota en la pared
+				//velocity = reflect(velocity, collnorm) * 0.95;
+
+			}
+		}
+		nextPos.y = 0.0;
+
+		this->player->pos = nextPos;
+
 	}
-	nextPos.y = 0.0;
+	else {
+		SDL_ShowCursor(true);
 
-	this->player->pos = nextPos;
-
+	}
 }
 
 STAGE_ID IntroStage::GetId()

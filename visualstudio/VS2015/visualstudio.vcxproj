@@ -156,6 +156,7 @@
     <ClCompile Include="..\..\src\shader.cpp" />
     <ClCompile Include="..\..\src\Tasks.cpp" />
     <ClCompile Include="..\..\src\texture.cpp" />
+    <ClCompile Include="..\..\src\UI.cpp" />
     <ClCompile Include="..\..\src\utils.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -187,6 +188,7 @@
     <ClInclude Include="..\..\src\shader.h" />
     <ClInclude Include="..\..\src\Tasks.h" />
     <ClInclude Include="..\..\src\texture.h" />
+    <ClInclude Include="..\..\src\UI.h" />
     <ClInclude Include="..\..\src\utils.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
