@@ -232,7 +232,7 @@ void Game::onMouseButtonDown(SDL_MouseButtonEvent event)
 				for (int i = 0; i < menu->Buttons.size(); i++) {
 					Button* current = menu->Buttons[i];
 					if (current->type == H) {
-						std::cout << "UIACTIVE" << std::endl;
+						std::cout << "UIACTIVE: " <<current->text<< std::endl;
 						current->type = N;
 					}
 				}

@@ -56,7 +56,7 @@ void Button::RenderButton()
 
 }
 
-Button::Button(BUTTONTYPE t, Vector4 v)
+Button::Button(BUTTONTYPE t, Vector4 v, const char* te)
 {
 	this->Active = Texture::Get("data/UI/HologramInterface/Button 1/Button Active.png");
 	this->Disabled = Texture::Get("data/UI/HologramInterface/Button 1/Button Disable.png");
@@ -64,6 +64,7 @@ Button::Button(BUTTONTYPE t, Vector4 v)
 	this->Normal = Texture::Get("data/UI/HologramInterface/Button 1/Button Normal.png");
 	this->type = t;
 	this->xyhw = v;
+	this->text = te;
 	
 }
 
@@ -72,10 +73,10 @@ Menu::Menu()
 	this->Card = Texture::Get("data/UI/HologramInterface/Card X1/Card X2.png");
 	int x = 100;
 	this->Buttons.reserve(3);
-	this->Buttons.push_back(new Button(N, Vector4(x, 100, 150, 50)));
-	this->Buttons.push_back(new Button(D, Vector4(x+200, 100, 150, 50)));
-	this->Buttons.push_back(new Button(N, Vector4(x+400, 100, 150, 50)));
-	this->Buttons.push_back(new Button(D, Vector4(x+600, 100, 150, 50)));
+	this->Buttons.push_back(new Button(N, Vector4(x, 100, 150, 50), "1"));
+	this->Buttons.push_back(new Button(D, Vector4(x+200, 100, 150, 50), "2"));
+	this->Buttons.push_back(new Button(N, Vector4(x+400, 100, 150, 50), "3"));
+	this->Buttons.push_back(new Button(D, Vector4(x+600, 100, 150, 50), "4"));
 
 
 

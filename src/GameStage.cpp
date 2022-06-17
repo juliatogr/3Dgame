@@ -34,15 +34,17 @@ void GameStage::PickButton() {
 		Button* current = this->menu->Buttons[i];
 		Vector2 size = Vector2(current->xyhw.z, current->xyhw.w);
 		Vector2 position = Vector2(current->xyhw.x - (size.x / 2), current->xyhw.y - (size.y / 2));
-		if (((mouse.x > (position.x)) && (mouse.y > position.y)) && ((mouse.x < (position.x + size.x)) && (mouse.y < (position.y + size.y)))) {
-			//std::cout << i << ". " << "mouse.x > position.x) && (mouse.y > position.y)" << std::endl;
-			current->type = H;
+		if((current->type==N) || (current->type == H)){
+			if (((mouse.x > (position.x)) && (mouse.y > position.y)) && ((mouse.x < (position.x + size.x)) && (mouse.y < (position.y + size.y)))) {
+				//std::cout << i << ". " << "mouse.x > position.x) && (mouse.y > position.y)" << std::endl;
+				current->type = H;
 
 
-		}
-		else {
-			current->type = N;
+			}
+			else {
+				current->type = N;
 
+			}
 		}
 
 	}

@@ -33,11 +33,11 @@ public:
 	Texture* Normal;
 	BUTTONTYPE type;
 	Vector4 xyhw;
-	std::string text;
+	const char* text;
 
 	void RenderButton();
 
-	Button(BUTTONTYPE t, Vector4 v);
+	Button(BUTTONTYPE t, Vector4 v, const char* te);
 };
 
 
