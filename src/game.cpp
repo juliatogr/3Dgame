@@ -227,10 +227,16 @@ void Game::onMouseButtonDown(SDL_MouseButtonEvent event)
 		if (GetCurrentStage()->GetId() == PLAY) {
 
 			if ((Game::instance->gameState->UIActive == true)) {
-				for (int i = 0; GetCurrentStage()->menu->Buttons.size(); i++) {
-					if (GetCurrentStage()->menu->Buttons[i]->onClick == true)
-						std::cout << "UIACTIVE" << std::endl;
+				
+				Menu* menu = GetCurrentStage()->menu;
+				for (int i = 0; i < menu->Buttons.size(); i++) {
+					Button* current = menu->Buttons[i];
+					if (current->type == H) {
+						std::cout << "UIACTIVE: " <<current->text<< std::endl;
+						current->type = N;
+					}
 				}
+
 			}
 		}
 

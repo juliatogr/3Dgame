@@ -27,6 +27,28 @@ void GameStage::RayPick(Camera* cam) {
 		}
 	}
 }
+void GameStage::PickButton() {
+
+	Vector2 mouse = Input::mouse_position;
+	for (int i = 0; i < this->menu->Buttons.size(); i++) {
+		Button* current = this->menu->Buttons[i];
+		Vector2 size = Vector2(current->xyhw.z, current->xyhw.w);
+		Vector2 position = Vector2(current->xyhw.x - (size.x / 2), current->xyhw.y - (size.y / 2));
+		if((current->type==N) || (current->type == H)){
+			if (((mouse.x > (position.x)) && (mouse.y > position.y)) && ((mouse.x < (position.x + size.x)) && (mouse.y < (position.y + size.y)))) {
+				//std::cout << i << ". " << "mouse.x > position.x) && (mouse.y > position.y)" << std::endl;
+				current->type = H;
+
+
+			}
+			else {
+				current->type = N;
+
+			}
+		}
+
+	}
+}
 
 void GameStage::RotateSelected(float angleDegrees) {
 	if (this->selectedEntity == NULL) {
@@ -90,8 +112,7 @@ void PlayStage::Render(Shader* a_shader, Camera* cam)
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 		this->menu->RenderMenu();
-
-
+ 
 		glEnable(GL_DEPTH_TEST);
 		glEnable(GL_CULL_FACE);
 		glDisable(GL_BLEND);
@@ -187,6 +208,8 @@ void PlayStage::Update(double seconds_elapsed, boolean cameralocked, float elaps
 	}
 	else {
 		SDL_ShowCursor(true);
+		this->PickButton();
+		//std::cout << "mouseX:"<<mouse.x <<" mouseY:" <<mouse.y << std::endl;
 
 	}
 }
