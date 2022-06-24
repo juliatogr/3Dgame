@@ -2,6 +2,8 @@
 #include "game.h"
 #include "input.h"
 
+bool testMouse = true;
+
 Lab* GameStage::GetLab()
 {
 	return this->lab;
@@ -72,6 +74,7 @@ PlayStage::PlayStage()
 }
 
 
+
 void PlayStage::Render(Shader* a_shader, Camera* cam)
 {
 	Matrix44 playerModel;
@@ -106,12 +109,15 @@ void PlayStage::Render(Shader* a_shader, Camera* cam)
 	}
 	if (Game::instance->gameState->UIActive == true) {
 		//UI
-		
-		this->menu->RenderMenu();
- 
-	
-		//drawText(this->xyhw.x, this->xyhw.y, this->text, Vector3(1, 1, 1), 2);
 
+		this->menu->RenderMenu();
+
+		if (testMouse == true) {
+			/*testeo para saber posicion del mouse*/
+			Vector2 mouse = Input::mouse_position;
+			std::string text = "Mouse Position2D: "+std::to_string((int)mouse.x) + ", " + std::to_string((int)mouse.y);
+			drawText((Game::instance->window_width) - 290, (Game::instance->window_height)-25, text, Vector3(1, 1, 1), 2);
+		}
 	}
 }
 

@@ -109,8 +109,6 @@ void Menu::RenderMenu()
 		drawText(current->xyhw.x-5, current->xyhw.y-5, current->text, Vector3(1, 1, 1), 2);
 
 	}
-	Vector2 mouse = Input::mouse_position;
-	std::string text = std::to_string(mouse.x)+", "+std::to_string(mouse.y);
-	drawText((Game::instance->window_width / 2)-50, (Game::instance->window_height / 2)-50, text, Vector3(1, 1, 1), 2);
+	
 
 }
