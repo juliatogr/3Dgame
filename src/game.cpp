@@ -141,29 +141,6 @@ void Game::render(void)
 	SDL_GL_SwapWindow(this->window);
 }
 
-void pickButton() {
-	Vector2 mouse = Input::mouse_position;
-	Game* g = Game::instance;
-	Vector3 dir = g->camera->getRayDirection(mouse.x, mouse.y, g->window_width, g->window_height);
-	Vector3 rayOrigin = g->camera->eye;
-
-	for (int r = 0; r < GetCurrentStage()->menu->Buttons.size(); r++) {
-
-		Button* button = GetCurrentStage()->menu->Buttons[r];
-		Vector3 pos;
-		Vector3 normal;
-		if (button->quad.testRayCollision(button->quadModel, rayOrigin, dir, pos, normal)) {
-
-			//this->selectedEntity = entity;
-			button->onClick = true;
-			break;
-		}
-
-	}
-
-
-}
-
 
 void Game::update(double seconds_elapsed)
 {
@@ -171,7 +148,7 @@ void Game::update(double seconds_elapsed)
 
 	if (GetCurrentStage()->GetId() == PLAY) {
 		if (Game::instance->gameState->UIActive == true) {
-			pickButton();
+			//pickButton();
 		}
 		GetCurrentStage()->Update(seconds_elapsed, cameralocked, elapsed_time, speed, shader, camera, mouse_locked);
 	}

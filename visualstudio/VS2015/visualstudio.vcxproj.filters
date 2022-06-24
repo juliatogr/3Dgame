@@ -64,6 +64,18 @@
     <ClCompile Include="..\..\src\extra\jpgd.cpp">
       <Filter>extra</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\Inventory.cpp">
+      <Filter>components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\Note.cpp">
+      <Filter>components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\PopUpMessage.cpp">
+      <Filter>components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\Tasks.cpp">
+      <Filter>components</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\src\entity.cpp">
       <Filter>essentials</Filter>
     </ClCompile>
@@ -86,7 +98,7 @@
       <Filter>Components</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\UI.cpp">
-      <Filter>Components</Filter>
+      <Filter>essentials</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -149,6 +161,18 @@
     <ClInclude Include="..\..\src\extra\jpgd.h">
       <Filter>extra</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\Inventory.h">
+      <Filter>components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Note.h">
+      <Filter>components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\PopUpMessage.h">
+      <Filter>components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Tasks.h">
+      <Filter>components</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\src\entity.h">
       <Filter>essentials</Filter>
     </ClInclude>
@@ -171,7 +195,7 @@
       <Filter>Components</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\UI.h">
-      <Filter>Components</Filter>
+      <Filter>essentials</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -187,11 +211,11 @@
     <Filter Include="utils">
       <UniqueIdentifier>{feb78646-9d96-43df-8d00-2397429ea3ef}</UniqueIdentifier>
     </Filter>
-    <Filter Include="essentials">
-      <UniqueIdentifier>{ce535408-e4e9-401e-9b9e-524d8f2ae29e}</UniqueIdentifier>
+    <Filter Include="components">
+      <UniqueIdentifier>{cc6e5211-dd45-43b5-8d4d-18c77497175b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Components">
-      <UniqueIdentifier>{15fbf92c-948b-43d7-b747-44f268dab376}</UniqueIdentifier>
+    <Filter Include="essentials">
+      <UniqueIdentifier>{5556558e-860c-4742-83af-fc38e031a06b}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
