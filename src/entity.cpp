@@ -11,7 +11,7 @@
 
 Ground::Ground() {
 	this->mesh = new Mesh();
-	this->mesh->createPlane(1000);
+	this->mesh->createPlane(500);
 	this->texture = Texture::Get("data/Estructuras/Floors/Floor1.tga");
 }
 
@@ -45,6 +45,17 @@ std::string ReadMeshPath(std::stringstream& ss) {
 	ss >> meshPath;
 	if (ss.peek() == ' ') ss.ignore();
 	return meshPath;
+}
+
+std::string ReadEntityType(std::stringstream& ss) {
+
+	std::string entityType;
+	std::string type;
+	ss >> type;
+	if (ss.peek() == ' ') ss.ignore();
+	ss >> entityType;
+	if (ss.peek() == ' ') ss.ignore();
+	return entityType;
 }
 
 std::string ReadTextPath(std::stringstream& ss) {
@@ -119,6 +130,51 @@ void Room::LoadEntities(const char* path) {
 	}
 }
 
+void Room::LoadTaskEntities(const char* path) {
+	std::string content = "";
+	readFile(path, content);
+	std::stringstream ss(content);
+	int nEntities = std::stoi(ReadNEntities(ss));
+	int count = 0;
+	while (count != nEntities) {
+
+		std::string entType = ReadEntityType(ss);
+		std::string meshPath = ReadMeshPath(ss);
+		const char* c = &meshPath[0];
+		std::string textPath = ReadTextPath(ss);
+		const char* t = &textPath[0];
+		Vector3 pos = ReadVector3(ss);
+		Vector3 rot = ReadVector3(ss);
+		Vector3 scl = ReadVector3(ss);
+
+		std::cout << c << std::endl;
+		std::cout << t << std::endl;
+
+		//create and add the entity;
+
+		TaskEntity* entity = new TaskEntity();
+
+		if (entType == "Note") {
+			Note* noteEnt = new Note();
+			entity = noteEnt;
+		}
+		entity->mesh = Mesh::Get(c);
+		entity->texture = Texture::Get(t);
+		Matrix44 model;
+		model.translate(pos.x, pos.y, pos.z);
+		model.rotate(rot.x * DEG2RAD, Vector3(1, 0, 0));
+		model.rotate(rot.y * DEG2RAD, Vector3(0, 1, 0));
+		model.rotate(rot.z * DEG2RAD, Vector3(0, 0, 1));
+		model.scale(scl.x, scl.y, scl.z);
+
+		entity->model = model;
+		entity->pos = pos;
+
+		taskEntities.push_back(entity);
+		count++;
+	}
+}
+
 void Lab::LoadDoors(const char* path) {
 	std::string content = "";
 	readFile(path, content);
@@ -165,7 +221,7 @@ Lab::Lab() {
 	}
 	LoadRooms();
 	LoadDoors("data/DoorObjects.scene");
-	
+	LoadRoomsTaskEntities();
 }
 
 void Lab::LoadRooms() {
@@ -179,9 +235,49 @@ void Lab::LoadRooms() {
 
 }
 
-void Door::Move(Shader* a_shader, Camera* cam)
-{
-	
-	this->model.translate(-1.0f * speed, 0.0f, 0.0f);
+void Lab::LoadRoomsTaskEntities() {
+
+	this->rooms[int(sRooms::HALL)]->LoadTaskEntities("data/ObjetosTareasPasillo.scene");
+	this->rooms[int(sRooms::CHEM)]->LoadTaskEntities("data/ObjetosTareasChemicalLab.scene");
+	this->rooms[int(sRooms::MACH)]->LoadTaskEntities("data/ObjetosTareasMachineLab.scene");
+
 }
 
+void Door::Open(Shader* a_shader, float seconds_elapsed)
+{
+	if (this->isOpening == true) {
+		currDist += -0.2f * speed;
+		if (abs(currDist) < maxDist) {
+			this->model.translate(-1.0f * speed, 0.0f, 0.0f);
+		}
+		else {
+			this->isOpening = false;
+		}
+	}
+	
+}
+
+void Note::Show(Shader* a_shader, Camera* cam) {
+
+}
+
+void TaskEntity::viewToTask(Camera* cam, float seconds_elapsed) {
+
+	Vector3 viewCenter = this->pos;
+	Vector3 viewEye = viewCenter + Vector3(0, 1, 0);
+	if (cam->eye.x != viewEye.x || cam->eye.y != viewEye.y || cam->eye.z != viewEye.z) {
+		cam->lookAt(viewEye, viewCenter, Vector3(0,0,1));
+
+	}
+}
+void TaskEntity::returnView(Camera* cam, float seconds_elapsed) {
+	this->isViewed = true;
+	this->isViewing = false;
+
+	cam->lookAt(this->pos + Vector3(0,0.3,0), this->pos, Vector3(0, 1, 0));
+	this->isReturning = false;
+}
+
+Note::Note() {
+	this->canBeSaved = true;
+}
