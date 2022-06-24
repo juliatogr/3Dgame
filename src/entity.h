@@ -4,6 +4,8 @@
 #include "texture.h"
 #include "camera.h"
 #include "shader.h"
+
+
 class Entity
 {
 public:
@@ -15,29 +17,52 @@ public:
 
 };
 
+class TaskEntity : public Entity {
+public:
+	bool isViewing = false;
+	bool isViewed = false;
+	bool isReturning = false;
+	bool canBeSaved = false;
+	bool isSaved = false;
+
+	Vector3 pos;
+
+	void viewToTask(Camera* cam, float seconds_elapsed);
+	void returnView(Camera* cam, float seconds_elapsed);
+};
+
+class Note : public TaskEntity {
+public:
+
+	Note();
+	void Show(Shader* a_shader, Camera* cam);
+};
 
 class Ground : public Entity {
 public:
-
+	bool canBeSaved = false;
 	Ground();
 };
 
 class Door : public Entity {
 public:
 
+	bool canBeSaved = false;
+	bool isOpening = false;
+	float maxDist = 0.5;
+	float currDist = 0;
+	float speed = 0.002f;
 
-	bool blocked = true;
-	bool isOpen = false;
-	float speed = 0.02f;
-
-	void Move(Shader* a_shader, Camera* cam);
+	void Open(Shader* a_shader, float seconds_elapsed);
 
 };
 
 class Room {
 public:
 	std::vector<Entity*> entities;
+	std::vector<TaskEntity*> taskEntities;
 	void LoadEntities(const char* path);
+	void LoadTaskEntities(const char* path);
 };
 
 class Lab {
@@ -57,7 +82,11 @@ public:
 	Lab();
 	void LoadDoors(const char* path);
 	void LoadRooms();
+	void LoadRoomsTaskEntities();
 };
+
+
+
 
 
 

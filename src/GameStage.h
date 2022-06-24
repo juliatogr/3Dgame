@@ -1,6 +1,7 @@
 #include "shader.h"
 #include "camera.h"
 #include "entity.h"
+#include "inventory.h"
 #include "Player.h"
 #include "UI.h"
 
@@ -22,8 +23,10 @@ class GameStage {
 public:
 
 	Lab* lab;
+
 	virtual Lab* GetLab();
 	Entity* selectedEntity = NULL;
+	TaskEntity* selectedTaskEntity = NULL;
 
 	Player* player;
 	Menu* menu;
@@ -33,7 +36,7 @@ public:
 	virtual void PickButton();
 	virtual void RotateSelected(float angleDegrees);
 	virtual void Render(Shader* a_shader, Camera* cam) = 0;
-	virtual void Update(double seconds_elapsed, boolean cameralocked, float elapsed_time, float speed, Camera* camera,  bool mouse_locked) = 0;
+	virtual void Update(double seconds_elapsed, boolean cameralocked, float elapsed_time, float speed, Shader* a_shader, Camera* camera,  bool mouse_locked) = 0;
 };
 
 
@@ -44,17 +47,20 @@ public:
 	IntroStage();
 
 	void Render(Shader* a_shader, Camera* cam);
-	void Update(double seconds_elapsed, boolean cameralocked, float elapsed_time, float speed, Camera* camera, bool mouse_locked);
+	void Update(double seconds_elapsed, boolean cameralocked, float elapsed_time, float speed, Shader* a_shader, Camera* camera, bool mouse_locked);
 };
 
 class PlayStage : public GameStage {
 public:
-
+	bool isViewingTask = false;
 	STAGE_ID GetId();
-
+	Inventory* inventory;
+	
 	PlayStage();
 	void Render(Shader* a_shader, Camera* cam);
-	void Update(double seconds_elapsed, boolean cameralocked, float elapsed_time, float speed, Camera* camera, bool mouse_locked);
+	void Update(double seconds_elapsed, boolean cameralocked, float elapsed_time, float speed, Shader* a_shader, Camera* camera, bool mouse_locked);
+	Vector3 nextPosNoCol(Vector3 nextPos, float elapsed_time);
+	void checkNearTaskEntity(float elapsed_time);
 };
 
 class TutorialStage : public GameStage {
@@ -64,7 +70,7 @@ public:
 	STAGE_ID GetId();
 
 	void Render(Shader* a_shader, Camera* cam);
-	void Update(double seconds_elapsed, boolean cameralocked, float elapsed_time, float speed, Camera* camera,  bool mouse_locked);
+	void Update(double seconds_elapsed, boolean cameralocked, float elapsed_time, float speed, Shader* a_shader, Camera* camera,  bool mouse_locked);
 };
 
 class EndStage : public GameStage {
@@ -75,7 +81,7 @@ public:
 	STAGE_ID GetId();
 
 	void Render(Shader* a_shader, Camera* cam);
-	void Update(double seconds_elapsed, boolean cameralocked, float elapsed_time, float speed, Camera* camera,  bool mouse_locked);
+	void Update(double seconds_elapsed, boolean cameralocked, float elapsed_time, float speed, Shader* a_shader, Camera* camera,  bool mouse_locked);
 };
 
 class WinStage : public GameStage {
@@ -85,11 +91,9 @@ public:
 	STAGE_ID GetId();
 
 	void Render(Shader* a_shader, Camera* cam);
-	void Update(double seconds_elapsed, boolean cameralocked, float elapsed_time, float speed, Camera* camera,  bool mouse_locked);
+	void Update(double seconds_elapsed, boolean cameralocked, float elapsed_time, float speed, Shader* a_shader, Camera* camera,  bool mouse_locked);
 };
 
 
 
 #endif
-
-
