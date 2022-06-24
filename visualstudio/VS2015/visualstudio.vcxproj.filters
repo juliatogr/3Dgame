@@ -79,9 +79,6 @@
     <ClCompile Include="..\..\src\Inventory.cpp">
       <Filter>Components</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\Note.cpp">
-      <Filter>Components</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\PopUpMessage.cpp">
       <Filter>Components</Filter>
     </ClCompile>
@@ -165,9 +162,6 @@
       <Filter>essentials</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\Inventory.h">
-      <Filter>Components</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\Note.h">
       <Filter>Components</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\PopUpMessage.h">

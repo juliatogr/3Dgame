@@ -28,6 +28,7 @@ FBO* fbo = NULL;
 Game* Game::instance = NULL;
 Entity* selectedEntity = NULL;
 
+
 const int planes_width = 200;
 const int planes_heigth = 200;
 float padding = 20.0f;
@@ -97,6 +98,7 @@ Game::Game(int window_width, int window_height, SDL_Window* window)
 	instance->gameState = new GameState();
 
 	InitStages();
+
 	// example of shader loading using the shaders manager
 	shader = Shader::Get("data/shaders/basic.vs", "data/shaders/texture.fs");
 	//hide the cursor
@@ -171,7 +173,7 @@ void Game::update(double seconds_elapsed)
 		if (Game::instance->gameState->UIActive == true) {
 			pickButton();
 		}
-		GetCurrentStage()->Update(seconds_elapsed, cameralocked, elapsed_time, speed, camera, mouse_locked);
+		GetCurrentStage()->Update(seconds_elapsed, cameralocked, elapsed_time, speed, shader, camera, mouse_locked);
 	}
 }
 
@@ -184,11 +186,11 @@ void Game::onKeyDown(SDL_KeyboardEvent event)
 	case SDLK_ESCAPE: must_exit = true; break; //ESC key, kill the app
 	case SDLK_F1: Shader::ReloadAll(); break;
 	//case SDLK_2: AddEntityInFront(camera); break;
-	case SDLK_3: lab->doors[0]->Move(shader,camera); break;
-	case SDLK_4: lab->doors[1]->Move(shader, camera); break;
-	case SDLK_5: lab->doors[2]->Move(shader, camera); break;
-	case SDLK_6: lab->doors[3]->Move(shader, camera); break;
-	case SDLK_7: lab->doors[4]->Move(shader, camera); break;
+	case SDLK_3: lab->doors[0]->isOpening = true; break;
+	case SDLK_4: lab->doors[1]->isOpening = true; break;
+	case SDLK_5: lab->doors[2]->isOpening = true; break;
+	case SDLK_6: lab->doors[3]->isOpening = true; break;
+	case SDLK_7: lab->doors[4]->isOpening = true; break;
 	case SDLK_8: GetCurrentStage()->RayPick(camera); break; 
 	case SDLK_KP_PLUS: GetCurrentStage()->RotateSelected(10.0f); break;
 	case SDLK_KP_MINUS: GetCurrentStage()->RotateSelected(-10.0f); break;
