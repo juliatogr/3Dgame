@@ -1,5 +1,6 @@
 #include "UI.h"
 #include "game.h"
+#include "input.h"
 UI::UI()
 {
 	this->a_shader = Shader::Get("data/shaders/basic.vs", "data/shaders/texture.fs");
@@ -85,8 +86,31 @@ Menu::Menu()
 
 void Menu::RenderMenu()
 {
-	this->Render(this->Card, Game::instance->window_width/2, Game::instance->window_height/2, Game::instance->window_width+50, Game::instance->window_height+50, false);
+
+	// code to render the images
+	glDisable(GL_DEPTH_TEST);
+	glDisable(GL_CULL_FACE);
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+	this->Render(this->Card, Game::instance->window_width/2, Game::instance->window_height/2, Game::instance->window_width+50, Game::instance->window_height+15, false);
 	for (int i=0; i < this->Buttons.size(); i++) {
 		this->Buttons[i]->RenderButton();
 	}
+	glEnable(GL_DEPTH_TEST);
+	glEnable(GL_CULL_FACE);
+	glDisable(GL_BLEND);
+	
+	/* Render Text */
+
+	// Render text of the buttons
+	for (int i = 0; i < this->Buttons.size(); i++) {
+		Button* current = this->Buttons[i];
+		drawText(current->xyhw.x-5, current->xyhw.y-5, current->text, Vector3(1, 1, 1), 2);
+
+	}
+	Vector2 mouse = Input::mouse_position;
+	std::string text = std::to_string(mouse.x)+", "+std::to_string(mouse.y);
+	drawText((Game::instance->window_width / 2)-50, (Game::instance->window_height / 2)-50, text, Vector3(1, 1, 1), 2);
+
 }

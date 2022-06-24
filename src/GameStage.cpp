@@ -106,16 +106,12 @@ void PlayStage::Render(Shader* a_shader, Camera* cam)
 	}
 	if (Game::instance->gameState->UIActive == true) {
 		//UI
-		glDisable(GL_DEPTH_TEST);
-		glDisable(GL_CULL_FACE);
-		glEnable(GL_BLEND);
-		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
+		
 		this->menu->RenderMenu();
  
-		glEnable(GL_DEPTH_TEST);
-		glEnable(GL_CULL_FACE);
-		glDisable(GL_BLEND);
+	
+		//drawText(this->xyhw.x, this->xyhw.y, this->text, Vector3(1, 1, 1), 2);
+
 	}
 }
 
