@@ -1,6 +1,16 @@
 #include "UI.h"
 #include "game.h"
 #include "input.h"
+
+int count_chars(std::string s) {
+	int count = 0;
+
+	for (int i = 0; i < s.size(); i++)
+		count++;
+
+	return count;
+}
+
 UI::UI()
 {
 	this->a_shader = Shader::Get("data/shaders/basic.vs", "data/shaders/texture.fs");
@@ -8,6 +18,11 @@ UI::UI()
 }
 
 void UI::Render(Texture* texture, float x, float y, float w, float h, bool u) {
+	// code to render the images
+	glDisable(GL_DEPTH_TEST);
+	glDisable(GL_CULL_FACE);
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 	int windowWidth = Game::instance->window_width;
 	int windowHeight = Game::instance->window_height;
@@ -37,6 +52,10 @@ void UI::Render(Texture* texture, float x, float y, float w, float h, bool u) {
 	
 	//disable shader
 	this->a_shader->disable();
+
+	glEnable(GL_DEPTH_TEST);
+	glEnable(GL_CULL_FACE);
+	glDisable(GL_BLEND);
 }
 
 void Button::RenderButton()
@@ -53,8 +72,8 @@ void Button::RenderButton()
 	if(this->type == N) {
 		this->Render(this->Normal, this->xyhw.x, this->xyhw.y, this->xyhw.z, this->xyhw.w, false);
 	}
-
-
+	int nC = count_chars(this->text);
+	drawText(this->xyhw.x - nC * 6, this->xyhw.y - (this->xyhw.w / 10), this->text, Vector3(1, 1, 1), 2);
 }
 
 Button::Button(BUTTONTYPE t, Vector4 v, const char* te)
@@ -71,13 +90,24 @@ Button::Button(BUTTONTYPE t, Vector4 v, const char* te)
 
 Menu::Menu()
 {
-	this->Card = Texture::Get("data/UI/HologramInterface/Card X1/Card X2.png");
-	int x = 100;
-	this->Buttons.reserve(3);
-	this->Buttons.push_back(new Button(N, Vector4(x, 100, 150, 50), "1"));
-	this->Buttons.push_back(new Button(D, Vector4(x+200, 100, 150, 50), "2"));
-	this->Buttons.push_back(new Button(N, Vector4(x+400, 100, 150, 50), "3"));
-	this->Buttons.push_back(new Button(D, Vector4(x+600, 100, 150, 50), "4"));
+	this->Card = Texture::Get("data/UI/HologramInterface/Card X3/Card X6.png");
+	this->xyhw = Vector4(Game::instance->window_width / 2, Game::instance->window_height / 2, Game::instance->window_width, Game::instance->window_height);
+	/*Inventory buttons, as they initialy doesn't have any object they are visible but disabled*/
+	Vector4 xywh = Vector4(100, 250, 100, 100);
+	int r = 3;
+	int c = 3;
+	for (int i = 0; i < r; i++) {
+		for (int j = 0; j < c; j++) {
+			std::cout << "cell button added" << std::endl;
+		
+				this->Buttons.push_back(new Button(D, Vector4(xywh.x * (i + 1), xywh.y + (j * xywh.w), xywh.z, xywh.w), ""));
+				std::cout << xywh.y * (j + 1) << std::endl;
+			
+		}
+	}
+
+
+	this->isActive = false;
 
 
 
@@ -86,29 +116,41 @@ Menu::Menu()
 
 void Menu::RenderMenu()
 {
-
-	// code to render the images
-	glDisable(GL_DEPTH_TEST);
-	glDisable(GL_CULL_FACE);
-	glEnable(GL_BLEND);
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
-	this->Render(this->Card, Game::instance->window_width/2, Game::instance->window_height/2, Game::instance->window_width+50, Game::instance->window_height+15, false);
+	this->Render(this->Card, this->xyhw.x, this->xyhw.y, this->xyhw.z, this->xyhw.w, false);
+	int nC = count_chars("Inventory");
+	drawText(this->xyhw.x - nC * 6, 135, "Inventory", Vector3(1, 1, 1), 2);
 	for (int i=0; i < this->Buttons.size(); i++) {
 		this->Buttons[i]->RenderButton();
 	}
-	glEnable(GL_DEPTH_TEST);
-	glEnable(GL_CULL_FACE);
-	glDisable(GL_BLEND);
+
 	
-	/* Render Text */
 
-	// Render text of the buttons
-	for (int i = 0; i < this->Buttons.size(); i++) {
-		Button* current = this->Buttons[i];
-		drawText(current->xyhw.x-5, current->xyhw.y-5, current->text, Vector3(1, 1, 1), 2);
+}
 
+void Menu::UpdateMenu()
+{
+	for (int i = 0; i < this->inventory->numSavedEntities; i++) {
+		this->Buttons[i]->type = N;
+		this->Buttons[i]->text = "Nota";
 	}
-	
+}
+
+PopUpMessage::PopUpMessage(int i, const char* t, Texture* b, Vector4 xyhw)
+{
+	this->Id = i;
+	this->text = t;
+	this->bg = b;
+	this->xyhw = xyhw;
+	this->isActive = false;
+
+}
+
+
+
+void PopUpMessage::RenderPopUp()
+{
+	this->Render(this->bg, this->xyhw.x, this->xyhw.y, this->xyhw.z, this->xyhw.w, false);
+	int nC = count_chars(this->text);
+	drawText(this->xyhw.x - nC*6, this->xyhw.y - (this->xyhw.w/10), this->text, Vector3(1, 1, 1), 2);
 
 }

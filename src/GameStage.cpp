@@ -71,7 +71,11 @@ PlayStage::PlayStage()
 	this->lab = new Lab();
 	this->player = new Player();
 	this->menu = new Menu();
-	this->inventory = new Inventory();
+	this->menu->inventory = new Inventory();
+	this->pum.reserve(3);
+	this->pum.push_back(new PopUpMessage(0, "Push R to return", Texture::Get("data/UI/Elements/BlockInformation.png"), Vector4(Game::instance->window_width / 2, (Game::instance->window_height / 2) , Game::instance->window_width - 200, 50)));
+	this->pum.push_back(new PopUpMessage(1, "Push Q to save the object to Inventory", Texture::Get("data/UI/Elements/BlockInformation.png"), Vector4(Game::instance->window_width / 2, (Game::instance->window_height / 2) + 60, Game::instance->window_width - 200, 50)));
+	this->pum.push_back(new PopUpMessage(2, "Push E to view the object", Texture::Get("data/UI/Elements/BlockInformation.png"), Vector4(Game::instance->window_width/2, (Game::instance->window_height/2)+200, Game::instance->window_width-200,50)));
 }
 
 
@@ -126,23 +130,38 @@ void PlayStage::Render(Shader* a_shader, Camera* cam)
 		door->RenderMesh(a_shader, cam);
 
 	}
-	if (Game::instance->gameState->UIActive == true) {
-		//UI
+	
+	//UI
 
+	for (size_t i = 0; i < this->pum.size(); i++) {
+		PopUpMessage* m = this->pum[i];
+		if(m->isActive == true)
+			m->RenderPopUp();
+	}
+
+
+	if (this->menu->isActive == true) {
 		this->menu->RenderMenu();
 
 		if (testMouse == true) {
 			/*testeo para saber posicion del mouse*/
 			Vector2 mouse = Input::mouse_position;
-			std::string text = "Mouse Position2D: "+std::to_string((int)mouse.x) + ", " + std::to_string((int)mouse.y);
-			drawText((Game::instance->window_width) - 290, (Game::instance->window_height)-25, text, Vector3(1, 1, 1), 2);
+			std::string text = "Mouse Position2D: " + std::to_string((int)mouse.x) + ", " + std::to_string((int)mouse.y);
+			drawText((Game::instance->window_width) - 290, (Game::instance->window_height) - 25, text, Vector3(1, 1, 1), 2);
 		}
 	}
+
+		
+			
+		
+
+		
+	
 }
 
 void PlayStage::Update(double seconds_elapsed, boolean cameralocked, float elapsed_time, float speed, Shader* a_shader, Camera* camera, bool mouse_locked)
 {
-	if (Game::instance->gameState->UIActive == false) {
+	if (this->menu->isActive == false) {
 
 		isViewingTask = false;
 		this->selectedTaskEntity = NULL;
@@ -159,36 +178,55 @@ void PlayStage::Update(double seconds_elapsed, boolean cameralocked, float elaps
 			else if (this->selectedTaskEntity->isViewing) {
 				this->selectedTaskEntity->viewToTask(camera, seconds_elapsed);
 				isViewingTask = true;
+				this->pum[0]->isActive = true;
 				std::cout << "Push R to return" << std::endl;
 				if (Input::isKeyPressed(SDL_SCANCODE_R)) {
 					this->selectedTaskEntity->isReturning = true;
+					this->pum[0]->isActive = false;
+					this->pum[1]->isActive = false;
 				}
-				
+								
 				if (this->selectedTaskEntity->canBeSaved) {
+					this->pum[1]->isActive = true;
 					std::cout << "Push Q to save the object to Inventory" << std::endl;
 					if (Input::isKeyPressed(SDL_SCANCODE_Q)) {
 						this->selectedTaskEntity->isReturning = true;
 						this->selectedTaskEntity->isViewed = true;
 						this->selectedTaskEntity->isViewing = false;
 						isViewingTask = false;
-						this->inventory->addEntity(this->selectedTaskEntity);
+						this->menu->inventory->addEntity(this->selectedTaskEntity);
+						this->menu->UpdateMenu();
 						this->selectedTaskEntity->isSaved = true;
 						this->selectedTaskEntity = NULL;
+						this->pum[0]->isActive = false;
+						this->pum[1]->isActive = false;
+
 					}
 				}
+				
 				
 
 			}
 			else if (Input::isKeyPressed(SDL_SCANCODE_E)) {
 				this->selectedTaskEntity->isViewing = true;
 				isViewingTask = true;
+				this->pum[2]->isActive = false;
 			}
 			else {
-				std::cout << "Push E to view the object" << std::endl;
+				this->pum[0]->isActive = false;
+				this->pum[1]->isActive = false;
+					this->pum[2]->isActive = true;
+					std::cout << "Push E to view the object "<< this->pum[0]->isActive << std::endl;
+				
 				
 			}
 
+		}else{
+			this->pum[0]->isActive = false;
+			this->pum[1]->isActive = false;
+			this->pum[2]->isActive = false;
 		}
+		
 		
 
 		if (!isViewingTask) {

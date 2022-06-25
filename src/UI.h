@@ -3,6 +3,7 @@
 #include "texture.h"
 #include "camera.h"
 #include "mesh.h"
+#include "Inventory.h"
 
 class UI
 {
@@ -45,8 +46,28 @@ class Menu : public UI {
 public:
 	Texture* Card;
 	std::vector<Button*> Buttons;
+	bool isActive;
+	Vector4 xyhw;
+	Inventory* inventory;
 
 	Menu();
 	void RenderMenu();
+	void UpdateMenu();
+
+
+};
+
+class PopUpMessage : public UI {
+public:
+	int Id;
+	const char* text;
+	Texture* bg;
+	Vector4 xyhw;
+
+	bool isActive;
+
+	PopUpMessage(int i, const char* t, Texture* b, Vector4 xyhw);
+	void RenderPopUp();
+
 
 };

@@ -67,12 +67,6 @@
     <ClCompile Include="..\..\src\Inventory.cpp">
       <Filter>components</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\Note.cpp">
-      <Filter>components</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\PopUpMessage.cpp">
-      <Filter>components</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\Tasks.cpp">
       <Filter>components</Filter>
     </ClCompile>
@@ -162,12 +156,6 @@
       <Filter>extra</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\Inventory.h">
-      <Filter>components</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\Note.h">
-      <Filter>components</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\PopUpMessage.h">
       <Filter>components</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\Tasks.h">

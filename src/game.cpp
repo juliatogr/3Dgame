@@ -158,6 +158,7 @@ void Game::update(double seconds_elapsed)
 void Game::onKeyDown(SDL_KeyboardEvent event)
 {
 	Lab* lab = GetCurrentStage()->lab;
+	Menu* menu = GetCurrentStage()->menu;
 	switch (event.keysym.sym)
 	{
 	case SDLK_ESCAPE: must_exit = true; break; //ESC key, kill the app
@@ -171,7 +172,7 @@ void Game::onKeyDown(SDL_KeyboardEvent event)
 	case SDLK_8: GetCurrentStage()->RayPick(camera); break; 
 	case SDLK_KP_PLUS: GetCurrentStage()->RotateSelected(10.0f); break;
 	case SDLK_KP_MINUS: GetCurrentStage()->RotateSelected(-10.0f); break;
-	case SDLK_m: Game::gameState->UIActive = !Game::gameState->UIActive; break;
+	case SDLK_m:  menu->isActive= !menu->isActive; break;
 
 	}
 
@@ -205,9 +206,9 @@ void Game::onMouseButtonDown(SDL_MouseButtonEvent event)
 	{
 		if (GetCurrentStage()->GetId() == PLAY) {
 
-			if ((Game::instance->gameState->UIActive == true)) {
-				
 				Menu* menu = GetCurrentStage()->menu;
+			if ((menu->isActive == true)) {
+				
 				for (int i = 0; i < menu->Buttons.size(); i++) {
 					Button* current = menu->Buttons[i];
 					if (current->type == H) {
