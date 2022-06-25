@@ -1,7 +1,6 @@
 #include "shader.h"
 #include "camera.h"
 #include "entity.h"
-#include "inventory.h"
 #include "Player.h"
 #include "UI.h"
 
@@ -30,6 +29,7 @@ public:
 
 	Player* player;
 	Menu* menu;
+	std::vector<PopUpMessage*> pum;
 
 	virtual STAGE_ID GetId() = 0;
 	virtual void RayPick(Camera* cam);
@@ -54,7 +54,6 @@ class PlayStage : public GameStage {
 public:
 	bool isViewingTask = false;
 	STAGE_ID GetId();
-	Inventory* inventory;
 	
 	PlayStage();
 	void Render(Shader* a_shader, Camera* cam);
