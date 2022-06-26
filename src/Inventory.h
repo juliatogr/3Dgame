@@ -1,6 +1,6 @@
+#ifndef INVENTORY_H
+#define INVENTORY_H
 #include "entity.h"
-
-
 
 class Inventory
 {
@@ -12,3 +12,4 @@ public:
 	void addNote(Entity* n);
 };
 
+#endif
