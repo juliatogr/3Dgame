@@ -4,7 +4,7 @@ Inventory::Inventory() {
 
 }
 
-void Inventory::addEntity(Entity* ent) {
-	this->savedEntities.push_back(ent);
-	this->numSavedEntities++;
+void Inventory::addNote(Entity* ent) {
+	Note* n = new Note(ent);
+	this->Notes.push_back(n);
 }

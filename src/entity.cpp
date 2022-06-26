@@ -130,6 +130,16 @@ void Room::LoadEntities(const char* path) {
 	}
 }
 
+int CountTypeTasks(std::vector<TaskEntity*> taskEntities, TASKTYPE type) {
+	int count = 0;
+	for (int i = 0; i < taskEntities.size(); i++) {
+		if (taskEntities[i]->type == type) {
+			count++;
+		}
+	}
+	return count;
+}
+
 void Room::LoadTaskEntities(const char* path) {
 	std::string content = "";
 	readFile(path, content);
@@ -155,8 +165,13 @@ void Room::LoadTaskEntities(const char* path) {
 		TaskEntity* entity = new TaskEntity();
 
 		if (entType == "Note") {
-			Note* noteEnt = new Note();
+			Note* noteEnt = new Note(entity);
 			entity = noteEnt;
+		}
+		if (entType == "PC") {
+			int id = CountTypeTasks(taskEntities, PC);
+			Computer* pcEnt = new Computer(entity, id);
+			entity = pcEnt;
 		}
 		entity->mesh = Mesh::Get(c);
 		entity->texture = Texture::Get(t);
@@ -278,6 +293,16 @@ void TaskEntity::returnView(Camera* cam, float seconds_elapsed) {
 	this->isReturning = false;
 }
 
-Note::Note() {
+Note::Note(Entity* e) {
 	this->canBeSaved = true;
+	this->isShowing = false;
+	this->texture = e->texture;
+	this->type = NOTE;
+}
+
+Computer::Computer(Entity* e, int i)
+{
+	this->isShowing = false;
+	this->type = PC;
+	this->id = i;
 }

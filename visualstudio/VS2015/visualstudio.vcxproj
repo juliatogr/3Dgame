@@ -149,6 +149,7 @@
     <ClCompile Include="..\..\src\Inventory.cpp" />
     <ClCompile Include="..\..\src\main.cpp" />
     <ClCompile Include="..\..\src\mesh.cpp" />
+    <ClCompile Include="..\..\src\Note.cpp" />
     <ClCompile Include="..\..\src\Player.cpp" />
     <ClCompile Include="..\..\src\rendertotexture.cpp" />
     <ClCompile Include="..\..\src\shader.cpp" />
@@ -179,6 +180,7 @@
     <ClInclude Include="..\..\src\input.h" />
     <ClInclude Include="..\..\src\Inventory.h" />
     <ClInclude Include="..\..\src\mesh.h" />
+    <ClInclude Include="..\..\src\Note.h" />
     <ClInclude Include="..\..\src\Player.h" />
     <ClInclude Include="..\..\src\rendertotexture.h" />
     <ClInclude Include="..\..\src\shader.h" />
@@ -186,6 +188,17 @@
     <ClInclude Include="..\..\src\texture.h" />
     <ClInclude Include="..\..\src\UI.h" />
     <ClInclude Include="..\..\src\utils.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\data\EstructuraChemicalLab.scene" />
+    <None Include="..\..\data\EstructuraMachineLab.scene" />
+    <None Include="..\..\data\EstructuraPasillo.scene" />
+    <None Include="..\..\data\ObjetosChemicalLab.scene" />
+    <None Include="..\..\data\ObjetosMachineLab.scene" />
+    <None Include="..\..\data\ObjetosPasillo.scene" />
+    <None Include="..\..\data\ObjetosTareasChemicalLab.scene" />
+    <None Include="..\..\data\ObjetosTareasMachineLab.scene" />
+    <None Include="..\..\data\ObjetosTareasPasillo.scene" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

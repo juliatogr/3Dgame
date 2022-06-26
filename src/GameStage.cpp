@@ -29,14 +29,14 @@ void GameStage::RayPick(Camera* cam) {
 		}
 	}
 }
-void GameStage::PickButton() {
+void GameStage::PickButton(std::vector<Button*> buttons) {
 
 	Vector2 mouse = Input::mouse_position;
-	for (int i = 0; i < this->menu->Buttons.size(); i++) {
-		Button* current = this->menu->Buttons[i];
+	for (int i = 0; i < buttons.size(); i++) {
+		Button* current = buttons[i];
 		Vector2 size = Vector2(current->xyhw.z, current->xyhw.w);
 		Vector2 position = Vector2(current->xyhw.x - (size.x / 2), current->xyhw.y - (size.y / 2));
-		if((current->type==N) || (current->type == H)){
+		if ((current->type == N) || (current->type == H)) {
 			if (((mouse.x > (position.x)) && (mouse.y > position.y)) && ((mouse.x < (position.x + size.x)) && (mouse.y < (position.y + size.y)))) {
 				//std::cout << i << ". " << "mouse.x > position.x) && (mouse.y > position.y)" << std::endl;
 				current->type = H;
@@ -73,9 +73,11 @@ PlayStage::PlayStage()
 	this->menu = new Menu();
 	this->menu->inventory = new Inventory();
 	this->pum.reserve(3);
-	this->pum.push_back(new PopUpMessage(0, "Push R to return", Texture::Get("data/UI/Elements/BlockInformation.png"), Vector4(Game::instance->window_width / 2, (Game::instance->window_height / 2) , Game::instance->window_width - 200, 50)));
-	this->pum.push_back(new PopUpMessage(1, "Push Q to save the object to Inventory", Texture::Get("data/UI/Elements/BlockInformation.png"), Vector4(Game::instance->window_width / 2, (Game::instance->window_height / 2) + 60, Game::instance->window_width - 200, 50)));
-	this->pum.push_back(new PopUpMessage(2, "Push E to view the object", Texture::Get("data/UI/Elements/BlockInformation.png"), Vector4(Game::instance->window_width/2, (Game::instance->window_height/2)+200, Game::instance->window_width-200,50)));
+	this->pum.push_back(new PopUpMessage(0, "Push R to return", Texture::Get("data/UI/Elements/BlockInformation.png"), Vector4(Game::instance->window_width / 2, (Game::instance->window_height / 2) + 200, Game::instance->window_width - 200, 50)));
+	this->pum.push_back(new PopUpMessage(1, "Push Q to save the object to Inventory", Texture::Get("data/UI/Elements/BlockInformation.png"), Vector4(Game::instance->window_width / 2, (Game::instance->window_height / 2) + 260, Game::instance->window_width - 200, 50)));
+	this->pum.push_back(new PopUpMessage(2, "Push E to view the object", Texture::Get("data/UI/Elements/BlockInformation.png"), Vector4(Game::instance->window_width / 2, (Game::instance->window_height / 2) + 200, Game::instance->window_width - 200, 50)));
+	this->codeUI = new CodeScreen();
+	this->IsActiveUIs = false;
 }
 
 
@@ -97,7 +99,7 @@ void PlayStage::Render(Shader* a_shader, Camera* cam)
 		cam->lookAt(eye, center, up);
 	}
 
-	
+
 	lab->ground->RenderMesh(a_shader, cam);
 
 	for (int r = 0; r < this->lab->numRooms; r++) {
@@ -120,7 +122,7 @@ void PlayStage::Render(Shader* a_shader, Camera* cam)
 			else if (entity->isViewing) {
 				entity->RenderMesh(a_shader, cam);
 			}
-			
+
 		}
 	}
 
@@ -130,12 +132,12 @@ void PlayStage::Render(Shader* a_shader, Camera* cam)
 		door->RenderMesh(a_shader, cam);
 
 	}
-	
+
 	//UI
 
 	for (size_t i = 0; i < this->pum.size(); i++) {
 		PopUpMessage* m = this->pum[i];
-		if(m->isActive == true)
+		if (m->isActive == true)
 			m->RenderPopUp();
 	}
 
@@ -151,83 +153,115 @@ void PlayStage::Render(Shader* a_shader, Camera* cam)
 		}
 	}
 
-		
-			
-		
+	if (this->codeUI->isActive == true) {
+		this->codeUI->RenderCodeScreen();
+		if (testMouse == true) {
+			/*testeo para saber posicion del mouse*/
+			Vector2 mouse = Input::mouse_position;
+			std::string text = "Mouse Position2D: " + std::to_string((int)mouse.x) + ", " + std::to_string((int)mouse.y);
+			drawText((Game::instance->window_width) - 290, (Game::instance->window_height) - 25, text, Vector3(1, 1, 1), 2);
+		}
+	}
 
-		
-	
+
+
+
+
+
+
 }
 
 void PlayStage::Update(double seconds_elapsed, boolean cameralocked, float elapsed_time, float speed, Shader* a_shader, Camera* camera, bool mouse_locked)
 {
-	if (this->menu->isActive == false) {
+	/* si al menos un tipo de UI esta activado -> que el bool IsActiveUis es true*/
+	if (this->menu->isActive == true || this->codeUI->isActive == true) {
+		this->IsActiveUIs = true;
+	}
+	else {
+		this->IsActiveUIs = false;
+	}
+
+	if (this->IsActiveUIs==false) {
 
 		isViewingTask = false;
 		this->selectedTaskEntity = NULL;
 		this->checkNearTaskEntity(elapsed_time);
 		if (this->selectedTaskEntity != NULL) {
+			if (this->selectedTaskEntity->type == NOTE) {
+				if (this->selectedTaskEntity->isReturning) {
+					this->selectedTaskEntity->returnView(camera, seconds_elapsed);
+					isViewingTask = true;
+					this->selectedTaskEntity->isViewed = true;
+					this->selectedTaskEntity = NULL;
 
-			if (this->selectedTaskEntity->isReturning) {
-				this->selectedTaskEntity->returnView(camera, seconds_elapsed);
-				isViewingTask = true;
-				this->selectedTaskEntity->isViewed = true;
-				this->selectedTaskEntity = NULL;
-
-			}
-			else if (this->selectedTaskEntity->isViewing) {
-				this->selectedTaskEntity->viewToTask(camera, seconds_elapsed);
-				isViewingTask = true;
-				this->pum[0]->isActive = true;
-				std::cout << "Push R to return" << std::endl;
-				if (Input::isKeyPressed(SDL_SCANCODE_R)) {
-					this->selectedTaskEntity->isReturning = true;
-					this->pum[0]->isActive = false;
-					this->pum[1]->isActive = false;
 				}
-								
-				if (this->selectedTaskEntity->canBeSaved) {
-					this->pum[1]->isActive = true;
-					std::cout << "Push Q to save the object to Inventory" << std::endl;
-					if (Input::isKeyPressed(SDL_SCANCODE_Q)) {
+				else if (this->selectedTaskEntity->isViewing) {
+					this->selectedTaskEntity->viewToTask(camera, seconds_elapsed);
+					isViewingTask = true;
+					this->pum[0]->isActive = true;
+					//std::cout << "Push R to return" << std::endl;
+					if (Input::isKeyPressed(SDL_SCANCODE_R)) {
 						this->selectedTaskEntity->isReturning = true;
-						this->selectedTaskEntity->isViewed = true;
-						this->selectedTaskEntity->isViewing = false;
-						isViewingTask = false;
-						this->menu->inventory->addEntity(this->selectedTaskEntity);
-						this->menu->UpdateMenu();
-						this->selectedTaskEntity->isSaved = true;
-						this->selectedTaskEntity = NULL;
 						this->pum[0]->isActive = false;
 						this->pum[1]->isActive = false;
-
 					}
+
+					if (this->selectedTaskEntity->canBeSaved) {
+						this->pum[1]->isActive = true;
+						//std::cout << "Push Q to save the object to Inventory" << std::endl;
+						if (Input::isKeyPressed(SDL_SCANCODE_Q)) {
+							this->selectedTaskEntity->isReturning = true;
+							this->selectedTaskEntity->isViewed = true;
+							this->selectedTaskEntity->isViewing = false;
+							isViewingTask = false;
+							this->menu->inventory->addNote(this->selectedTaskEntity);
+							this->menu->UpdateMenu();
+							this->selectedTaskEntity->isSaved = true;
+							this->selectedTaskEntity = NULL;
+							this->pum[0]->isActive = false;
+							this->pum[1]->isActive = false;
+
+						}
+					}
+
+
+
 				}
-				
-				
-
-			}
-			else if (Input::isKeyPressed(SDL_SCANCODE_E)) {
-				this->selectedTaskEntity->isViewing = true;
-				isViewingTask = true;
-				this->pum[2]->isActive = false;
-			}
-			else {
-				this->pum[0]->isActive = false;
-				this->pum[1]->isActive = false;
+				else if (Input::isKeyPressed(SDL_SCANCODE_E)) {
+					this->selectedTaskEntity->isViewing = true;
+					isViewingTask = true;
+					this->pum[2]->isActive = false;
+				}
+				else {
+					this->pum[0]->isActive = false;
+					this->pum[1]->isActive = false;
 					this->pum[2]->isActive = true;
-					std::cout << "Push E to view the object "<< this->pum[0]->isActive << std::endl;
-				
-				
+					//std::cout << "Push E to view the object " << this->pum[2]->isActive << std::endl;
+
+
+				}
+			}
+			else if (this->selectedTaskEntity->type == PC) {
+
+				if (Input::isKeyPressed(SDL_SCANCODE_E)) {
+					this->pum[2]->isActive = false;
+					this->codeUI->isActive = true;
+					this->codeUI->codes[this->selectedTaskEntity->id]->isActive = true;
+				}
+				else {
+					this->pum[2]->isActive = true;
+					//std::cout << "Push E to view the object " << this->pum[2]->isActive << std::endl;
+				}
 			}
 
-		}else{
+		}
+		else {
 			this->pum[0]->isActive = false;
 			this->pum[1]->isActive = false;
 			this->pum[2]->isActive = false;
 		}
-		
-		
+
+
 
 		if (!isViewingTask) {
 			//mouse input to rotate the cam
@@ -271,13 +305,24 @@ void PlayStage::Update(double seconds_elapsed, boolean cameralocked, float elaps
 			lab->doors[2]->Open(a_shader, seconds_elapsed);
 			lab->doors[3]->Open(a_shader, seconds_elapsed);
 			lab->doors[4]->Open(a_shader, seconds_elapsed);
-			
+
 		}
-		
+
 	}
 	else {
-		SDL_ShowCursor(true);
-		this->PickButton();
+
+	/*Por cada UI que contenga botones, compruebo si alguno esta en Hover*/
+		if (this->menu->isActive == true) {
+			SDL_ShowCursor(true);
+
+			this->PickButton(this->menu->Buttons);
+
+		}
+		if (this->codeUI->isActive == true) {
+			SDL_ShowCursor(true);
+
+			this->PickButton(this->codeUI->Buttons);
+		}
 		//std::cout << "mouseX:"<<mouse.x <<" mouseY:" <<mouse.y << std::endl;
 
 	}
@@ -347,6 +392,7 @@ void PlayStage::checkNearTaskEntity(float elapsed_time)
 				if (!entity->mesh->testSphereCollision(entity->model, this->player->pos + Vector3(0, 0.3, 0), 12.f, coll, collnorm)) {
 					continue;
 				}
+				//std::cout << "current: " << entity->type << std::endl;
 				selectedTaskEntity = entity;
 			}
 		}
@@ -383,7 +429,7 @@ void TutorialStage::Render(Shader* a_shader, Camera* cam)
 {
 }
 
-void TutorialStage::Update(double seconds_elapsed, boolean cameralocked, float elapsed_time, float speed, Shader* a_shader, Camera* camera,  bool mouse_locked)
+void TutorialStage::Update(double seconds_elapsed, boolean cameralocked, float elapsed_time, float speed, Shader* a_shader, Camera* camera, bool mouse_locked)
 {
 }
 
@@ -400,7 +446,7 @@ void EndStage::Render(Shader* a_shader, Camera* cam)
 {
 }
 
-void EndStage::Update(double seconds_elapsed, boolean cameralocked, float elapsed_time, float speed, Shader* a_shader, Camera* camera,  bool mouse_locked)
+void EndStage::Update(double seconds_elapsed, boolean cameralocked, float elapsed_time, float speed, Shader* a_shader, Camera* camera, bool mouse_locked)
 {
 }
 
@@ -417,6 +463,6 @@ void WinStage::Render(Shader* a_shader, Camera* cam)
 {
 }
 
-void WinStage::Update(double seconds_elapsed, boolean cameralocked, float elapsed_time, float speed, Shader* a_shader, Camera* camera,  bool mouse_locked)
+void WinStage::Update(double seconds_elapsed, boolean cameralocked, float elapsed_time, float speed, Shader* a_shader, Camera* camera, bool mouse_locked)
 {
 }

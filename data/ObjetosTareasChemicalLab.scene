@@ -1,1 +1,7 @@
-Entities 0
+Entities 1
+TYPE PC
+MESH data/MachineLab/Objetos/table.obj 
+TEXTURE data/MachineLab/Texturas/table.tga
+1.100,0.600,-5.640
+0.000,0.000,0.000 
+0.048,0.048,0.048
