@@ -132,8 +132,10 @@ void Room::LoadEntities(const char* path) {
 
 int CountTypeTasks(std::vector<TaskEntity*> taskEntities, TASKTYPE type) {
 	int count = 0;
+	std::cout << "size: " << taskEntities.size() << std::endl;
 	for (int i = 0; i < taskEntities.size(); i++) {
 		if (taskEntities[i]->type == type) {
+
 			count++;
 		}
 	}
@@ -170,6 +172,7 @@ void Room::LoadTaskEntities(const char* path) {
 		}
 		if (entType == "PC") {
 			int id = CountTypeTasks(taskEntities, PC);
+			std::cout << "countTypes: " << id << std::endl;
 			Computer* pcEnt = new Computer(entity, id);
 			entity = pcEnt;
 		}
@@ -228,7 +231,7 @@ void Lab::LoadDoors(const char* path) {
 }
 
 Lab::Lab() {
-	
+
 	this->ground = new Ground();
 	for (int i = 0; i < this->numRooms; i++) {
 		Room* room = new Room();
@@ -269,7 +272,7 @@ void Door::Open(Shader* a_shader, float seconds_elapsed)
 			this->isOpening = false;
 		}
 	}
-	
+
 }
 
 void Note::Show(Shader* a_shader, Camera* cam) {
@@ -281,7 +284,7 @@ void TaskEntity::viewToTask(Camera* cam, float seconds_elapsed) {
 	Vector3 viewCenter = this->pos;
 	Vector3 viewEye = viewCenter + Vector3(0, 1, 0);
 	if (cam->eye.x != viewEye.x || cam->eye.y != viewEye.y || cam->eye.z != viewEye.z) {
-		cam->lookAt(viewEye, viewCenter, Vector3(0,0,1));
+		cam->lookAt(viewEye, viewCenter, Vector3(0, 0, 1));
 
 	}
 }
@@ -289,7 +292,7 @@ void TaskEntity::returnView(Camera* cam, float seconds_elapsed) {
 	this->isViewed = true;
 	this->isViewing = false;
 
-	cam->lookAt(this->pos + Vector3(0,0.3,0), this->pos, Vector3(0, 1, 0));
+	cam->lookAt(this->pos + Vector3(0, 0.3, 0), this->pos, Vector3(0, 1, 0));
 	this->isReturning = false;
 }
 

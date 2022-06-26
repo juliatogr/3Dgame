@@ -125,8 +125,8 @@ void Game::render(void)
 	glEnable(GL_DEPTH_TEST);
 	glDisable(GL_CULL_FACE);
 
-	if (GetCurrentStage()->GetId() == PLAY){
-	
+	if (GetCurrentStage()->GetId() == PLAY) {
+
 		GetCurrentStage()->Render(shader, camera);
 		//Draw the floor grid
 		drawGrid();
@@ -136,7 +136,7 @@ void Game::render(void)
 			drawText(2, 2, getGPUStats(), Vector3(1, 1, 1), 2);
 		}
 	}
-	
+
 	//swap between front buffer and back buffer
 	SDL_GL_SwapWindow(this->window);
 }
@@ -163,16 +163,16 @@ void Game::onKeyDown(SDL_KeyboardEvent event)
 	{
 	case SDLK_ESCAPE: must_exit = true; break; //ESC key, kill the app
 	case SDLK_F1: Shader::ReloadAll(); break;
-	//case SDLK_2: AddEntityInFront(camera); break;
+		//case SDLK_2: AddEntityInFront(camera); break;
 	case SDLK_3: lab->doors[0]->isOpening = true; break;
 	case SDLK_4: lab->doors[1]->isOpening = true; break;
 	case SDLK_5: lab->doors[2]->isOpening = true; break;
 	case SDLK_6: lab->doors[3]->isOpening = true; break;
 	case SDLK_7: lab->doors[4]->isOpening = true; break;
-	case SDLK_8: GetCurrentStage()->RayPick(camera); break; 
+	case SDLK_8: GetCurrentStage()->RayPick(camera); break;
 	case SDLK_KP_PLUS: GetCurrentStage()->RotateSelected(10.0f); break;
 	case SDLK_KP_MINUS: GetCurrentStage()->RotateSelected(-10.0f); break;
-	case SDLK_m:  menu->isActive= !menu->isActive; break;
+	case SDLK_m:  menu->isActive = !menu->isActive; break;
 	}
 
 }
@@ -181,7 +181,7 @@ void Game::onKeyUp(SDL_KeyboardEvent event)
 {
 	switch (event.keysym.sym)
 	{
-	} 
+	}
 }
 
 void Game::onGamepadButtonDown(SDL_JoyButtonEvent event)
@@ -209,10 +209,10 @@ void Game::onMouseButtonDown(SDL_MouseButtonEvent event)
 			Menu* menu = GetCurrentStage()->menu;
 			if ((menu->isActive == true)) {
 				/*de la lista de botones, busco cual esta activo, menos el de salida*/
-				for (int i = 0; i < menu->Buttons.size()-1; i++) {
+				for (int i = 0; i < menu->Buttons.size() - 1; i++) {
 					Button* current = menu->Buttons[i];
 					if (current->type == H) {
-						std::cout << "UIACTIVE: " <<current->text<< std::endl;
+						std::cout << "UIACTIVE: " << current->text << std::endl;
 						menu->inventory->Notes[i]->isShowing = true;
 
 						current->type = N;
@@ -242,7 +242,7 @@ void Game::onMouseButtonDown(SDL_MouseButtonEvent event)
 				Code* currentCode;
 
 				for (int i = 0; i < code->codes.size(); i++) {
-					if (code->codes[i]->isActive == true){
+					if (code->codes[i]->isActive == true) {
 						currentCode = code->codes[i];
 					}
 				}
@@ -252,27 +252,34 @@ void Game::onMouseButtonDown(SDL_MouseButtonEvent event)
 					Button* current = code->Buttons[i];
 					if (current->type == H) {
 						std::cout << "UIACTIVE: " << current->text << std::endl;
-						currentCode->test=(currentCode->test + current->text);
-				
+						currentCode->test = (currentCode->test + current->text);
+
 						std::cout << "Test: " << currentCode->test << std::endl;
 
 
 						current->type = N;
 					}
 				}
-				
+
 
 				Button* enter = code->Buttons[code->Buttons.size() - 1];
+				Lab* lab = GetCurrentStage()->lab;
 				//* y esta en hover el boton de salida*/
 				if (enter->type == H) {
-					if (currentCode->obj==currentCode->test) {
+					if (currentCode->obj == currentCode->test) {
 						code->isActive = false;
 						currentCode->isActive = false;
 						currentCode->isCompleted = true;
 						std::cout << "UIACTIVE: Enter Correct" << std::endl;
+						//si esta la clave correcta se abre la puerta correspondiente
+						currentCode->OpenDoors();
+
 					}
-					currentCode->test = "";
-					std::cout << "UIACTIVE: Enter Wrong" << std::endl;
+					else {
+						currentCode->test = "";
+						std::cout << "UIACTIVE: Enter Wrong" << std::endl;
+
+					}
 
 					enter->type = N;
 				}

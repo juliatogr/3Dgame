@@ -263,12 +263,13 @@ char* codeButton(int i) {
 	}
 }
 
-CodeScreen::CodeScreen()
+CodeScreen::CodeScreen(Lab* lab)
 {
 	this->bg = Texture::Get("data/UI/HologramInterface/Card X1/Card X1.png");
 	this->xyhw = Vector4(Game::instance->window_width / 2, Game::instance->window_height / 2, Game::instance->window_width, Game::instance->window_height);
 	this->isActive = false;
-	this->codes.push_back(new Code(0, "1234"));
+	this->codes.push_back(new Code(0, "1234", lab->doors[2], lab->doors[3]));
+	this->codes.push_back(new Code(1, "1618", lab->doors[4]));
 
 	Vector4 xywh = Vector4(100, 250, 100, 100);
 	int r = 3;

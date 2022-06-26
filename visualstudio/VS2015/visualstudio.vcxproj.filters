@@ -91,9 +91,6 @@
     <ClCompile Include="..\..\src\UI.cpp">
       <Filter>essentials</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\Note.cpp">
-      <Filter>components</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\camera.h" />
@@ -181,9 +178,6 @@
     </ClInclude>
     <ClInclude Include="..\..\src\UI.h">
       <Filter>essentials</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\Note.h">
-      <Filter>components</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
