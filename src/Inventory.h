@@ -1,3 +1,8 @@
+
+#ifndef INVENTORY_H
+#define INVENTORY_H
+
+
 #include "entity.h"
 
 
@@ -12,3 +17,5 @@ public:
 	void addNote(Entity* n);
 };
 
+
+#endif
