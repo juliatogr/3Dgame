@@ -76,7 +76,7 @@ PlayStage::PlayStage()
 	this->pum.push_back(new PopUpMessage(0, "Push R to return", Texture::Get("data/UI/Elements/BlockInformation.png"), Vector4(Game::instance->window_width / 2, (Game::instance->window_height / 2) + 200, Game::instance->window_width - 200, 50)));
 	this->pum.push_back(new PopUpMessage(1, "Push Q to save the object to Inventory", Texture::Get("data/UI/Elements/BlockInformation.png"), Vector4(Game::instance->window_width / 2, (Game::instance->window_height / 2) + 260, Game::instance->window_width - 200, 50)));
 	this->pum.push_back(new PopUpMessage(2, "Push E to view the object", Texture::Get("data/UI/Elements/BlockInformation.png"), Vector4(Game::instance->window_width / 2, (Game::instance->window_height / 2) + 200, Game::instance->window_width - 200, 50)));
-	this->codeUI = new CodeScreen();
+	this->codeUI = new CodeScreen(this->lab);
 	this->IsActiveUIs = false;
 }
 
@@ -181,7 +181,7 @@ void PlayStage::Update(double seconds_elapsed, boolean cameralocked, float elaps
 		this->IsActiveUIs = false;
 	}
 
-	if (this->IsActiveUIs==false) {
+	if (this->IsActiveUIs == false) {
 
 		isViewingTask = false;
 		this->selectedTaskEntity = NULL;
@@ -204,12 +204,20 @@ void PlayStage::Update(double seconds_elapsed, boolean cameralocked, float elaps
 						this->selectedTaskEntity->isReturning = true;
 						this->pum[0]->isActive = false;
 						this->pum[1]->isActive = false;
+
+						// si lee la nota se abre la puerta
+						this->lab->doors[0]->isOpening = true;
+						this->lab->doors[1]->isOpening = true;
 					}
 
 					if (this->selectedTaskEntity->canBeSaved) {
 						this->pum[1]->isActive = true;
 						//std::cout << "Push Q to save the object to Inventory" << std::endl;
 						if (Input::isKeyPressed(SDL_SCANCODE_Q)) {
+							//si se guarda la nota se abre la puerta
+							this->lab->doors[0]->isOpening = true;
+							this->lab->doors[1]->isOpening = true;
+
 							this->selectedTaskEntity->isReturning = true;
 							this->selectedTaskEntity->isViewed = true;
 							this->selectedTaskEntity->isViewing = false;
@@ -246,7 +254,13 @@ void PlayStage::Update(double seconds_elapsed, boolean cameralocked, float elaps
 				if (Input::isKeyPressed(SDL_SCANCODE_E)) {
 					this->pum[2]->isActive = false;
 					this->codeUI->isActive = true;
-					this->codeUI->codes[this->selectedTaskEntity->id]->isActive = true;
+					if (this->codeUI->codes[this->selectedTaskEntity->id]->isCompleted == true) {
+						this->codeUI->codes[this->selectedTaskEntity->id + 1]->isActive = true;
+
+					}
+					else {
+						this->codeUI->codes[this->selectedTaskEntity->id]->isActive = true;
+					}
 				}
 				else {
 					this->pum[2]->isActive = true;
@@ -311,7 +325,7 @@ void PlayStage::Update(double seconds_elapsed, boolean cameralocked, float elaps
 	}
 	else {
 
-	/*Por cada UI que contenga botones, compruebo si alguno esta en Hover*/
+		/*Por cada UI que contenga botones, compruebo si alguno esta en Hover*/
 		if (this->menu->isActive == true) {
 			SDL_ShowCursor(true);
 

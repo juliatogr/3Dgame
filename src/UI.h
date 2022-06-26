@@ -1,3 +1,4 @@
+
 #pragma once
 #include "shader.h"
 #include "texture.h"
@@ -86,7 +87,7 @@ public:
 	std::vector<Button*> Buttons;
 	Vector4 xyhw;
 	std::vector<Code*> codes;
-	CodeScreen();
+	CodeScreen(Lab* lab);
 	void RenderCodeScreen();
 
 };

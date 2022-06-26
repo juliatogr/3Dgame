@@ -1,8 +1,7 @@
 #pragma once
 #include <string>
+#include "entity.h"
 
-#ifndef TASK_H
-#define TASK_H
 
 enum TASK_ID {
 	CODE = 0
@@ -20,6 +19,11 @@ class Code : public Task {
 public: 
 	std::string obj;
 	std::string test;
-	Code(int id, std::string  o);
+	Door* door1;
+	Door* door2;
+	int nD;
+
+	Code(int id, std::string o, Door* d1, Door* d2);
+	Code(int id, std::string  o, Door* d);
+	void OpenDoors();
 };
-#endif

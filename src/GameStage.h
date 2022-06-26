@@ -1,3 +1,6 @@
+#ifndef STAGE_H
+#define STAGE_H
+
 #include "shader.h"
 #include "camera.h"
 #include "entity.h"
@@ -6,8 +9,6 @@
 
 
 
-#ifndef STAGE_H
-#define STAGE_H
 
 enum STAGE_ID {
 	INTRO = 0,
