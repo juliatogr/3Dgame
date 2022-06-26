@@ -4,6 +4,7 @@
 #include "camera.h"
 #include "mesh.h"
 #include "Inventory.h"
+#include "Tasks.h"
 
 class UI
 {
@@ -12,10 +13,13 @@ public:
 	Camera cam2D;
 	Mesh quad;
 	Matrix44 quadModel;
+	bool isActive;
+
 
 	UI();
 
 	void Render(Texture* texture, float x, float y, float w, float h, bool u);
+	void RenderRotate(Texture* texture, float x, float y, float w, float h, bool u);
 };
 
 enum BUTTONTYPE {
@@ -27,18 +31,22 @@ enum BUTTONTYPE {
 
 class Button : public UI{
 public:
-	bool onClick;
 	Texture* Active;
 	Texture* Disabled;
 	Texture* Hover;
 	Texture* Normal;
 	BUTTONTYPE type;
 	Vector4 xyhw;
+	//si contiene texto
 	const char* text;
-
-	void RenderButton();
+	//si contiene un icono
+	Texture* icon;
+	
+	void RenderButtonText();
+	void RenderButtonIcon();
 
 	Button(BUTTONTYPE t, Vector4 v, const char* te);
+	Button(BUTTONTYPE t, Vector4 v, Texture* i);
 };
 
 
@@ -46,13 +54,14 @@ class Menu : public UI {
 public:
 	Texture* Card;
 	std::vector<Button*> Buttons;
-	bool isActive;
 	Vector4 xyhw;
 	Inventory* inventory;
 
 	Menu();
 	void RenderMenu();
 	void UpdateMenu();
+
+	void ShowNote(int id);
 
 
 };
@@ -64,10 +73,20 @@ public:
 	Texture* bg;
 	Vector4 xyhw;
 
-	bool isActive;
-
 	PopUpMessage(int i, const char* t, Texture* b, Vector4 xyhw);
 	void RenderPopUp();
 
+
+};
+
+
+class CodeScreen : public UI {
+public:
+	Texture* bg;//fondo de la ui
+	std::vector<Button*> Buttons;
+	Vector4 xyhw;
+	std::vector<Code*> codes;
+	CodeScreen();
+	void RenderCodeScreen();
 
 };

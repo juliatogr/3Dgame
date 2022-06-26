@@ -1,16 +1,11 @@
 #include "Tasks.h"
 
-Code::Code(int id, int o)
+Code::Code(int id, std::string o)
 {
 	this->ID = id;
 	this->obj = o;
+	this->test = "";
 	this->type = CODE;
-}
-
-bool Code::InputCodeIsCorrect(int inp)
-{
-	if (inp == this->obj) {
-		return true;
-	}
-	return false;
+	this->isCompleted = false;
+	this->isActive = false;
 }

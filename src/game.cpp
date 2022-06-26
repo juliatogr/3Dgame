@@ -173,7 +173,6 @@ void Game::onKeyDown(SDL_KeyboardEvent event)
 	case SDLK_KP_PLUS: GetCurrentStage()->RotateSelected(10.0f); break;
 	case SDLK_KP_MINUS: GetCurrentStage()->RotateSelected(-10.0f); break;
 	case SDLK_m:  menu->isActive= !menu->isActive; break;
-
 	}
 
 }
@@ -206,18 +205,92 @@ void Game::onMouseButtonDown(SDL_MouseButtonEvent event)
 	{
 		if (GetCurrentStage()->GetId() == PLAY) {
 
-				Menu* menu = GetCurrentStage()->menu;
+			/*Que Ocurre si se hace click a un boton que esta dentro del menu*/
+			Menu* menu = GetCurrentStage()->menu;
 			if ((menu->isActive == true)) {
-				
-				for (int i = 0; i < menu->Buttons.size(); i++) {
+				/*de la lista de botones, busco cual esta activo, menos el de salida*/
+				for (int i = 0; i < menu->Buttons.size()-1; i++) {
 					Button* current = menu->Buttons[i];
 					if (current->type == H) {
 						std::cout << "UIACTIVE: " <<current->text<< std::endl;
+						menu->inventory->Notes[i]->isShowing = true;
+
 						current->type = N;
 					}
 				}
+				/*busco cual nota se esta mostrando*/
+				for (int i = 0; i < menu->inventory->Notes.size(); i++) {
+					Note* current = menu->inventory->Notes[i];
+					// si se muestra
+					if (current->isShowing == true) {
+						Button* exit = menu->Buttons[menu->Buttons.size() - 1];
+						/* y esta en hover el boton de salida*/
+						if (exit->type == H) {
+							std::cout << "UIACTIVE: Exit" << std::endl;
+							/*se cierra la imagen*/
+							menu->inventory->Notes[i]->isShowing = false;
+
+							exit->type = N;
+						}
+					}
+				}
+			}
+
+			CodeScreen* code = GetCurrentStage()->codeUI;
+			/*Que ocurre si se da click a un boton de la tarea codigo*/
+			if (code->isActive) {
+				Code* currentCode;
+
+				for (int i = 0; i < code->codes.size(); i++) {
+					if (code->codes[i]->isActive == true){
+						currentCode = code->codes[i];
+					}
+				}
+
+				//*hago click en los botones para crear un codigo de 4 digitos*/
+				for (int i = 0; i < code->Buttons.size() - 2; i++) {
+					Button* current = code->Buttons[i];
+					if (current->type == H) {
+						std::cout << "UIACTIVE: " << current->text << std::endl;
+						currentCode->test=(currentCode->test + current->text);
+				
+						std::cout << "Test: " << currentCode->test << std::endl;
+
+
+						current->type = N;
+					}
+				}
+				
+
+				Button* enter = code->Buttons[code->Buttons.size() - 1];
+				//* y esta en hover el boton de salida*/
+				if (enter->type == H) {
+					if (currentCode->obj==currentCode->test) {
+						code->isActive = false;
+						currentCode->isActive = false;
+						currentCode->isCompleted = true;
+						std::cout << "UIACTIVE: Enter Correct" << std::endl;
+					}
+					currentCode->test = "";
+					std::cout << "UIACTIVE: Enter Wrong" << std::endl;
+
+					enter->type = N;
+				}
+
+				Button* exit = code->Buttons[code->Buttons.size() - 2];
+				/* y esta en hover el boton de salida*/
+				if (exit->type == H) {
+					std::cout << "UIACTIVE: Exit" << std::endl;
+					/*se cierra la CodeUI*/
+					currentCode->test = "";
+					code->isActive = false;
+
+
+					exit->type = N;
+				}
 
 			}
+
 		}
 
 	}

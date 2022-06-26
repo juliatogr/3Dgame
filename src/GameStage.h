@@ -30,10 +30,12 @@ public:
 	Player* player;
 	Menu* menu;
 	std::vector<PopUpMessage*> pum;
+	CodeScreen* codeUI;
+
 
 	virtual STAGE_ID GetId() = 0;
 	virtual void RayPick(Camera* cam);
-	virtual void PickButton();
+	virtual void PickButton(std::vector<Button*> buttons);
 	virtual void RotateSelected(float angleDegrees);
 	virtual void Render(Shader* a_shader, Camera* cam) = 0;
 	virtual void Update(double seconds_elapsed, boolean cameralocked, float elapsed_time, float speed, Shader* a_shader, Camera* camera,  bool mouse_locked) = 0;
@@ -54,7 +56,8 @@ class PlayStage : public GameStage {
 public:
 	bool isViewingTask = false;
 	STAGE_ID GetId();
-	
+	bool IsActiveUIs;
+
 	PlayStage();
 	void Render(Shader* a_shader, Camera* cam);
 	void Update(double seconds_elapsed, boolean cameralocked, float elapsed_time, float speed, Shader* a_shader, Camera* camera, bool mouse_locked);

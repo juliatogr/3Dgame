@@ -1,11 +1,14 @@
 #include "entity.h"
+
+
+
 class Inventory
 {
 public:
-	int numSavedEntities = 0;
-	std::vector<Entity*> savedEntities;
+
+	std::vector<Note*> Notes;
 
 	Inventory();
-	void addEntity(Entity* ent);
+	void addNote(Entity* n);
 };
 

@@ -16,6 +16,11 @@ public:
 	void RenderMesh(Shader* a_shader, Camera* cam);
 
 };
+enum TASKTYPE {
+	NOTE,
+	PC
+
+};
 
 class TaskEntity : public Entity {
 public:
@@ -26,6 +31,8 @@ public:
 	bool isSaved = false;
 
 	Vector3 pos;
+	TASKTYPE type;
+	int id;//id of the task, in this case as is a PC, the task would be Code
 
 	void viewToTask(Camera* cam, float seconds_elapsed);
 	void returnView(Camera* cam, float seconds_elapsed);
@@ -33,11 +40,16 @@ public:
 
 class Note : public TaskEntity {
 public:
-
-	Note();
+	bool isShowing;
+	Note(Entity* e);
 	void Show(Shader* a_shader, Camera* cam);
 };
-
+class Computer : public TaskEntity {
+public:
+	bool isShowing;
+	Computer(Entity* e, int i);
+	void Show(Shader* a_shader, Camera* cam);
+};
 class Ground : public Entity {
 public:
 	bool canBeSaved = false;

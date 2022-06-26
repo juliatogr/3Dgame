@@ -85,14 +85,14 @@
     <ClCompile Include="..\..\src\Inventory.cpp">
       <Filter>Components</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\PopUpMessage.cpp">
-      <Filter>Components</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\Tasks.cpp">
       <Filter>Components</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\UI.cpp">
       <Filter>essentials</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\Note.cpp">
+      <Filter>components</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -176,14 +176,14 @@
     <ClInclude Include="..\..\src\Inventory.h">
       <Filter>Components</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\PopUpMessage.h">
-      <Filter>Components</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\Tasks.h">
       <Filter>Components</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\UI.h">
       <Filter>essentials</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Note.h">
+      <Filter>components</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -205,5 +205,46 @@
     <Filter Include="essentials">
       <UniqueIdentifier>{5556558e-860c-4742-83af-fc38e031a06b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="scene">
+      <UniqueIdentifier>{d5f19af3-25b6-4eb8-948b-f0ba98ae8286}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="scene\Estructuras">
+      <UniqueIdentifier>{72cf1b01-ba78-4511-8609-08630c977772}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="scene\Objetos">
+      <UniqueIdentifier>{90eb7493-e49f-412b-a269-a8bc675fc692}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="scene\Tareas">
+      <UniqueIdentifier>{ec4eae74-c98a-40fe-9298-d6360fbbcf43}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\data\EstructuraChemicalLab.scene">
+      <Filter>scene\Estructuras</Filter>
+    </None>
+    <None Include="..\..\data\EstructuraMachineLab.scene">
+      <Filter>scene\Estructuras</Filter>
+    </None>
+    <None Include="..\..\data\EstructuraPasillo.scene">
+      <Filter>scene\Estructuras</Filter>
+    </None>
+    <None Include="..\..\data\ObjetosChemicalLab.scene">
+      <Filter>scene\Objetos</Filter>
+    </None>
+    <None Include="..\..\data\ObjetosMachineLab.scene">
+      <Filter>scene\Objetos</Filter>
+    </None>
+    <None Include="..\..\data\ObjetosPasillo.scene">
+      <Filter>scene\Objetos</Filter>
+    </None>
+    <None Include="..\..\data\ObjetosTareasMachineLab.scene">
+      <Filter>scene\Tareas</Filter>
+    </None>
+    <None Include="..\..\data\ObjetosTareasPasillo.scene">
+      <Filter>scene\Tareas</Filter>
+    </None>
+    <None Include="..\..\data\ObjetosTareasChemicalLab.scene">
+      <Filter>scene\Tareas</Filter>
+    </None>
   </ItemGroup>
 </Project>
