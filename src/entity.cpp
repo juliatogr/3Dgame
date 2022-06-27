@@ -58,6 +58,7 @@ std::string ReadEntityType(std::stringstream& ss) {
 	return entityType;
 }
 
+
 std::string ReadTextPath(std::stringstream& ss) {
 
 	std::string textPath;
@@ -151,6 +152,13 @@ void Room::LoadTaskEntities(const char* path) {
 	while (count != nEntities) {
 
 		std::string entType = ReadEntityType(ss);
+		std::string entImg;
+		const char* im;
+		if (entType == "Note") {
+			 entImg = ReadTextPath(ss);
+			 im = &entImg[0];
+			 std::cout << im << std::endl;
+		}
 		std::string meshPath = ReadMeshPath(ss);
 		const char* c = &meshPath[0];
 		std::string textPath = ReadTextPath(ss);
@@ -167,8 +175,10 @@ void Room::LoadTaskEntities(const char* path) {
 		TaskEntity* entity = new TaskEntity();
 
 		if (entType == "Note") {
-			Note* noteEnt = new Note(entity);
+			int id = CountTypeTasks(taskEntities, NOTE);
+			Note* noteEnt = new Note(entity, entity->img, id);
 			entity = noteEnt;
+			entity->img = Texture::Get(im);
 		}
 		if (entType == "PC") {
 			int id = CountTypeTasks(taskEntities, PC);
@@ -296,10 +306,12 @@ void TaskEntity::returnView(Camera* cam, float seconds_elapsed) {
 	this->isReturning = false;
 }
 
-Note::Note(Entity* e) {
+Note::Note(Entity* e, Texture* i, int nid) {
+	this->id = nid;
 	this->canBeSaved = true;
 	this->isShowing = false;
 	this->texture = e->texture;
+	this->img = i;
 	this->type = NOTE;
 }
 

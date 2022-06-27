@@ -9,7 +9,7 @@ public:
 	std::vector<Note*> Notes;
 
 	Inventory();
-	void addNote(Entity* n);
+	void addNote(Entity* n, Texture* img, int id);
 };
 
 #endif

@@ -39,6 +39,7 @@ public:
 
 	Vector3 pos;
 	TASKTYPE type;
+	Texture* img;
 	int id;//id of the task, in this case as is a PC, the task would be Code
 
 	void viewToTask(Camera* cam, float seconds_elapsed);
@@ -48,7 +49,7 @@ public:
 class Note : public TaskEntity {
 public:
 	bool isShowing;
-	Note(Entity* e);
+	Note(Entity* e, Texture* i, int nid);
 	void Show(Shader* a_shader, Camera* cam);
 };
 class Computer : public TaskEntity {

@@ -14,13 +14,10 @@ public:
 	Camera cam2D;
 	Mesh quad;
 	Matrix44 quadModel;
-	bool isActive;
-
 
 	UI();
 
 	void Render(Texture* texture, float x, float y, float w, float h, bool u);
-	void RenderRotate(Texture* texture, float x, float y, float w, float h, bool u);
 };
 
 enum BUTTONTYPE {
@@ -74,6 +71,8 @@ public:
 	Texture* bg;
 	Vector4 xyhw;
 
+	bool isActive;
+
 	PopUpMessage(int i, const char* t, Texture* b, Vector4 xyhw);
 	void RenderPopUp();
 
@@ -86,8 +85,8 @@ public:
 	Texture* bg;//fondo de la ui
 	std::vector<Button*> Buttons;
 	Vector4 xyhw;
-	std::vector<Code*> codes;
+
 	CodeScreen(Lab* lab);
-	void RenderCodeScreen();
+	void RenderCodeScreen(Code* code);
 
 };
