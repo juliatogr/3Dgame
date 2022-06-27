@@ -192,6 +192,9 @@ void PlayStage::Update(double seconds_elapsed, boolean cameralocked, float elaps
 					this->selectedTaskEntity->returnView(camera, seconds_elapsed);
 					isViewingTask = true;
 					this->selectedTaskEntity->isViewed = true;
+					// cuando el usuario vuelve (ha leido la nota), abre las puertas
+					this->lab->doors[0]->isOpening = true;
+					this->lab->doors[1]->isOpening = true;
 					this->selectedTaskEntity = NULL;
 
 				}
@@ -204,19 +207,12 @@ void PlayStage::Update(double seconds_elapsed, boolean cameralocked, float elaps
 						this->selectedTaskEntity->isReturning = true;
 						this->pum[0]->isActive = false;
 						this->pum[1]->isActive = false;
-
-						// si lee la nota se abre la puerta
-						this->lab->doors[0]->isOpening = true;
-						this->lab->doors[1]->isOpening = true;
 					}
 
 					if (this->selectedTaskEntity->canBeSaved) {
 						this->pum[1]->isActive = true;
 						//std::cout << "Push Q to save the object to Inventory" << std::endl;
 						if (Input::isKeyPressed(SDL_SCANCODE_Q)) {
-							//si se guarda la nota se abre la puerta
-							this->lab->doors[0]->isOpening = true;
-							this->lab->doors[1]->isOpening = true;
 
 							this->selectedTaskEntity->isReturning = true;
 							this->selectedTaskEntity->isViewed = true;
