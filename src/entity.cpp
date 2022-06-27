@@ -244,20 +244,20 @@ Lab::Lab() {
 
 void Lab::LoadRooms() {
 
-	this->rooms[int(sRooms::HALL)]->LoadEntities("data/EstructuraPasillo.scene");
-	this->rooms[int(sRooms::HALL)]->LoadEntities("data/ObjetosPasillo.scene");
-	this->rooms[int(sRooms::CHEM)]->LoadEntities("data/EstructuraChemicalLab.scene");
-	this->rooms[int(sRooms::CHEM)]->LoadEntities("data/ObjetosChemicalLab.scene");
-	this->rooms[int(sRooms::MACH)]->LoadEntities("data/EstructuraMachineLab.scene");
-	this->rooms[int(sRooms::MACH)]->LoadEntities("data/ObjetosMachineLab.scene");
+	this->rooms[int(ROOMS_ID::HALL)]->LoadEntities("data/EstructuraPasillo.scene");
+	this->rooms[int(ROOMS_ID::HALL)]->LoadEntities("data/ObjetosPasillo.scene");
+	this->rooms[int(ROOMS_ID::CHEM)]->LoadEntities("data/EstructuraChemicalLab.scene");
+	this->rooms[int(ROOMS_ID::CHEM)]->LoadEntities("data/ObjetosChemicalLab.scene");
+	this->rooms[int(ROOMS_ID::MACH)]->LoadEntities("data/EstructuraMachineLab.scene");
+	this->rooms[int(ROOMS_ID::MACH)]->LoadEntities("data/ObjetosMachineLab.scene");
 
 }
 
 void Lab::LoadRoomsTaskEntities() {
 
-	this->rooms[int(sRooms::HALL)]->LoadTaskEntities("data/ObjetosTareasPasillo.scene");
-	this->rooms[int(sRooms::CHEM)]->LoadTaskEntities("data/ObjetosTareasChemicalLab.scene");
-	this->rooms[int(sRooms::MACH)]->LoadTaskEntities("data/ObjetosTareasMachineLab.scene");
+	this->rooms[int(ROOMS_ID::HALL)]->LoadTaskEntities("data/ObjetosTareasPasillo.scene");
+	this->rooms[int(ROOMS_ID::CHEM)]->LoadTaskEntities("data/ObjetosTareasChemicalLab.scene");
+	this->rooms[int(ROOMS_ID::MACH)]->LoadTaskEntities("data/ObjetosTareasMachineLab.scene");
 
 }
 

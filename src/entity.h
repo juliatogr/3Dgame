@@ -7,6 +7,11 @@
 #include "camera.h"
 #include "shader.h"
 
+enum class ROOMS_ID {
+	HALL = 0,
+	MACH = 1,
+	CHEM = 2
+};
 
 class Entity
 {
@@ -65,7 +70,7 @@ public:
 	bool isOpening = false;
 	float maxDist = 0.5;
 	float currDist = 0;
-	float speed = 0.002f;
+	float speed = 0.001f;
 
 	void Open(Shader* a_shader, float seconds_elapsed);
 
@@ -81,11 +86,7 @@ public:
 
 class Lab {
 public:
-	enum class sRooms {
-		HALL = 0,
-		MACH = 1,
-		CHEM = 2
-	};
+
 	int numRooms = 3;
 	int numDoors = 4;
 
