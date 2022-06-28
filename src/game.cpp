@@ -211,13 +211,25 @@ void Game::onMouseButtonDown(SDL_MouseButtonEvent event)
 			/*Que Ocurre si se hace click a un boton que esta dentro del menu*/
 			if ((state->OpenInventory == true)) {
 				/*de la lista de botones, busco cual esta activo, menos el de salida*/
+        
 				for (int i = 0; i < playMenu->Buttons.size() - 1; i++) {
+        	Note* currentNote = playMenu->inventory->Notes[i];
 					Button* current = playMenu->Buttons[i];
 					if (current->type == H) {
-						std::cout << "UIACTIVE: " << current->text << std::endl;
-						playMenu->inventory->Notes[i]->isShowing = true;
+						//std::cout << "UIACTIVE: " << current->text << std::endl;
+						
+						for (int j = 0; j < playMenu->inventory->Notes.size(); j++) {
+							//los botones y la lista de notas deberia ser la misma size, a menos que haya botones disabled, 
+							//por lo que hay menos notas que botones disponibles
+							if (i == j) {
+								currentNote->isShowing = true;
+							}
+							else {
+								playMenu->inventory->Notes[j]->isShowing = false;
 
-						current->type = N;
+							}
+						}
+								current->type = N;
 					}
 				}
 				/*busco cual nota se esta mostrando*/
@@ -228,7 +240,7 @@ void Game::onMouseButtonDown(SDL_MouseButtonEvent event)
 						Button* exit = playMenu->Buttons[playMenu->Buttons.size() - 1];
 						/* y esta en hover el boton de salida*/
 						if (exit->type == H) {
-							std::cout << "UIACTIVE: Exit" << std::endl;
+							//std::cout << "UIACTIVE: Exit" << std::endl;
 							/*se cierra la imagen*/
 							playMenu->inventory->Notes[i]->isShowing = false;
 
@@ -253,10 +265,10 @@ void Game::onMouseButtonDown(SDL_MouseButtonEvent event)
 				for (int i = 0; i < code->Buttons.size() - 2; i++) {
 					Button* current = code->Buttons[i];
 					if (current->type == H) {
-						std::cout << "UIACTIVE: " << current->text << std::endl;
+						//std::cout << "UIACTIVE: " << current->text << std::endl;
 						currentCode->test = (currentCode->test + current->text);
 
-						std::cout << "Test: " << currentCode->test << std::endl;
+						//std::cout << "Test: " << currentCode->test << std::endl;
 
 
 						current->type = N;
@@ -272,14 +284,14 @@ void Game::onMouseButtonDown(SDL_MouseButtonEvent event)
 						state->CodeUiActive = false;
 						currentCode->isActive = false;
 						currentCode->isCompleted = true;
-						std::cout << "UIACTIVE: Enter Correct" << std::endl;
+						//std::cout << "UIACTIVE: Enter Correct" << std::endl;
 						//si esta la clave correcta se abre la puerta correspondiente
 						currentCode->OpenDoors();
 
 					}
 					else {
 						currentCode->test = "";
-						std::cout << "UIACTIVE: Enter Wrong" << std::endl;
+						//std::cout << "UIACTIVE: Enter Wrong" << std::endl;
 
 					}
 
@@ -289,7 +301,7 @@ void Game::onMouseButtonDown(SDL_MouseButtonEvent event)
 				Button* exit = code->Buttons[code->Buttons.size() - 2];
 				/* y esta en hover el boton de salida*/
 				if (exit->type == H) {
-					std::cout << "UIACTIVE: Exit" << std::endl;
+					//std::cout << "UIACTIVE: Exit" << std::endl;
 					/*se cierra la CodeUI*/
 					currentCode->test = "";
 					state->CodeUiActive = false;
@@ -301,7 +313,7 @@ void Game::onMouseButtonDown(SDL_MouseButtonEvent event)
 			}
 
 			PauseMenu* pauseMenu = playStage->pauseMenu;
-			/*Que ocurre si se da click a un boton del menú de pausa*/
+			/*Que ocurre si se da click a un boton del menï¿½ de pausa*/
 			if ((state->PauseMenu == true)) {
 				/*de la lista de botones, busco cual esta activo, menos el de salida*/
 				for (int i = 0; i < pauseMenu->Buttons.size() - 1; i++) {

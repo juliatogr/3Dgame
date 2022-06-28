@@ -36,14 +36,14 @@ public:
 	BUTTONTYPE type;
 	Vector4 xyhw;
 	//si contiene texto
-	const char* text;
+	std::string text;
 	//si contiene un icono
 	Texture* icon;
 	
 	void RenderButtonText();
 	void RenderButtonIcon();
 
-	Button(BUTTONTYPE t, Vector4 v, const char* te);
+	Button(BUTTONTYPE t, Vector4 v, std::string te);
 	Button(BUTTONTYPE t, Vector4 v, Texture* i);
 };
 
