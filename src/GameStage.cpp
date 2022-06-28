@@ -491,7 +491,7 @@ void IntroStage::Update(double seconds_elapsed, boolean cameralocked, float spee
 TutorialStage::TutorialStage()
 {
 
-	this->screen = new TutorialMenu();
+	this->menu = new TutorialMenu();
 
 }
 
@@ -517,7 +517,7 @@ void TutorialStage::Render(Shader* a_shader, Camera* cam)
 	glDisable(GL_CULL_FACE);
 
 	/*aqui renderizamos*/
-	this->screen->RenderMenu();
+	this->menu->RenderMenu();
 
 
 	if (testMouse == true) {

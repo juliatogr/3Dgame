@@ -66,7 +66,7 @@ public:
 class TutorialStage : public Stage {
 public:
 
-	TutorialMenu* screen;
+	TutorialMenu* menu;
 
 	TutorialStage();
 	STAGE_ID GetId();
