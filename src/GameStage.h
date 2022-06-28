@@ -9,8 +9,8 @@
 
 
 enum STAGE_ID {
-	INTRO = 0,
 	TUTORIAL = 1,
+	INTRO = 0,
 	PLAY = 2,
 	END = 3
 };
@@ -57,7 +57,7 @@ public:
 	std::vector<PopUpMessage*> pum;
 	CodeScreen* codeUI;
 	STAGE_ID GetId();
-	
+
 	IntroStage();
 	void Render(Shader* a_shader, Camera* cam);
 	void Update(double seconds_elapsed, boolean cameralocked, float speed, Shader* a_shader, Camera* camera, bool mouse_locked);
@@ -65,12 +65,12 @@ public:
 
 class TutorialStage : public Stage {
 public:
-
+	TutorialMenu* screen;
 	TutorialStage();
 	STAGE_ID GetId();
 
 	void Render(Shader* a_shader, Camera* cam);
-	void Update(double seconds_elapsed, boolean cameralocked, float speed, Shader* a_shader, Camera* camera,  bool mouse_locked);
+	void Update(double seconds_elapsed, boolean cameralocked, float speed, Shader* a_shader, Camera* camera, bool mouse_locked);
 };
 
 class EndStage : public Stage {
@@ -81,7 +81,7 @@ public:
 	STAGE_ID GetId();
 
 	void Render(Shader* a_shader, Camera* cam);
-	void Update(double seconds_elapsed, boolean cameralocked, float speed, Shader* a_shader, Camera* camera,  bool mouse_locked);
+	void Update(double seconds_elapsed, boolean cameralocked, float speed, Shader* a_shader, Camera* camera, bool mouse_locked);
 };
 
 
