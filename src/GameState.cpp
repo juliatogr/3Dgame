@@ -7,6 +7,7 @@ GameState::GameState(){
 	this->CodeUiActive = false;
 	this->PauseMenu = false;
 	this->isFinished = false;
+	this->isLoaded = false;
 
 
 }

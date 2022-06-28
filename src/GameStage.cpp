@@ -405,7 +405,7 @@ Vector3 PlayStage::nextPosNoCol(Vector3 nextPos, float seconds_elapsed)
 		if (!entity->mesh->testSphereCollision(entity->model, character_center, 0.05f, coll, collnorm))
 			continue; //si no colisiona, pasamos al siguiente objeto
 
-					  //si la esfera está colisionando muevela a su posicion anterior alejandola del objeto
+					  //si la esfera estÃ¡ colisionando muevela a su posicion anterior alejandola del objeto
 		Vector3 push_away = normalize(coll - character_center) * seconds_elapsed;
 
 		nextPos = this->player->pos - push_away; //move to previous pos but a little bit further
@@ -423,7 +423,7 @@ Vector3 PlayStage::nextPosNoCol(Vector3 nextPos, float seconds_elapsed)
 			if (!entity->mesh->testSphereCollision(entity->model, character_center, 0.05f, coll, collnorm)) {
 				continue;
 			}
-			//si la esfera está colisionando muevela a su posicion anterior alejandola del objeto
+			//si la esfera estÃ¡ colisionando muevela a su posicion anterior alejandola del objeto
 			Vector3 push_away = normalize(coll - character_center) * seconds_elapsed;
 
 			nextPos = this->player->pos - push_away; //move to previous pos but a little bit further
@@ -490,7 +490,9 @@ void IntroStage::Update(double seconds_elapsed, boolean cameralocked, float spee
 
 TutorialStage::TutorialStage()
 {
-	this->menu = new TutorialMenu();
+
+	this->screen = new TutorialMenu();
+
 }
 
 STAGE_ID TutorialStage::GetId()
@@ -500,7 +502,23 @@ STAGE_ID TutorialStage::GetId()
 
 void TutorialStage::Render(Shader* a_shader, Camera* cam)
 {
-	this->menu->RenderMenu();
+	//set the clear color (the background color)
+	glClearColor(0.7, 0.7, 0.8, 1.0);			// white background to simulate the ceiling
+
+	// Clear the window and the depth buffer
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+	//set the camera as default
+	cam->enable();
+
+	//set flags
+	glDisable(GL_BLEND);
+	glEnable(GL_DEPTH_TEST);
+	glDisable(GL_CULL_FACE);
+
+	/*aqui renderizamos*/
+	this->screen->RenderMenu();
+
 
 	if (testMouse == true) {
 		/*testeo para saber posicion del mouse*/
@@ -508,6 +526,11 @@ void TutorialStage::Render(Shader* a_shader, Camera* cam)
 		std::string text = "Mouse Position2D: " + std::to_string((int)mouse.x) + ", " + std::to_string((int)mouse.y);
 		drawText((Game::instance->window_width) - 290, (Game::instance->window_height) - 25, text, Vector3(1, 1, 1), 2);
 	}
+
+
+	//swap between front buffer and back buffer
+	SDL_GL_SwapWindow(Game::instance->window);
+
 }
 
 void TutorialStage::Update(double seconds_elapsed, boolean cameralocked, float speed, Shader* a_shader, Camera* camera, bool mouse_locked)
