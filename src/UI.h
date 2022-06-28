@@ -108,13 +108,13 @@ public:
 
 };
 
-class EndMenu : public Menu {
+class EndingMenu : public Menu {
 public:
 	Texture* Card;
 	std::vector<Button*> Buttons;
 	Vector4 xyhw;
 
-	EndMenu();
+	EndingMenu();
 	void RenderMenu();
 	void UpdateMenu();
 

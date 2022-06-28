@@ -38,7 +38,9 @@ float no_render_distance = 1000.0f;
 
 /*Stages*/
 std::vector<Stage*> stages;
-STAGE_ID currentStage = STAGE_ID::TUTORIAL;
+
+STAGE_ID currentStage = STAGE_ID::INTRO;
+
 
 
 Stage* GetStage(STAGE_ID id) {
@@ -52,6 +54,7 @@ Stage* GetCurrentStage() {
 void SetStage(STAGE_ID id) {
 	currentStage = id;
 }
+
 
 void InitStages(GameState* state, Shader* shader, Camera* camera) {
 	bool isLoaded1 = false, isLoaded2 = false, isLoaded3 = false;
@@ -240,6 +243,7 @@ void Game::onMouseButtonDown(SDL_MouseButtonEvent event)
 			/*Que Ocurre si se hace click a un boton que esta dentro del menu*/
 			if ((state->OpenInventory == true)) {
 				/*de la lista de botones, busco cual esta activo, menos el de salida*/
+
 				if (playMenu->inventory->Notes.size() > 0) {
 					for (int i = 0; i < playMenu->Buttons.size() - 1; i++) {
 						Note* currentNote = playMenu->inventory->Notes[i];
@@ -257,29 +261,29 @@ void Game::onMouseButtonDown(SDL_MouseButtonEvent event)
 									playMenu->inventory->Notes[j]->isShowing = false;
 
 								}
+								current->type = N;
 							}
-							current->type = N;
 						}
 					}
-				}
-				/*busco cual nota se esta mostrando*/
-				for (int i = 0; i < playMenu->inventory->Notes.size(); i++) {
-					Note* current = playMenu->inventory->Notes[i];
-					// si se muestra
-					if (current->isShowing == true) {
-						Button* exit = playMenu->Buttons[playMenu->Buttons.size() - 1];
-						/* y esta en hover el boton de salida*/
-						if (exit->type == H) {
-							//std::cout << "UIACTIVE: Exit" << std::endl;
-							/*se cierra la imagen*/
-							playMenu->inventory->Notes[i]->isShowing = false;
+					/*busco cual nota se esta mostrando*/
+					for (int i = 0; i < playMenu->inventory->Notes.size(); i++) {
+						Note* current = playMenu->inventory->Notes[i];
+						// si se muestra
+						if (current->isShowing == true) {
+							Button* exit = playMenu->Buttons[playMenu->Buttons.size() - 1];
+							/* y esta en hover el boton de salida*/
+							if (exit->type == H) {
+								//std::cout << "UIACTIVE: Exit" << std::endl;
+								/*se cierra la imagen*/
+								playMenu->inventory->Notes[i]->isShowing = false;
 
-							exit->type = N;
+								exit->type = N;
+							}
 						}
 					}
 				}
+
 			}
-
 			CodeScreen* code = playStage->codeUI;
 			/*Que ocurre si se da click a un boton de la tarea codigo*/
 			if (state->CodeUiActive) {
@@ -344,16 +348,36 @@ void Game::onMouseButtonDown(SDL_MouseButtonEvent event)
 
 			PauseMenu* pauseMenu = playStage->pauseMenu;
 			/*Que ocurre si se da click a un boton del men� de pausa*/
-			if ((state->PauseMenu == true)) {
+			if (state->PauseMenu == true) {
 				/*de la lista de botones, busco cual esta activo, menos el de salida*/
 				for (int i = 0; i < pauseMenu->Buttons.size() - 1; i++) {
 					Button* current = pauseMenu->Buttons[i];
+
+					if (current->type == H) {
+						if (current->text == "Continue") {
+							state->PauseMenu = false;
+						}
+						else if (current->text == "Tutorial") {
+							state->OpenInventory = false;
+							state->PauseMenu = false;
+							SetStage(STAGE_ID::TUTORIAL);
+						}
+					}
+
+
+				}
+				Button* exit = pauseMenu->Buttons[pauseMenu->Buttons.size() - 1];
+				/* y esta en hover el boton de salida*/
+				if (exit->type == H) {
+					state->OpenInventory = false;
+					state->PauseMenu = false;
+					exit->type = N;
+					SetStage(STAGE_ID::INTRO);
 				}
 			}
-
 		}
 
-		if (GetCurrentStage()->GetId() == INTRO) {
+		else if (GetCurrentStage()->GetId() == INTRO) {
 			IntroStage* introStage = (IntroStage*)GetCurrentStage();
 			IntroMenu* introMenu = (IntroMenu*)introStage->menu;
 			/*Que Ocurre si se hace click a un boton que esta dentro del menu*/
@@ -361,6 +385,49 @@ void Game::onMouseButtonDown(SDL_MouseButtonEvent event)
 			for (int i = 0; i < introMenu->Buttons.size() - 1; i++) {
 				Button* current = introMenu->Buttons[i];
 				if (current->type == H) {
+					if (current->text == "Play") {
+						SetStage(PLAY);
+					}
+					else if (current->text == "Tutorial") {
+						SetStage(TUTORIAL);
+					}
+				}
+			}
+		}
+
+		else if (GetCurrentStage()->GetId() == TUTORIAL) {
+			TutorialStage* tutStage = (TutorialStage*)GetCurrentStage();
+			IntroMenu* introMenu = (IntroMenu*)tutStage->menu;
+			/*Que Ocurre si se hace click a un boton que esta dentro del menu*/
+			/*de la lista de botones, busco cual esta activo, menos el de salida*/
+			for (int i = 0; i < introMenu->Buttons.size() - 1; i++) {
+				Button* current = introMenu->Buttons[i];
+				if (current->type == H) {
+					if (current->text == "Continue") {
+						SetStage(TUTORIAL);
+					}
+					else if (current->text == "Play") {
+						SetStage(PLAY);
+					}
+				}
+			}
+		}
+
+
+		else if (GetCurrentStage()->GetId() == END) {
+			EndStage* endStage = (EndStage*)GetCurrentStage();
+			EndingMenu* endMenu = (EndingMenu*)endStage->menu;
+			/*Que Ocurre si se hace click a un boton que esta dentro del menu*/
+			/*de la lista de botones, busco cual esta activo, menos el de salida*/
+			for (int i = 0; i < endMenu->Buttons.size() - 1; i++) {
+				Button* current = endMenu->Buttons[i];
+				if (current->type == H) {
+					if (current->text == "Continue") {
+						SetStage(TUTORIAL);
+					}
+					else if (current->text == "Play") {
+						SetStage(PLAY);
+					}
 				}
 			}
 		}
