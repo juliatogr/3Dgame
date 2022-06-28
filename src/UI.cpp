@@ -154,13 +154,9 @@ void PlayMenu::RenderMenu()
 		//me muestra la nota actual
 		if (current->isShowing == true) {
 			this->ShowNote(i);
-			/*me aseguro que las otras se cierren*/
-			for (int k = 0; k < this->inventory->Notes.size(); k++) {
-				if (i!=k) {
-					this->inventory->Notes[k]->isShowing = false;
-				}
-			}
+						
 		}
+		
 	}
 
 

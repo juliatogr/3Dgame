@@ -213,13 +213,26 @@ void Game::onMouseButtonDown(SDL_MouseButtonEvent event)
 			if ((state->OpenInventory == true)) {
 				/*de la lista de botones, busco cual esta activo, menos el de salida*/
 				for (int i = 0; i < menu->Buttons.size() - 1; i++) {
+					Note* currentNote = menu->inventory->Notes[i];
 					Button* current = menu->Buttons[i];
 					if (current->type == H) {
 						//std::cout << "UIACTIVE: " << current->text << std::endl;
-						menu->inventory->Notes[i]->isShowing = true;
-						current->type = N;
-					}
+						
+						for (int j = 0; j < menu->inventory->Notes.size(); j++) {
+							//los botones y la lista de notas deberia ser la misma size, a menos que haya botones disabled, 
+							//por lo que hay menos notas que botones disponibles
+							if (i == j) {
+								currentNote->isShowing = true;
+							}
+							else {
+								menu->inventory->Notes[j]->isShowing = false;
 
+							}
+						}
+								current->type = N;
+
+
+					}
 				}
 				/*busco cual nota se esta mostrando*/
 				for (int i = 0; i < menu->inventory->Notes.size(); i++) {

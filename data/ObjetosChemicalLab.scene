@@ -1,161 +1,161 @@
 Entities 38
-MESH data/ObjetosEscena/Objetos/Impresora.obj 
-TEXTURE data/ObjetosEscena/Texturas/Impresora.png 
+MESH data/ChemicalLab/Objetos/Impresora.obj 
+TEXTURE data/ChemicalLab/Texturas/Impresora.png 
 0.000,0.000,5.986
 0.000,180.000,0.000 
 2.000,2.000,2.000
-MESH data/ObjetosEscena/Objetos/Congelador.obj 
-TEXTURE data/ObjetosEscena/Texturas/Congelador.png 
+MESH data/ChemicalLab/Objetos/Congelador.obj 
+TEXTURE data/ChemicalLab/Texturas/Congelador.png 
 3.120,0.000,5.392
 0.000,90.000,0.000 
 2.000,2.000,2.000
-MESH data/ObjetosEscena/Objetos/Congelador.obj 
-TEXTURE data/ObjetosEscena/Texturas/Congelador.png 
+MESH data/ChemicalLab/Objetos/Congelador.obj 
+TEXTURE data/ChemicalLab/Texturas/Congelador.png 
 3.120,0.000,4.077 
 0.000,90.000,0.000 
 2.000,2.000,2.000
-MESH data/ObjetosEscena/Objetos/MesaCentro.obj 
-TEXTURE data/ObjetosEscena/Texturas/MesaCentro.png 
+MESH data/ChemicalLab/Objetos/MesaCentro.obj 
+TEXTURE data/ChemicalLab/Texturas/MesaCentro.png 
 3.378,0.000,2.714
 0.000,90.000,0.000 
 2.000,2.000,2.000
-MESH data/ObjetosEscena/Objetos/MesaCentro.obj 
-TEXTURE data/ObjetosEscena/Texturas/MesaCentro.png 
+MESH data/ChemicalLab/Objetos/MesaCentro.obj 
+TEXTURE data/ChemicalLab/Texturas/MesaCentro.png 
 3.378,0.000,1.362
 0.000,90.000,0.000 
 2.000,2.000,2.000
-MESH data/ObjetosEscena/Objetos/EstanteriaAerea.obj 
-TEXTURE data/ObjetosEscena/Texturas/EstanteriaAerea.png 
+MESH data/ChemicalLab/Objetos/EstanteriaAerea.obj 
+TEXTURE data/ChemicalLab/Texturas/EstanteriaAerea.png 
 3.324,0.402,2.906
 0.000,90.000,0.000 
 2.000,2.000,2.000
-MESH data/ObjetosEscena/Objetos/EstanteriaAerea.obj 
-TEXTURE data/ObjetosEscena/Texturas/EstanteriaAerea.png 
+MESH data/ChemicalLab/Objetos/EstanteriaAerea.obj 
+TEXTURE data/ChemicalLab/Texturas/EstanteriaAerea.png 
 3.324,0.402,1.932
 0.000,90.000,0.000 
 2.000,2.000,2.000
-MESH data/ObjetosEscena/Objetos/EstanteriaAerea.obj 
-TEXTURE data/ObjetosEscena/Texturas/EstanteriaAerea.png 
+MESH data/ChemicalLab/Objetos/EstanteriaAerea.obj 
+TEXTURE data/ChemicalLab/Texturas/EstanteriaAerea.png 
 3.324,0.402,1.076
 0.000,90.000,0.000 
 2.000,2.000,2.000
-MESH data/ObjetosEscena/Objetos/EstanteriaAerea.obj 
-TEXTURE data/ObjetosEscena/Texturas/EstanteriaAerea.png 
+MESH data/ChemicalLab/Objetos/EstanteriaAerea.obj 
+TEXTURE data/ChemicalLab/Texturas/EstanteriaAerea.png 
 3.324,0.402,0.162
 0.000,90.000,0.000 
 2.000,2.000,2.000
-MESH data/ObjetosEscena/Objetos/MesaBidet.obj 
-TEXTURE data/ObjetosEscena/Texturas/MesaBidet.png 
+MESH data/ChemicalLab/Objetos/MesaBidet.obj 
+TEXTURE data/ChemicalLab/Texturas/MesaBidet.png 
 -1.330,0.000, 0.398
 0.000,0.000,0.000 
 2.000,2.000,2.000
-MESH data/ObjetosEscena/Objetos/MesaBidet.obj 
-TEXTURE data/ObjetosEscena/Texturas/MesaBidet.png 
+MESH data/ChemicalLab/Objetos/MesaBidet.obj 
+TEXTURE data/ChemicalLab/Texturas/MesaBidet.png 
 -1.984,0.000, 0.398
 0.000,0.000,0.000 
 2.000,2.000,2.000
-MESH data/ObjetosEscena/Objetos/MesaBidet.obj 
-TEXTURE data/ObjetosEscena/Texturas/MesaBidet.png 
+MESH data/ChemicalLab/Objetos/MesaBidet.obj 
+TEXTURE data/ChemicalLab/Texturas/MesaBidet.png 
 -2.640,0.000, 0.398
 0.000,0.000,0.000 
 2.000,2.000,2.000
-MESH data/ObjetosEscena/Objetos/MesaBidet.obj 
-TEXTURE data/ObjetosEscena/Texturas/MesaBidet.png 
+MESH data/ChemicalLab/Objetos/MesaBidet.obj 
+TEXTURE data/ChemicalLab/Texturas/MesaBidet.png 
 -3.296,0.000, 0.398
 0.000,0.000,0.000 
 2.000,2.000,2.000
-MESH data/ObjetosEscena/Objetos/MesaBidet.obj 
-TEXTURE data/ObjetosEscena/Texturas/MesaBidet.png 
+MESH data/ChemicalLab/Objetos/MesaBidet.obj 
+TEXTURE data/ChemicalLab/Texturas/MesaBidet.png 
 -1.330,0.000, 0.000
 0.000,180.000,0.000 
 2.000,2.000,2.000
-MESH data/ObjetosEscena/Objetos/MesaBidet.obj 
-TEXTURE data/ObjetosEscena/Texturas/MesaBidet.png 
+MESH data/ChemicalLab/Objetos/MesaBidet.obj 
+TEXTURE data/ChemicalLab/Texturas/MesaBidet.png 
 -1.984,0.000, 0.000
 0.000,180.000,0.000 
 2.000,2.000,2.000
-MESH data/ObjetosEscena/Objetos/MesaBidet.obj 
-TEXTURE data/ObjetosEscena/Texturas/MesaBidet.png 
+MESH data/ChemicalLab/Objetos/MesaBidet.obj 
+TEXTURE data/ChemicalLab/Texturas/MesaBidet.png 
 -2.640,0.000, 0.000
 0.000,180.000,0.000 
 2.000,2.000,2.000
-MESH data/ObjetosEscena/Objetos/MesaBidet.obj 
-TEXTURE data/ObjetosEscena/Texturas/MesaBidet.png 
+MESH data/ChemicalLab/Objetos/MesaBidet.obj 
+TEXTURE data/ChemicalLab/Texturas/MesaBidet.png 
 -3.296,0.000, 0.000
 0.000,180.000,0.000 
 2.000,2.000,2.000
-MESH data/ObjetosEscena/Objetos/MesaBidet.obj 
-TEXTURE data/ObjetosEscena/Texturas/MesaBidet.png 
+MESH data/ChemicalLab/Objetos/MesaBidet.obj 
+TEXTURE data/ChemicalLab/Texturas/MesaBidet.png 
 -1.330,0.000, -2.382
 0.000,0.000,0.000 
 2.000,2.000,2.000
-MESH data/ObjetosEscena/Objetos/MesaBidet.obj 
-TEXTURE data/ObjetosEscena/Texturas/MesaBidet.png 
+MESH data/ChemicalLab/Objetos/MesaBidet.obj 
+TEXTURE data/ChemicalLab/Texturas/MesaBidet.png 
 -1.984,0.000, -2.382
 0.000,0.000,0.000 
 2.000,2.000,2.000
-MESH data/ObjetosEscena/Objetos/MesaBidet.obj 
-TEXTURE data/ObjetosEscena/Texturas/MesaBidet.png 
+MESH data/ChemicalLab/Objetos/MesaBidet.obj 
+TEXTURE data/ChemicalLab/Texturas/MesaBidet.png 
 -2.640,0.000, -2.382
 0.000,0.000,0.000 
 2.000,2.000,2.000
-MESH data/ObjetosEscena/Objetos/MesaBidet.obj 
-TEXTURE data/ObjetosEscena/Texturas/MesaBidet.png 
+MESH data/ChemicalLab/Objetos/MesaBidet.obj 
+TEXTURE data/ChemicalLab/Texturas/MesaBidet.png 
 -3.296,0.000, -2.382
 0.000,0.000,0.000 
 2.000,2.000,2.000
-MESH data/ObjetosEscena/Objetos/MesaBidet.obj 
-TEXTURE data/ObjetosEscena/Texturas/MesaBidet.png 
+MESH data/ChemicalLab/Objetos/MesaBidet.obj 
+TEXTURE data/ChemicalLab/Texturas/MesaBidet.png 
 -1.330,0.000, -2.782
 0.000,180.000,0.000 
 2.000,2.000,2.000
-MESH data/ObjetosEscena/Objetos/MesaBidet.obj 
-TEXTURE data/ObjetosEscena/Texturas/MesaBidet.png 
+MESH data/ChemicalLab/Objetos/MesaBidet.obj 
+TEXTURE data/ChemicalLab/Texturas/MesaBidet.png 
 -1.984,0.000, -2.782
 0.000,180.000,0.000 
 2.000,2.000,2.000
-MESH data/ObjetosEscena/Objetos/MesaBidet.obj 
-TEXTURE data/ObjetosEscena/Texturas/MesaBidet.png 
+MESH data/ChemicalLab/Objetos/MesaBidet.obj 
+TEXTURE data/ChemicalLab/Texturas/MesaBidet.png 
 -2.640,0.000, -2.782
 0.000,180.000,0.000 
 2.000,2.000,2.000
-MESH data/ObjetosEscena/Objetos/MesaBidet.obj 
-TEXTURE data/ObjetosEscena/Texturas/MesaBidet.png 
+MESH data/ChemicalLab/Objetos/MesaBidet.obj 
+TEXTURE data/ChemicalLab/Texturas/MesaBidet.png 
 -3.296,0.000, -2.782
 0.000,180.000,0.000 
 2.000,2.000,2.000
-MESH data/ObjetosEscena/Objetos/Pocion3.obj 
-TEXTURE data/ObjetosEscena/Texturas/Pocion3.png 
+MESH data/ChemicalLab/Objetos/Pocion3.obj 
+TEXTURE data/ChemicalLab/Texturas/Pocion3.png 
 3.538,0.940,2.928
 0.000,0.000,0.000 
 2.000,2.000,2.000
-MESH data/ObjetosEscena/Objetos/Pocion3.obj 
-TEXTURE data/ObjetosEscena/Texturas/Pocion3.png 
+MESH data/ChemicalLab/Objetos/Pocion3.obj 
+TEXTURE data/ChemicalLab/Texturas/Pocion3.png 
 -1.734,0.554,0.170
 0.000,0.000,0.000 
 2.000,2.000,2.000
-MESH data/ObjetosEscena/Objetos/Pocion3.obj 
-TEXTURE data/ObjetosEscena/Texturas/Pocion3.png 
+MESH data/ChemicalLab/Objetos/Pocion3.obj 
+TEXTURE data/ChemicalLab/Texturas/Pocion3.png 
 -1.304,0.554, -2.69
 0.000,0.000,0.000 
 2.000,2.000,2.000
-MESH data/ObjetosEscena/Objetos/Pocion3.obj 
-TEXTURE data/ObjetosEscena/Texturas/Pocion3.png 
+MESH data/ChemicalLab/Objetos/Pocion3.obj 
+TEXTURE data/ChemicalLab/Texturas/Pocion3.png 
 -2.052,0.554, -2.534
 0.000,0.000,0.000 
 2.000,2.000,2.000
-MESH data/ObjetosEscena/Objetos/Pocion2.obj 
-TEXTURE data/ObjetosEscena/Texturas/Pocion3.png 
+MESH data/ChemicalLab/Objetos/Pocion2.obj 
+TEXTURE data/ChemicalLab/Texturas/Pocion3.png 
 3.538,0.940,2.656
 0.000,0.000,0.000 
 2.000,2.000,2.000
-MESH data/ObjetosEscena/Objetos/Pocion2.obj 
-TEXTURE data/ObjetosEscena/Texturas/Pocion3.png 
+MESH data/ChemicalLab/Objetos/Pocion2.obj 
+TEXTURE data/ChemicalLab/Texturas/Pocion3.png 
 3.538,0.772, 2.454
 0.000,0.000,0.000 
 2.000,2.000,2.000
-MESH data/ObjetosEscena/Objetos/Pocion2.obj 
-TEXTURE data/ObjetosEscena/Texturas/Pocion3.png 
+MESH data/ChemicalLab/Objetos/Pocion2.obj 
+TEXTURE data/ChemicalLab/Texturas/Pocion3.png 
 -1.610,0.554, 0.246
 0.000,0.000,0.000 
 2.000,2.000,2.000
