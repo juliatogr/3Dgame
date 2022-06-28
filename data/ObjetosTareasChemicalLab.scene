@@ -1,11 +1,13 @@
 Entities 2
 TYPE PC
+ID 0
 MESH data/MachineLab/Objetos/table.obj 
 TEXTURE data/MachineLab/Texturas/table.tga
 1.100,0.600,-5.640
 0.000,0.000,0.000 
 0.048,0.048,0.048
 TYPE Note
+ID 1
 IMAGE data/UI/Notes/ChemicalNote1.png
 MESH data/MachineLab/Objetos/hallNote.obj 
 TEXTURE data/ChemicalLab/Texturas/ChemicalNote1.tga

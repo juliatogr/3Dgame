@@ -36,6 +36,7 @@ public:
 	bool isReturning = false;
 	bool canBeSaved = false;
 	bool isSaved = false;
+	bool updatedId = false;
 
 	Vector3 pos;
 	Vector3 rot;
