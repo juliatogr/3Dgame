@@ -13,7 +13,7 @@
 #include "GameStage.h"
 #include "Player.h"
 
-bool test = true;
+bool test = false;
 
 //some globals
 Shader* shader = NULL;
@@ -171,7 +171,8 @@ void Game::onKeyDown(SDL_KeyboardEvent event)
 	case SDLK_8: if (GetCurrentStage()->GetId() == PLAY) playStage->RayPick(camera); break;
 	case SDLK_KP_PLUS: if (GetCurrentStage()->GetId() == PLAY) playStage->RotateSelected(10.0f); break;
 	case SDLK_KP_MINUS: if (GetCurrentStage()->GetId() == PLAY) playStage->RotateSelected(-10.0f); break;
-	case SDLK_m: state->OpenInventory = !state->OpenInventory; break;
+	case SDLK_i: state->OpenInventory = state->PauseMenu ? false : !state->OpenInventory; break;
+	case SDLK_m: state->PauseMenu = !state->PauseMenu; break;
 	}
 
 }
@@ -206,7 +207,7 @@ void Game::onMouseButtonDown(SDL_MouseButtonEvent event)
 	{
 		if (GetCurrentStage()->GetId() == PLAY) {
 			PlayStage* playStage = (PlayStage*) GetCurrentStage();
-			PlayMenu* playMenu = (PlayMenu*)playStage->menu;
+			InventoryMenu* playMenu = (InventoryMenu*)playStage->invMenu;
 			/*Que Ocurre si se hace click a un boton que esta dentro del menu*/
 			if ((state->OpenInventory == true)) {
 				/*de la lista de botones, busco cual esta activo, menos el de salida*/
@@ -299,6 +300,15 @@ void Game::onMouseButtonDown(SDL_MouseButtonEvent event)
 
 			}
 
+			PauseMenu* pauseMenu = playStage->pauseMenu;
+			/*Que ocurre si se da click a un boton del menú de pausa*/
+			if ((state->PauseMenu == true)) {
+				/*de la lista de botones, busco cual esta activo, menos el de salida*/
+				for (int i = 0; i < pauseMenu->Buttons.size() - 1; i++) {
+					Button* current = pauseMenu->Buttons[i];
+				}
+			}
+
 		}
 
 		if (GetCurrentStage()->GetId() == INTRO) {
@@ -308,64 +318,8 @@ void Game::onMouseButtonDown(SDL_MouseButtonEvent event)
 			/*de la lista de botones, busco cual esta activo, menos el de salida*/
 			for (int i = 0; i < introMenu->Buttons.size() - 1; i++) {
 				Button* current = introMenu->Buttons[i];
-			}
-
-			CodeScreen* code = introStage->codeUI;
-			/*Que ocurre si se da click a un boton de la tarea codigo*/
-			Code* currentCode;
-
-			for (int i = 0; i < state->codes.size(); i++) {
-				if (state->codes[i]->isActive == true) {
-					currentCode = state->codes[i];
-				}
-			}
-
-			//*hago click en los botones para crear un codigo de 4 digitos*/
-			for (int i = 0; i < code->Buttons.size() - 2; i++) {
-				Button* current = code->Buttons[i];
 				if (current->type == H) {
-					std::cout << "UIACTIVE: " << current->text << std::endl;
-					currentCode->test = (currentCode->test + current->text);
-
-					std::cout << "Test: " << currentCode->test << std::endl;
-
-
-					current->type = N;
 				}
-			}
-
-
-			Button* enter = code->Buttons[code->Buttons.size() - 1];
-			//* y esta en hover el boton de salida*/
-			if (enter->type == H) {
-				if (currentCode->obj == currentCode->test) {
-					state->CodeUiActive = false;
-					currentCode->isActive = false;
-					currentCode->isCompleted = true;
-					std::cout << "UIACTIVE: Enter Correct" << std::endl;
-					//si esta la clave correcta se abre la puerta correspondiente
-					currentCode->OpenDoors();
-
-				}
-				else {
-					currentCode->test = "";
-					std::cout << "UIACTIVE: Enter Wrong" << std::endl;
-
-				}
-
-				enter->type = N;
-			}
-
-			Button* exit = code->Buttons[code->Buttons.size() - 2];
-			/* y esta en hover el boton de salida*/
-			if (exit->type == H) {
-				std::cout << "UIACTIVE: Exit" << std::endl;
-				/*se cierra la CodeUI*/
-				currentCode->test = "";
-				state->CodeUiActive = false;
-
-
-				exit->type = N;
 			}
 		}
 

@@ -33,7 +33,8 @@ public:
 	TaskEntity* selectedTaskEntity = NULL;
 
 	Player* player;
-	PlayMenu* menu;
+	InventoryMenu* invMenu;
+	PauseMenu* pauseMenu;
 	std::vector<PopUpMessage*> pum;
 	CodeScreen* codeUI;
 
@@ -42,7 +43,6 @@ public:
 
 	PlayStage();
 	void RayPick(Camera* cam);
-	void PickButton(std::vector<Button*> buttons);
 	void RotateSelected(float angleDegrees);
 	void Render(Shader* a_shader, Camera* cam);
 	void Update(double seconds_elapsed, boolean cameralocked, float speed, Shader* a_shader, Camera* camera, bool mouse_locked);
@@ -85,5 +85,5 @@ public:
 };
 
 
-
+void PickButton(std::vector<Button*> buttons);
 #endif
