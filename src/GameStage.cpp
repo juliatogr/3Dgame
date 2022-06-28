@@ -181,6 +181,13 @@ void PlayStage::Render(Shader* a_shader, Camera* cam)
 		}
 	}
 
+	if (testMouse == true) {
+		/*testeo para saber posicion del player*/
+
+		std::string text = "Player Position2D: " + std::to_string(this->player->pos.x) + ", " + std::to_string(this->player->pos.y) + ", " + std::to_string(this->player->pos.z);
+		drawText(0, (Game::instance->window_height) - 25, text, Vector3(1, 1, 1), 2);
+	}
+
 }
 
 void PlayStage::Update(double seconds_elapsed, boolean cameralocked, float speed, Shader* a_shader, Camera* camera, bool mouse_locked)
@@ -346,6 +353,12 @@ void PlayStage::Update(double seconds_elapsed, boolean cameralocked, float speed
 			lab->doors[2]->Open(a_shader, seconds_elapsed);
 			lab->doors[3]->Open(a_shader, seconds_elapsed);
 			lab->doors[4]->Open(a_shader, seconds_elapsed);
+
+			if (this->player->pos.z <= -17.844) {
+				//std::cout << "WIN" << std::endl;
+				if (!state->isFinished)
+					state->isFinished = true;
+			}
 
 		}
 

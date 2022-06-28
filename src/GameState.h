@@ -11,6 +11,7 @@ public:
 	bool OpenInventory;
 	bool CodeUiActive;
 	bool PauseMenu;
+	bool isFinished;
 
 
 	std::vector<Code*> codes;
