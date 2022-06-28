@@ -145,8 +145,8 @@ void Game::update(double seconds_elapsed)
 	float speed = 0.02 * seconds_elapsed * mouse_speed; //the speed is defined by the seconds_elapsed so it goes constant
 
 	if (GetCurrentStage()->GetId() == PLAY) {
-		if (Game::instance->gameState->UIActive == true) {
-			//pickButton();
+		if (this->gameState->isFinished) {
+			SetStage(END);
 		}
 	}
 	GetCurrentStage()->Update(seconds_elapsed, cameralocked, speed, shader, camera, mouse_locked);

@@ -355,7 +355,9 @@ void PlayStage::Update(double seconds_elapsed, boolean cameralocked, float speed
 			lab->doors[4]->Open(a_shader, seconds_elapsed);
 
 			if (this->player->pos.z <= -17.844) {
-				std::cout << "WIN" << std::endl;
+				//std::cout << "WIN" << std::endl;
+				if (!state->isFinished)
+					state->isFinished = true;
 			}
 
 		}
