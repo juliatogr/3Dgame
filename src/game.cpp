@@ -91,8 +91,8 @@ void InitStages(GameState* state, Shader* shader, Camera* camera) {
 	}
 	std::cout << "All Loaded" << std::endl;
 
-
 }
+
 
 //SDL_GetTicks();
 
