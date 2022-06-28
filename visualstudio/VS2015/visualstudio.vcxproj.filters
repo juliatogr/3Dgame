@@ -240,5 +240,8 @@
     <None Include="..\..\data\ObjetosTareasChemicalLab.scene">
       <Filter>scene\Tareas</Filter>
     </None>
+    <None Include="..\..\data\DoorObjects.scene">
+      <Filter>scene\Estructuras</Filter>
+    </None>
   </ItemGroup>
 </Project>

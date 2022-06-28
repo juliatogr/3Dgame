@@ -155,7 +155,7 @@ void Game::update(double seconds_elapsed)
 //Keyboard event handler (sync input)
 void Game::onKeyDown(SDL_KeyboardEvent event)
 {
-	PlayStage* playStage = (PlayStage*) stages[STAGE_ID::PLAY];
+	PlayStage* playStage = (PlayStage*)stages[STAGE_ID::PLAY];
 	Lab* lab = playStage->lab;
 	GameState* state = Game::instance->gameState;
 	switch (event.keysym.sym)
@@ -206,30 +206,31 @@ void Game::onMouseButtonDown(SDL_MouseButtonEvent event)
 	if (event.button == SDL_BUTTON_LEFT) //left mouse
 	{
 		if (GetCurrentStage()->GetId() == PLAY) {
-			PlayStage* playStage = (PlayStage*) GetCurrentStage();
+			PlayStage* playStage = (PlayStage*)GetCurrentStage();
 			InventoryMenu* playMenu = (InventoryMenu*)playStage->invMenu;
 			/*Que Ocurre si se hace click a un boton que esta dentro del menu*/
 			if ((state->OpenInventory == true)) {
 				/*de la lista de botones, busco cual esta activo, menos el de salida*/
-        
-				for (int i = 0; i < playMenu->Buttons.size() - 1; i++) {
-        	Note* currentNote = playMenu->inventory->Notes[i];
-					Button* current = playMenu->Buttons[i];
-					if (current->type == H) {
-						//std::cout << "UIACTIVE: " << current->text << std::endl;
-						
-						for (int j = 0; j < playMenu->inventory->Notes.size(); j++) {
-							//los botones y la lista de notas deberia ser la misma size, a menos que haya botones disabled, 
-							//por lo que hay menos notas que botones disponibles
-							if (i == j) {
-								currentNote->isShowing = true;
-							}
-							else {
-								playMenu->inventory->Notes[j]->isShowing = false;
+				if (playMenu->inventory->Notes.size() > 0) {
+					for (int i = 0; i < playMenu->Buttons.size() - 1; i++) {
+						Note* currentNote = playMenu->inventory->Notes[i];
+						Button* current = playMenu->Buttons[i];
+						if (current->type == H) {
+							//std::cout << "UIACTIVE: " << current->text << std::endl;
 
+							for (int j = 0; j < playMenu->inventory->Notes.size(); j++) {
+								//los botones y la lista de notas deberia ser la misma size, a menos que haya botones disabled, 
+								//por lo que hay menos notas que botones disponibles
+								if (i == j) {
+									currentNote->isShowing = true;
+								}
+								else {
+									playMenu->inventory->Notes[j]->isShowing = false;
+
+								}
 							}
+							current->type = N;
 						}
-								current->type = N;
 					}
 				}
 				/*busco cual nota se esta mostrando*/

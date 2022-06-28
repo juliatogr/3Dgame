@@ -6,6 +6,7 @@ GameState::GameState(){
 	this->OpenInventory = false;
 	this->CodeUiActive = false;
 	this->PauseMenu = false;
+	this->isFinished = false;
 
 
 }
