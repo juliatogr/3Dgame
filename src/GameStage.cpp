@@ -195,7 +195,7 @@ void PlayStage::Update(double seconds_elapsed, boolean cameralocked, float speed
 	GameState* state = Game::instance->gameState;
 
 	/* si al menos un tipo de UI esta activado -> que el bool UIActive es true*/
-	if (state->OpenInventory == true || state->CodeUiActive == true) {
+	if (state->OpenInventory == true || state->CodeUiActive == true || state->PauseMenu == true) {
 		state->UIActive = true;
 	}
 	else {
@@ -205,7 +205,7 @@ void PlayStage::Update(double seconds_elapsed, boolean cameralocked, float speed
 	if (state->UIActive == false) {
 
 		isViewingTask = false;
-		this->selectedTaskEntity = NULL;
+		
 		this->checkNearTaskEntity(seconds_elapsed);
 		if (this->selectedTaskEntity != NULL) {
 			if (this->selectedTaskEntity->type == NOTE) {
@@ -377,6 +377,11 @@ void PlayStage::Update(double seconds_elapsed, boolean cameralocked, float speed
 
 			PickButton(this->codeUI->Buttons);
 		}
+		if (state->PauseMenu == true) {
+			SDL_ShowCursor(true);
+
+			PickButton(this->pauseMenu->Buttons);
+		}
 		//std::cout << "mouseX:"<<mouse.x <<" mouseY:" <<mouse.y << std::endl;
 
 	}
@@ -433,6 +438,7 @@ Vector3 PlayStage::nextPosNoCol(Vector3 nextPos, float seconds_elapsed)
 
 void PlayStage::checkNearTaskEntity(double seconds_elapsed)
 {
+	selectedTaskEntity = NULL;
 
 	for (int r = 0; r < this->lab->numRooms; r++) {
 		for (size_t i = 0; i < this->lab->rooms[r]->taskEntities.size(); i++) {
@@ -484,6 +490,7 @@ void IntroStage::Update(double seconds_elapsed, boolean cameralocked, float spee
 
 TutorialStage::TutorialStage()
 {
+	this->menu = new TutorialMenu();
 }
 
 STAGE_ID TutorialStage::GetId()
@@ -493,14 +500,24 @@ STAGE_ID TutorialStage::GetId()
 
 void TutorialStage::Render(Shader* a_shader, Camera* cam)
 {
+	this->menu->RenderMenu();
+
+	if (testMouse == true) {
+		/*testeo para saber posicion del mouse*/
+		Vector2 mouse = Input::mouse_position;
+		std::string text = "Mouse Position2D: " + std::to_string((int)mouse.x) + ", " + std::to_string((int)mouse.y);
+		drawText((Game::instance->window_width) - 290, (Game::instance->window_height) - 25, text, Vector3(1, 1, 1), 2);
+	}
 }
 
 void TutorialStage::Update(double seconds_elapsed, boolean cameralocked, float speed, Shader* a_shader, Camera* camera, bool mouse_locked)
 {
+	PickButton(this->menu->Buttons);
 }
 
 EndStage::EndStage()
 {
+	this->menu = new EndingMenu();
 }
 
 STAGE_ID EndStage::GetId()
@@ -510,9 +527,18 @@ STAGE_ID EndStage::GetId()
 
 void EndStage::Render(Shader* a_shader, Camera* cam)
 {
+	this->menu->RenderMenu();
+
+	if (testMouse == true) {
+		/*testeo para saber posicion del mouse*/
+		Vector2 mouse = Input::mouse_position;
+		std::string text = "Mouse Position2D: " + std::to_string((int)mouse.x) + ", " + std::to_string((int)mouse.y);
+		drawText((Game::instance->window_width) - 290, (Game::instance->window_height) - 25, text, Vector3(1, 1, 1), 2);
+	}
 }
 
 void EndStage::Update(double seconds_elapsed, boolean cameralocked, float speed, Shader* a_shader, Camera* camera, bool mouse_locked)
 {
+	PickButton(this->menu->Buttons);
 }
 

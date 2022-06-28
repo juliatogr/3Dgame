@@ -65,7 +65,7 @@ public:
 
 class TutorialStage : public Stage {
 public:
-
+	TutorialMenu* menu;
 	TutorialStage();
 	STAGE_ID GetId();
 
@@ -75,11 +75,9 @@ public:
 
 class EndStage : public Stage {
 public:
-
-
+	EndingMenu* menu;
 	EndStage();
 	STAGE_ID GetId();
-
 	void Render(Shader* a_shader, Camera* cam);
 	void Update(double seconds_elapsed, boolean cameralocked, float speed, Shader* a_shader, Camera* camera,  bool mouse_locked);
 };
