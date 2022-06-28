@@ -502,19 +502,7 @@ STAGE_ID TutorialStage::GetId()
 
 void TutorialStage::Render(Shader* a_shader, Camera* cam)
 {
-	//set the clear color (the background color)
-	glClearColor(0.7, 0.7, 0.8, 1.0);			// white background to simulate the ceiling
-
-	// Clear the window and the depth buffer
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-	//set the camera as default
-	cam->enable();
-
-	//set flags
-	glDisable(GL_BLEND);
-	glEnable(GL_DEPTH_TEST);
-	glDisable(GL_CULL_FACE);
+	
 
 	/*aqui renderizamos*/
 	this->menu->RenderMenu();
@@ -528,8 +516,6 @@ void TutorialStage::Render(Shader* a_shader, Camera* cam)
 	}
 
 
-	//swap between front buffer and back buffer
-	SDL_GL_SwapWindow(Game::instance->window);
 
 }
 
@@ -565,3 +551,24 @@ void EndStage::Update(double seconds_elapsed, boolean cameralocked, float speed,
 	PickButton(this->menu->Buttons);
 }
 
+LoadStage::LoadStage()
+{
+	//std::cout << "loadedScreen" << std::endl;
+	this->menu = new LoadScreen();
+}
+
+STAGE_ID LoadStage::GetId()
+{
+	return STAGE_ID();
+}
+
+void LoadStage::Render(Shader* a_shader, Camera* cam)
+{
+	this->menu->RenderMenu();
+}
+
+void LoadStage::Update(double seconds_elapsed, boolean cameralocked, float speed, Shader* a_shader, Camera* camera, bool mouse_locked)
+{
+	PickButton(this->menu->Buttons);
+
+}

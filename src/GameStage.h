@@ -9,10 +9,11 @@
 
 
 enum STAGE_ID {
-	TUTORIAL = 1,
-	INTRO = 0,
-	PLAY = 2,
-	END = 3
+	LOAD = 0,
+	INTRO = 1,
+	TUTORIAL = 2,
+	PLAY = 3,
+	END = 4
 };
 
 class Stage {
@@ -50,6 +51,17 @@ public:
 	void checkNearTaskEntity(double seconds_elapsed);
 };
 
+class LoadStage : public Stage {
+public:
+
+	LoadScreen* menu;
+
+	LoadStage();
+	STAGE_ID GetId();
+
+	void Render(Shader* a_shader, Camera* cam);
+	void Update(double seconds_elapsed, boolean cameralocked, float speed, Shader* a_shader, Camera* camera, bool mouse_locked);
+};
 
 class IntroStage : public Stage {
 public:
@@ -62,6 +74,8 @@ public:
 	void Render(Shader* a_shader, Camera* cam);
 	void Update(double seconds_elapsed, boolean cameralocked, float speed, Shader* a_shader, Camera* camera, bool mouse_locked);
 };
+
+
 
 class TutorialStage : public Stage {
 public:

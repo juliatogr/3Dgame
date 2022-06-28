@@ -57,43 +57,41 @@ void SetStage(STAGE_ID id) {
 
 
 void InitStages(GameState* state, Shader* shader, Camera* camera) {
-	bool isLoaded1 = false, isLoaded2 = false, isLoaded3 = false;
-	stages.reserve(4);
-	//cargamos el tutorial stage que sera el primero ya que servira de loading
+	stages.reserve(5);
+	//cargamos el Load stage que sera el primero ya que servira de loading
+	stages.push_back(new LoadStage());
+
+	std::cout << "cargando Stages" << std::endl;
+
+	//Render Load Image
+	//set the clear color (the background color)
+	glClearColor(0.7, 0.7, 0.8, 1.0);			// white background to simulate the ceiling
+
+	// Clear the window and the depth buffer
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+	//set the camera as default
+	camera->enable();
+
+	//set flags
+	glDisable(GL_BLEND);
+	glEnable(GL_DEPTH_TEST);
+	glDisable(GL_CULL_FACE);
+
+	//renderLoadStage
+	stages[0]->Render(shader, camera);
+
+	//swap between front buffer and back buffer
+	SDL_GL_SwapWindow(Game::instance->window);
+
+	stages.push_back(new IntroStage());
 	stages.push_back(new TutorialStage());
+	stages.push_back(new PlayStage());
+	stages.push_back(new EndStage());
 
-	while (!state->isLoaded) {
-		std::cout << "Dentro del bucle: cargando Stages" << std::endl;
-		stages[0]->Render(shader, camera);
 
-		if (!isLoaded1) {
-			std::cout << "Dentro del bucle: cargando IntroStage " << std::endl;
-
-			stages.push_back(new IntroStage());
-			isLoaded1 = true;
-		}
-		else if (!isLoaded2) {
-			std::cout << "Dentro del bucle: cargando PlayStage " << std::endl;
-
-			stages.push_back(new PlayStage());
-			isLoaded2 = true;
-
-		}
-		else if (!isLoaded3) {
-			std::cout << "Dentro del bucle: cargando EndStage " << std::endl;
-
-			stages.push_back(new EndStage());
-			isLoaded3 = true;
-
-		}
-		if (isLoaded1 && isLoaded2 && isLoaded3) {
-			std::cout << "Todo Cargado " << std::endl;
-
-			state->isLoaded = true;
-		}
-	}
 	std::cout << "All Loaded" << std::endl;
-
+	Game::instance->gameState->isLoaded = true;
 }
 
 
@@ -404,7 +402,8 @@ void Game::onMouseButtonDown(SDL_MouseButtonEvent event)
 				Button* current = introMenu->Buttons[i];
 				if (current->type == H) {
 					if (current->text == "Continue") {
-						SetStage(TUTORIAL);
+						
+						SetStage(LOAD);
 					}
 					else if (current->text == "Play") {
 						SetStage(PLAY);
@@ -412,6 +411,18 @@ void Game::onMouseButtonDown(SDL_MouseButtonEvent event)
 				}
 			}
 		}
+		else if (GetCurrentStage()->GetId() == LOAD) {
+		LoadStage* loadStage = (LoadStage*)GetCurrentStage();
+		Button* exit =loadStage->menu->Buttons[0];
+		/* y esta en hover el boton de salida*/
+		if (exit->type == H) {
+			
+			SetStage(TUTORIAL);
+
+
+			exit->type = N;
+		}
+}
 
 
 		else if (GetCurrentStage()->GetId() == END) {
@@ -422,7 +433,7 @@ void Game::onMouseButtonDown(SDL_MouseButtonEvent event)
 			for (int i = 0; i < endMenu->Buttons.size() - 1; i++) {
 				Button* current = endMenu->Buttons[i];
 				if (current->type == H) {
-					if (current->text == "Continue") {
+					if (current->text == "Read") {
 						SetStage(TUTORIAL);
 					}
 					else if (current->text == "Play") {

@@ -70,7 +70,17 @@ public:
 
 	void ShowNote(int id);
 };
+class LoadScreen : public Menu {
+public:
+	Texture* Card;
+	std::vector<Button*> Buttons;
+	Vector4 xyhw;
 
+	LoadScreen();
+	void RenderMenu();
+	void UpdateMenu();
+
+};
 
 class PauseMenu : public Menu {
 public:
