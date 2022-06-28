@@ -13,7 +13,7 @@
 #include "GameStage.h"
 #include "Player.h"
 
-bool test = true;
+bool test = false;
 
 //some globals
 Shader* shader = NULL;
@@ -37,15 +37,15 @@ float lod_distance = 200.0f;
 float no_render_distance = 1000.0f;
 
 /*Stages*/
-std::vector<GameStage*> stages;
+std::vector<Stage*> stages;
 STAGE_ID currentStage = STAGE_ID::PLAY;
 
 
-GameStage* GetStage(STAGE_ID id) {
+Stage* GetStage(STAGE_ID id) {
 	return stages[(int)id];
 }
 
-GameStage* GetCurrentStage() {
+Stage* GetCurrentStage() {
 	return GetStage(currentStage);
 }
 
@@ -61,7 +61,6 @@ void InitStages() {
 	stages.push_back(new TutorialStage());
 	stages.push_back(new PlayStage());
 	stages.push_back(new EndStage());
-	stages.push_back(new WinStage());
 
 	//stages.size();//4
 
@@ -125,9 +124,8 @@ void Game::render(void)
 	glEnable(GL_DEPTH_TEST);
 	glDisable(GL_CULL_FACE);
 
+	GetCurrentStage()->Render(shader, camera);
 	if (GetCurrentStage()->GetId() == PLAY) {
-
-		GetCurrentStage()->Render(shader, camera);
 		//Draw the floor grid
 		drawGrid();
 
@@ -150,30 +148,31 @@ void Game::update(double seconds_elapsed)
 		if (Game::instance->gameState->UIActive == true) {
 			//pickButton();
 		}
-		GetCurrentStage()->Update(seconds_elapsed, cameralocked, speed, shader, camera, mouse_locked);
 	}
+	GetCurrentStage()->Update(seconds_elapsed, cameralocked, speed, shader, camera, mouse_locked);
 }
 
 //Keyboard event handler (sync input)
 void Game::onKeyDown(SDL_KeyboardEvent event)
 {
-	Lab* lab = GetCurrentStage()->lab;
-	PlayMenu* menu = GetCurrentStage()->menu;
+	PlayStage* playStage = (PlayStage*) stages[STAGE_ID::PLAY];
+	Lab* lab = playStage->lab;
 	GameState* state = Game::instance->gameState;
 	switch (event.keysym.sym)
 	{
 	case SDLK_ESCAPE: must_exit = true; break; //ESC key, kill the app
 	case SDLK_F1: Shader::ReloadAll(); break;
 		//case SDLK_2: AddEntityInFront(camera); break;
-	case SDLK_3: lab->doors[0]->isOpening = true; break;
-	case SDLK_4: lab->doors[1]->isOpening = true; break;
-	case SDLK_5: lab->doors[2]->isOpening = true; break;
-	case SDLK_6: lab->doors[3]->isOpening = true; break;
-	case SDLK_7: lab->doors[4]->isOpening = true; break;
-	case SDLK_8: GetCurrentStage()->RayPick(camera); break;
-	case SDLK_KP_PLUS: GetCurrentStage()->RotateSelected(10.0f); break;
-	case SDLK_KP_MINUS: GetCurrentStage()->RotateSelected(-10.0f); break;
-	case SDLK_m: state->OpenInventory = !state->OpenInventory; break;
+	//case SDLK_3: lab->doors[0]->isOpening = true; break;
+	//case SDLK_4: lab->doors[1]->isOpening = true; break;
+	//case SDLK_5: lab->doors[2]->isOpening = true; break;
+	//case SDLK_6: lab->doors[3]->isOpening = true; break;
+	case SDLK_7: if (GetCurrentStage()->GetId() == PLAY) lab->doors[4]->isOpening = true; break;
+	case SDLK_8: if (GetCurrentStage()->GetId() == PLAY) playStage->RayPick(camera); break;
+	case SDLK_KP_PLUS: if (GetCurrentStage()->GetId() == PLAY) playStage->RotateSelected(10.0f); break;
+	case SDLK_KP_MINUS: if (GetCurrentStage()->GetId() == PLAY) playStage->RotateSelected(-10.0f); break;
+	case SDLK_i: state->OpenInventory = state->PauseMenu ? false : !state->OpenInventory; break;
+	case SDLK_m: state->PauseMenu = !state->PauseMenu; break;
 	}
 
 }
@@ -207,44 +206,43 @@ void Game::onMouseButtonDown(SDL_MouseButtonEvent event)
 	if (event.button == SDL_BUTTON_LEFT) //left mouse
 	{
 		if (GetCurrentStage()->GetId() == PLAY) {
-
+			PlayStage* playStage = (PlayStage*) GetCurrentStage();
+			InventoryMenu* playMenu = (InventoryMenu*)playStage->invMenu;
 			/*Que Ocurre si se hace click a un boton que esta dentro del menu*/
-			PlayMenu* menu = GetCurrentStage()->menu;
 			if ((state->OpenInventory == true)) {
 				/*de la lista de botones, busco cual esta activo, menos el de salida*/
-				for (int i = 0; i < menu->Buttons.size() - 1; i++) {
-					Note* currentNote = menu->inventory->Notes[i];
-					Button* current = menu->Buttons[i];
+        
+				for (int i = 0; i < playMenu->Buttons.size() - 1; i++) {
+        	Note* currentNote = playMenu->inventory->Notes[i];
+					Button* current = playMenu->Buttons[i];
 					if (current->type == H) {
 						//std::cout << "UIACTIVE: " << current->text << std::endl;
 						
-						for (int j = 0; j < menu->inventory->Notes.size(); j++) {
+						for (int j = 0; j < playMenu->inventory->Notes.size(); j++) {
 							//los botones y la lista de notas deberia ser la misma size, a menos que haya botones disabled, 
 							//por lo que hay menos notas que botones disponibles
 							if (i == j) {
 								currentNote->isShowing = true;
 							}
 							else {
-								menu->inventory->Notes[j]->isShowing = false;
+								playMenu->inventory->Notes[j]->isShowing = false;
 
 							}
 						}
 								current->type = N;
-
-
 					}
 				}
 				/*busco cual nota se esta mostrando*/
-				for (int i = 0; i < menu->inventory->Notes.size(); i++) {
-					Note* current = menu->inventory->Notes[i];
+				for (int i = 0; i < playMenu->inventory->Notes.size(); i++) {
+					Note* current = playMenu->inventory->Notes[i];
 					// si se muestra
 					if (current->isShowing == true) {
-						Button* exit = menu->Buttons[menu->Buttons.size() - 1];
+						Button* exit = playMenu->Buttons[playMenu->Buttons.size() - 1];
 						/* y esta en hover el boton de salida*/
 						if (exit->type == H) {
 							//std::cout << "UIACTIVE: Exit" << std::endl;
 							/*se cierra la imagen*/
-							menu->inventory->Notes[i]->isShowing = false;
+							playMenu->inventory->Notes[i]->isShowing = false;
 
 							exit->type = N;
 						}
@@ -252,7 +250,7 @@ void Game::onMouseButtonDown(SDL_MouseButtonEvent event)
 				}
 			}
 
-			CodeScreen* code = GetCurrentStage()->codeUI;
+			CodeScreen* code = playStage->codeUI;
 			/*Que ocurre si se da click a un boton de la tarea codigo*/
 			if (state->CodeUiActive) {
 				Code* currentCode;
@@ -279,7 +277,7 @@ void Game::onMouseButtonDown(SDL_MouseButtonEvent event)
 
 
 				Button* enter = code->Buttons[code->Buttons.size() - 1];
-				Lab* lab = GetCurrentStage()->lab;
+				Lab* lab = playStage->lab;
 				//* y esta en hover el boton de salida*/
 				if (enter->type == H) {
 					if (currentCode->obj == currentCode->test) {
@@ -314,6 +312,27 @@ void Game::onMouseButtonDown(SDL_MouseButtonEvent event)
 
 			}
 
+			PauseMenu* pauseMenu = playStage->pauseMenu;
+			/*Que ocurre si se da click a un boton del men� de pausa*/
+			if ((state->PauseMenu == true)) {
+				/*de la lista de botones, busco cual esta activo, menos el de salida*/
+				for (int i = 0; i < pauseMenu->Buttons.size() - 1; i++) {
+					Button* current = pauseMenu->Buttons[i];
+				}
+			}
+
+		}
+
+		if (GetCurrentStage()->GetId() == INTRO) {
+			IntroStage* introStage = (IntroStage*)GetCurrentStage();
+			IntroMenu* introMenu = (IntroMenu*)introStage->menu;
+			/*Que Ocurre si se hace click a un boton que esta dentro del menu*/
+			/*de la lista de botones, busco cual esta activo, menos el de salida*/
+			for (int i = 0; i < introMenu->Buttons.size() - 1; i++) {
+				Button* current = introMenu->Buttons[i];
+				if (current->type == H) {
+				}
+			}
 		}
 
 	}

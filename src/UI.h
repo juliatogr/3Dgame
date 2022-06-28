@@ -57,19 +57,66 @@ public:
 	virtual void UpdateMenu() = 0;
 };
 
-class PlayMenu : public Menu {
+class InventoryMenu : public Menu {
 public:
 	Texture* Card;
 	std::vector<Button*> Buttons;
 	Vector4 xyhw;
 	Inventory* inventory;
 
-	PlayMenu();
+	InventoryMenu();
 	void RenderMenu();
 	void UpdateMenu();
 
 	void ShowNote(int id);
+};
 
+
+class PauseMenu : public Menu {
+public:
+	Texture* Card;
+	std::vector<Button*> Buttons;
+	Vector4 xyhw;
+
+	PauseMenu();
+	void RenderMenu();
+	void UpdateMenu();
+
+}; 
+
+class IntroMenu : public Menu {
+public:
+	Texture* Card;
+	std::vector<Button*> Buttons;
+	Vector4 xyhw;
+
+	IntroMenu();
+	void RenderMenu();
+	void UpdateMenu();
+
+};
+
+class TutorialMenu : public Menu {
+public:
+	Texture* Card;
+	std::vector<Button*> Buttons;
+	Vector4 xyhw;
+
+	TutorialMenu();
+	void RenderMenu();
+	void UpdateMenu();
+
+};
+
+class EndMenu : public Menu {
+public:
+	Texture* Card;
+	std::vector<Button*> Buttons;
+	Vector4 xyhw;
+
+	EndMenu();
+	void RenderMenu();
+	void UpdateMenu();
 
 };
 

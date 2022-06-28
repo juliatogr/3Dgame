@@ -43,7 +43,7 @@ void UI::Render(Texture* texture, float x, float y, float w, float h, bool u) {
 		this->a_shader->setUniform("u_texture", texture, 0);
 	}
 	this->a_shader->setUniform("u_tex_tilling", 1.0f);
-	//this->quadModel.translate(sin(Game::instance->time)*0.20,0,0);
+	//this->quadModel.translate(sin(Game::instance->time)*0.20,0,0);this->type
 	this->a_shader->setUniform("u_model", this->quadModel);
 	this->a_shader->setUniform("u_time", time);
 
@@ -117,7 +117,7 @@ Button::Button(BUTTONTYPE t, Vector4 v, Texture* i)
 	this->icon = i;
 }
 
-PlayMenu::PlayMenu()
+InventoryMenu::InventoryMenu()
 {
 	this->Card = Texture::Get("data/UI/HologramInterface/Card X1/Card X1.png");
 	this->xyhw = Vector4(Game::instance->window_width / 2, Game::instance->window_height / 2, Game::instance->window_width + 50, Game::instance->window_height);
@@ -138,7 +138,7 @@ PlayMenu::PlayMenu()
 
 }
 
-void PlayMenu::RenderMenu()
+void InventoryMenu::RenderMenu()
 {
 	this->Render(this->Card, this->xyhw.x, this->xyhw.y, this->xyhw.z, this->xyhw.w, false);
 	int nC = count_chars("Inventory");
@@ -162,7 +162,7 @@ void PlayMenu::RenderMenu()
 
 }
 
-void PlayMenu::UpdateMenu()
+void InventoryMenu::UpdateMenu()
 {
 	/*Update the data that would be shown in the menu*/
 	for (int i = 0; i < this->inventory->Notes.size(); i++) {
@@ -171,7 +171,135 @@ void PlayMenu::UpdateMenu()
 	}
 }
 
-void PlayMenu::ShowNote(int id) {
+
+IntroMenu::IntroMenu()
+{
+	this->Card = Texture::Get("data/UI/HologramInterface/Card X1/Card X1.png");
+	this->xyhw = Vector4(Game::instance->window_width / 2, Game::instance->window_height / 2, Game::instance->window_width + 50, Game::instance->window_height);
+	/*Inventory buttons, as they initialy doesn't have any object they are visible but disabled*/
+	Vector4 xywh = Vector4(270, 220, 200, 150);
+	this->Buttons.push_back(new Button(A, Vector4(xywh.x, xywh.y, xywh.z, xywh.w), "Continue Game"));
+	this->Buttons.push_back(new Button(A, Vector4(xywh.x*2, xywh.y, xywh.z, xywh.w), "New Game"));
+	this->Buttons.push_back(new Button(A, Vector4(xywh.x, xywh.y*2, xywh.z, xywh.w), "Tutorial"));
+	this->Buttons.push_back(new Button(A, Vector4(xywh.x*2, xywh.y*2, xywh.z, xywh.w), "Credits"));
+	Button* exit = new Button(N, Vector4(75, 60, 50, 50), Texture::Get("data/UI/HologramInterface/Icons/21.png"));
+	this->Buttons.push_back(exit);
+}
+
+void IntroMenu::RenderMenu()
+{
+	this->Render(this->Card, this->xyhw.x, this->xyhw.y, this->xyhw.z, this->xyhw.w, false);
+	int nC = count_chars("MJ Lab");
+	drawText(this->xyhw.x - nC * 6, 70, "MJ Lab", Vector3(1, 1, 1), 2);
+	/*Renderizamos todos los botones menos el de exit*/
+	for (int i = 0; i < this->Buttons.size() - 1; i++) {
+		this->Buttons[i]->RenderButtonText();
+	}
+}
+
+void IntroMenu::UpdateMenu()
+{
+}
+
+PauseMenu::PauseMenu()
+{
+	this->Card = Texture::Get("data/UI/HologramInterface/Card X1/Card X1.png");
+	this->xyhw = Vector4(Game::instance->window_width / 2, Game::instance->window_height / 2, Game::instance->window_width + 50, Game::instance->window_height);
+	/*Inventory buttons, as they initialy doesn't have any object they are visible but disabled*/
+	Vector4 xywh = Vector4(270, 220, 200, 150);
+	this->Buttons.push_back(new Button(A, Vector4(xywh.x, xywh.y, xywh.z, xywh.w), "Continue Game"));
+	this->Buttons.push_back(new Button(A, Vector4(xywh.x * 2, xywh.y, xywh.z, xywh.w), "New Game"));
+	this->Buttons.push_back(new Button(A, Vector4(xywh.x, xywh.y * 2, xywh.z, xywh.w), "Tutorial"));
+	this->Buttons.push_back(new Button(A, Vector4(xywh.x * 2, xywh.y * 2, xywh.z, xywh.w), "Credits"));
+	Button* exit = new Button(N, Vector4(75, 60, 50, 50), Texture::Get("data/UI/HologramInterface/Icons/21.png"));
+	this->Buttons.push_back(exit);
+}
+
+void PauseMenu::RenderMenu()
+{
+	this->Render(this->Card, this->xyhw.x, this->xyhw.y, this->xyhw.z, this->xyhw.w, false);
+	int nC = count_chars("MJ Lab");
+	drawText(this->xyhw.x - nC * 6, 70, "MJ Lab", Vector3(1, 1, 1), 2);
+	/*Renderizamos todos los botones menos el de exit*/
+	for (int i = 0; i < this->Buttons.size() - 1; i++) {
+		this->Buttons[i]->RenderButtonText();
+	}
+}
+
+void PauseMenu::UpdateMenu()
+{
+}
+
+TutorialMenu::TutorialMenu()
+{
+	this->Card = Texture::Get("data/UI/HologramInterface/Card X1/Card X1.png");
+	this->xyhw = Vector4(Game::instance->window_width / 2, Game::instance->window_height / 2, Game::instance->window_width + 50, Game::instance->window_height);
+	/*Inventory buttons, as they initialy doesn't have any object they are visible but disabled*/
+	Vector4 xywh = Vector4(100, 250, 100, 100);
+	int r = 3;
+	int c = 3;
+	for (int i = 0; i < r; i++) {
+		for (int j = 0; j < c; j++) {
+			//std::cout << "cell button added" << std::endl;
+			this->Buttons.push_back(new Button(D, Vector4(xywh.x * (i + 1), xywh.y + (j * xywh.w), xywh.z, xywh.w), ""));
+
+		}
+	}
+	Button* exit = new Button(N, Vector4(75, 60, 50, 50), Texture::Get("data/UI/HologramInterface/Icons/21.png"));
+	this->Buttons.push_back(exit);
+}
+
+void TutorialMenu::RenderMenu()
+{
+	this->Render(this->Card, this->xyhw.x, this->xyhw.y, this->xyhw.z, this->xyhw.w, false);
+	int nC = count_chars("Inventory");
+	drawText(this->xyhw.x - nC * 6, 70, "Inventory", Vector3(1, 1, 1), 2);
+	/*Renderizamos todos los botones menos el de exit*/
+	for (int i = 0; i < this->Buttons.size() - 1; i++) {
+		this->Buttons[i]->RenderButtonText();
+	}
+}
+
+void TutorialMenu::UpdateMenu()
+{
+}
+
+EndMenu::EndMenu()
+{
+	this->Card = Texture::Get("data/UI/HologramInterface/Card X1/Card X1.png");
+	this->xyhw = Vector4(Game::instance->window_width / 2, Game::instance->window_height / 2, Game::instance->window_width + 50, Game::instance->window_height);
+	/*Inventory buttons, as they initialy doesn't have any object they are visible but disabled*/
+	Vector4 xywh = Vector4(100, 250, 100, 100);
+	int r = 3;
+	int c = 3;
+	for (int i = 0; i < r; i++) {
+		for (int j = 0; j < c; j++) {
+			//std::cout << "cell button added" << std::endl;
+			this->Buttons.push_back(new Button(D, Vector4(xywh.x * (i + 1), xywh.y + (j * xywh.w), xywh.z, xywh.w), ""));
+
+		}
+	}
+	Button* exit = new Button(N, Vector4(75, 60, 50, 50), Texture::Get("data/UI/HologramInterface/Icons/21.png"));
+	this->Buttons.push_back(exit);
+}
+
+void EndMenu::RenderMenu()
+{
+	this->Render(this->Card, this->xyhw.x, this->xyhw.y, this->xyhw.z, this->xyhw.w, false);
+	int nC = count_chars("Inventory");
+	drawText(this->xyhw.x - nC * 6, 70, "Inventory", Vector3(1, 1, 1), 2);
+	/*Renderizamos todos los botones menos el de exit*/
+	for (int i = 0; i < this->Buttons.size() - 1; i++) {
+		this->Buttons[i]->RenderButtonText();
+	}
+}
+
+void EndMenu::UpdateMenu()
+{
+}
+
+
+void InventoryMenu::ShowNote(int id) {
 	UI* note = new UI();
 	note->a_shader = this->a_shader;
 	note->cam2D = this->cam2D;

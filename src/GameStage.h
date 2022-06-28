@@ -8,18 +8,23 @@
 #include "UI.h"
 
 
-
-
 enum STAGE_ID {
 	INTRO = 0,
 	TUTORIAL = 1,
 	PLAY = 2,
-	END = 3,
-	WIN = 4
+	END = 3
+};
+
+class Stage {
+public:
+	Menu* menu;
+	virtual STAGE_ID GetId() = 0;
+	virtual void Render(Shader* a_shader, Camera* cam) = 0;
+	virtual void Update(double seconds_elapsed, boolean cameralocked, float speed, Shader* a_shader, Camera* camera, bool mouse_locked) = 0;
 };
 
 
-class GameStage {
+class PlayStage : public Stage {
 public:
 	Lab* lab;
 
@@ -28,43 +33,37 @@ public:
 	TaskEntity* selectedTaskEntity = NULL;
 
 	Player* player;
-	PlayMenu* menu;
+	InventoryMenu* invMenu;
+	PauseMenu* pauseMenu;
 	std::vector<PopUpMessage*> pum;
 	CodeScreen* codeUI;
 
-
-	virtual STAGE_ID GetId() = 0;
-	virtual void RayPick(Camera* cam);
-	virtual void PickButton(std::vector<Button*> buttons);
-	virtual void RotateSelected(float angleDegrees);
-	virtual void Render(Shader* a_shader, Camera* cam) = 0;
-	virtual void Update(double seconds_elapsed, boolean cameralocked, float speed, Shader* a_shader, Camera* camera,  bool mouse_locked) = 0;
-};
-
-
-class IntroStage : public GameStage {
-public:
-	STAGE_ID GetId();
-	
-	IntroStage();
-
-	void Render(Shader* a_shader, Camera* cam);
-	void Update(double seconds_elapsed, boolean cameralocked, float speed, Shader* a_shader, Camera* camera, bool mouse_locked);
-};
-
-class PlayStage : public GameStage {
-public:
 	bool isViewingTask = false;
 	STAGE_ID GetId();
 
 	PlayStage();
+	void RayPick(Camera* cam);
+	void RotateSelected(float angleDegrees);
 	void Render(Shader* a_shader, Camera* cam);
 	void Update(double seconds_elapsed, boolean cameralocked, float speed, Shader* a_shader, Camera* camera, bool mouse_locked);
 	Vector3 nextPosNoCol(Vector3 nextPos, float seconds_elapsed);
 	void checkNearTaskEntity(double seconds_elapsed);
 };
 
-class TutorialStage : public GameStage {
+
+class IntroStage : public Stage {
+public:
+	IntroMenu* menu;
+	std::vector<PopUpMessage*> pum;
+	CodeScreen* codeUI;
+	STAGE_ID GetId();
+	
+	IntroStage();
+	void Render(Shader* a_shader, Camera* cam);
+	void Update(double seconds_elapsed, boolean cameralocked, float speed, Shader* a_shader, Camera* camera, bool mouse_locked);
+};
+
+class TutorialStage : public Stage {
 public:
 
 	TutorialStage();
@@ -74,7 +73,7 @@ public:
 	void Update(double seconds_elapsed, boolean cameralocked, float speed, Shader* a_shader, Camera* camera,  bool mouse_locked);
 };
 
-class EndStage : public GameStage {
+class EndStage : public Stage {
 public:
 
 
@@ -85,16 +84,6 @@ public:
 	void Update(double seconds_elapsed, boolean cameralocked, float speed, Shader* a_shader, Camera* camera,  bool mouse_locked);
 };
 
-class WinStage : public GameStage {
-public:
 
-	WinStage();
-	STAGE_ID GetId();
-
-	void Render(Shader* a_shader, Camera* cam);
-	void Update(double seconds_elapsed, boolean cameralocked, float speed, Shader* a_shader, Camera* camera,  bool mouse_locked);
-};
-
-
-
+void PickButton(std::vector<Button*> buttons);
 #endif
