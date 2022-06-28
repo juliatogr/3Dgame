@@ -70,7 +70,7 @@ PlayStage::PlayStage()
 {
 	this->lab = new Lab();
 	this->player = new Player();
-	this->menu = new Menu();
+	this->menu = new PlayMenu();
 	this->menu->inventory = new Inventory();
 	this->pum.reserve(3);
 	this->pum.push_back(new PopUpMessage(0, "Push R to return", Texture::Get("data/UI/Elements/BlockInformation.png"), Vector4(Game::instance->window_width / 2, (Game::instance->window_height / 2) + 200, Game::instance->window_width - 200, 50)));
@@ -177,7 +177,7 @@ void PlayStage::Render(Shader* a_shader, Camera* cam)
 
 }
 
-void PlayStage::Update(double seconds_elapsed, boolean cameralocked, float elapsed_time, float speed, Shader* a_shader, Camera* camera, bool mouse_locked)
+void PlayStage::Update(double seconds_elapsed, boolean cameralocked, float speed, Shader* a_shader, Camera* camera, bool mouse_locked)
 {
 	GameState* state = Game::instance->gameState;
 
@@ -193,7 +193,7 @@ void PlayStage::Update(double seconds_elapsed, boolean cameralocked, float elaps
 
 		isViewingTask = false;
 		this->selectedTaskEntity = NULL;
-		this->checkNearTaskEntity(elapsed_time);
+		this->checkNearTaskEntity(seconds_elapsed);
 		if (this->selectedTaskEntity != NULL) {
 			if (this->selectedTaskEntity->type == NOTE) {
 
@@ -310,11 +310,11 @@ void PlayStage::Update(double seconds_elapsed, boolean cameralocked, float elaps
 			if (Input::wasKeyPressed(SDL_SCANCODE_TAB)) {
 				cameralocked = !cameralocked;
 			}
-			float playerSpeed = 5.0f * elapsed_time;
-			float rotSpeed = 200.0f * DEG2RAD * elapsed_time;
+			float playerSpeed = 5.0f * seconds_elapsed;
+			float rotSpeed = 200.0f * DEG2RAD * seconds_elapsed;
 
-			this->player->yaw += -Input::mouse_delta.x * 10.0f * elapsed_time;
-			this->player->pitch += -Input::mouse_delta.y * 10.0f * elapsed_time;
+			this->player->yaw += -Input::mouse_delta.x * 10.0f * seconds_elapsed;
+			this->player->pitch += -Input::mouse_delta.y * 10.0f * seconds_elapsed;
 
 
 			Input::centerMouse();
@@ -333,7 +333,7 @@ void PlayStage::Update(double seconds_elapsed, boolean cameralocked, float elaps
 			if (Input::isKeyPressed(SDL_SCANCODE_D)) playerVel = playerVel + (right * playerSpeed);
 			if (Input::isKeyPressed(SDL_SCANCODE_A)) playerVel = playerVel - (right * playerSpeed);
 
-			this->player->pos = nextPosNoCol(this->player->pos + playerVel, elapsed_time);
+			this->player->pos = nextPosNoCol(this->player->pos + playerVel, seconds_elapsed);
 
 			lab->doors[0]->Open(a_shader, seconds_elapsed);
 			lab->doors[1]->Open(a_shader, seconds_elapsed);
@@ -363,7 +363,7 @@ void PlayStage::Update(double seconds_elapsed, boolean cameralocked, float elaps
 	}
 }
 
-Vector3 PlayStage::nextPosNoCol(Vector3 nextPos, float elapsed_time)
+Vector3 PlayStage::nextPosNoCol(Vector3 nextPos, float seconds_elapsed)
 {
 	Vector3 character_center = nextPos + Vector3(0, 0.3, 0);
 	//para cada objecto de la escena...
@@ -382,7 +382,7 @@ Vector3 PlayStage::nextPosNoCol(Vector3 nextPos, float elapsed_time)
 			continue; //si no colisiona, pasamos al siguiente objeto
 
 					  //si la esfera está colisionando muevela a su posicion anterior alejandola del objeto
-		Vector3 push_away = normalize(coll - character_center) * elapsed_time;
+		Vector3 push_away = normalize(coll - character_center) * seconds_elapsed;
 
 		nextPos = this->player->pos - push_away; //move to previous pos but a little bit further
 												 //reflejamos el vector velocidad para que de la sensacion de que rebota en la pared
@@ -400,7 +400,7 @@ Vector3 PlayStage::nextPosNoCol(Vector3 nextPos, float elapsed_time)
 				continue;
 			}
 			//si la esfera está colisionando muevela a su posicion anterior alejandola del objeto
-			Vector3 push_away = normalize(coll - character_center) * elapsed_time;
+			Vector3 push_away = normalize(coll - character_center) * seconds_elapsed;
 
 			nextPos = this->player->pos - push_away; //move to previous pos but a little bit further
 													 //reflejamos el vector velocidad para que de la sensacion de que rebota en la pared
@@ -412,7 +412,7 @@ Vector3 PlayStage::nextPosNoCol(Vector3 nextPos, float elapsed_time)
 	return nextPos;
 }
 
-void PlayStage::checkNearTaskEntity(float elapsed_time)
+void PlayStage::checkNearTaskEntity(double seconds_elapsed)
 {
 
 	for (int r = 0; r < this->lab->numRooms; r++) {
@@ -447,7 +447,7 @@ void IntroStage::Render(Shader* a_shader, Camera* cam)
 {
 }
 
-void IntroStage::Update(double seconds_elapsed, boolean cameralocked, float elapsed_time, float speed, Shader* a_shader, Camera* camera, bool mouse_locked)
+void IntroStage::Update(double seconds_elapsed, boolean cameralocked, float speed, Shader* a_shader, Camera* camera, bool mouse_locked)
 {
 }
 
@@ -464,7 +464,7 @@ void TutorialStage::Render(Shader* a_shader, Camera* cam)
 {
 }
 
-void TutorialStage::Update(double seconds_elapsed, boolean cameralocked, float elapsed_time, float speed, Shader* a_shader, Camera* camera, bool mouse_locked)
+void TutorialStage::Update(double seconds_elapsed, boolean cameralocked, float speed, Shader* a_shader, Camera* camera, bool mouse_locked)
 {
 }
 
@@ -481,7 +481,7 @@ void EndStage::Render(Shader* a_shader, Camera* cam)
 {
 }
 
-void EndStage::Update(double seconds_elapsed, boolean cameralocked, float elapsed_time, float speed, Shader* a_shader, Camera* camera, bool mouse_locked)
+void EndStage::Update(double seconds_elapsed, boolean cameralocked, float speed, Shader* a_shader, Camera* camera, bool mouse_locked)
 {
 }
 
@@ -498,6 +498,6 @@ void WinStage::Render(Shader* a_shader, Camera* cam)
 {
 }
 
-void WinStage::Update(double seconds_elapsed, boolean cameralocked, float elapsed_time, float speed, Shader* a_shader, Camera* camera, bool mouse_locked)
+void WinStage::Update(double seconds_elapsed, boolean cameralocked, float speed, Shader* a_shader, Camera* camera, bool mouse_locked)
 {
 }

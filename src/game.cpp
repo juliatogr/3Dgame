@@ -150,7 +150,7 @@ void Game::update(double seconds_elapsed)
 		if (Game::instance->gameState->UIActive == true) {
 			//pickButton();
 		}
-		GetCurrentStage()->Update(seconds_elapsed, cameralocked, elapsed_time, speed, shader, camera, mouse_locked);
+		GetCurrentStage()->Update(seconds_elapsed, cameralocked, speed, shader, camera, mouse_locked);
 	}
 }
 
@@ -158,7 +158,7 @@ void Game::update(double seconds_elapsed)
 void Game::onKeyDown(SDL_KeyboardEvent event)
 {
 	Lab* lab = GetCurrentStage()->lab;
-	Menu* menu = GetCurrentStage()->menu;
+	PlayMenu* menu = GetCurrentStage()->menu;
 	GameState* state = Game::instance->gameState;
 	switch (event.keysym.sym)
 	{
@@ -209,7 +209,7 @@ void Game::onMouseButtonDown(SDL_MouseButtonEvent event)
 		if (GetCurrentStage()->GetId() == PLAY) {
 
 			/*Que Ocurre si se hace click a un boton que esta dentro del menu*/
-			Menu* menu = GetCurrentStage()->menu;
+			PlayMenu* menu = GetCurrentStage()->menu;
 			if ((state->OpenInventory == true)) {
 				/*de la lista de botones, busco cual esta activo, menos el de salida*/
 				for (int i = 0; i < menu->Buttons.size() - 1; i++) {

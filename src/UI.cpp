@@ -118,7 +118,7 @@ Button::Button(BUTTONTYPE t, Vector4 v, Texture* i)
 	this->icon = i;
 }
 
-Menu::Menu()
+PlayMenu::PlayMenu()
 {
 	this->Card = Texture::Get("data/UI/HologramInterface/Card X1/Card X1.png");
 	this->xyhw = Vector4(Game::instance->window_width / 2, Game::instance->window_height / 2, Game::instance->window_width+50, Game::instance->window_height);
@@ -139,7 +139,7 @@ Menu::Menu()
 	
 }
 
-void Menu::RenderMenu()
+void PlayMenu::RenderMenu()
 {
 	this->Render(this->Card, this->xyhw.x, this->xyhw.y, this->xyhw.z, this->xyhw.w, false);
 	int nC = count_chars("Inventory");
@@ -160,7 +160,7 @@ void Menu::RenderMenu()
 
 }
 
-void Menu::UpdateMenu()
+void PlayMenu::UpdateMenu()
 {
 	/*Update the data that would be shown in the menu*/
 	for (int i = 0; i < this->inventory->Notes.size(); i++) {
@@ -169,7 +169,7 @@ void Menu::UpdateMenu()
 	}
 }
 
-void Menu::ShowNote(int id) {
+void PlayMenu::ShowNote(int id) {
 	UI* note = new UI();
 	note->a_shader = this->a_shader;
 	note->cam2D = this->cam2D;

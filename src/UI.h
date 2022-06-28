@@ -47,15 +47,24 @@ public:
 	Button(BUTTONTYPE t, Vector4 v, Texture* i);
 };
 
-
 class Menu : public UI {
+public:
+	Texture* Card;
+	std::vector<Button*> Buttons;
+	Vector4 xyhw;
+
+	virtual void RenderMenu() = 0;
+	virtual void UpdateMenu() = 0;
+};
+
+class PlayMenu : public Menu {
 public:
 	Texture* Card;
 	std::vector<Button*> Buttons;
 	Vector4 xyhw;
 	Inventory* inventory;
 
-	Menu();
+	PlayMenu();
 	void RenderMenu();
 	void UpdateMenu();
 
