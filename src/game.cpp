@@ -159,6 +159,7 @@ void Game::onKeyDown(SDL_KeyboardEvent event)
 {
 	Lab* lab = GetCurrentStage()->lab;
 	Menu* menu = GetCurrentStage()->menu;
+	GameState* state = Game::instance->gameState;
 	switch (event.keysym.sym)
 	{
 	case SDLK_ESCAPE: must_exit = true; break; //ESC key, kill the app
@@ -172,7 +173,7 @@ void Game::onKeyDown(SDL_KeyboardEvent event)
 	case SDLK_8: GetCurrentStage()->RayPick(camera); break;
 	case SDLK_KP_PLUS: GetCurrentStage()->RotateSelected(10.0f); break;
 	case SDLK_KP_MINUS: GetCurrentStage()->RotateSelected(-10.0f); break;
-	case SDLK_m:  menu->isActive = !menu->isActive; break;
+	case SDLK_m: state->OpenInventory = !state->OpenInventory; break;
 	}
 
 }
@@ -196,6 +197,8 @@ void Game::onGamepadButtonUp(SDL_JoyButtonEvent event)
 
 void Game::onMouseButtonDown(SDL_MouseButtonEvent event)
 {
+	GameState* state = Game::instance->gameState;
+
 	if (event.button == SDL_BUTTON_MIDDLE) //middle mouse
 	{
 		mouse_locked = !mouse_locked;
@@ -207,7 +210,7 @@ void Game::onMouseButtonDown(SDL_MouseButtonEvent event)
 
 			/*Que Ocurre si se hace click a un boton que esta dentro del menu*/
 			Menu* menu = GetCurrentStage()->menu;
-			if ((menu->isActive == true)) {
+			if ((state->OpenInventory == true)) {
 				/*de la lista de botones, busco cual esta activo, menos el de salida*/
 				for (int i = 0; i < menu->Buttons.size() - 1; i++) {
 					Button* current = menu->Buttons[i];
@@ -238,12 +241,12 @@ void Game::onMouseButtonDown(SDL_MouseButtonEvent event)
 
 			CodeScreen* code = GetCurrentStage()->codeUI;
 			/*Que ocurre si se da click a un boton de la tarea codigo*/
-			if (code->isActive) {
+			if (state->CodeUiActive) {
 				Code* currentCode;
 
-				for (int i = 0; i < code->codes.size(); i++) {
-					if (code->codes[i]->isActive == true) {
-						currentCode = code->codes[i];
+				for (int i = 0; i < state->codes.size(); i++) {
+					if (state->codes[i]->isActive == true) {
+						currentCode = state->codes[i];
 					}
 				}
 
@@ -267,7 +270,7 @@ void Game::onMouseButtonDown(SDL_MouseButtonEvent event)
 				//* y esta en hover el boton de salida*/
 				if (enter->type == H) {
 					if (currentCode->obj == currentCode->test) {
-						code->isActive = false;
+						state->CodeUiActive = false;
 						currentCode->isActive = false;
 						currentCode->isCompleted = true;
 						std::cout << "UIACTIVE: Enter Correct" << std::endl;
@@ -290,7 +293,7 @@ void Game::onMouseButtonDown(SDL_MouseButtonEvent event)
 					std::cout << "UIACTIVE: Exit" << std::endl;
 					/*se cierra la CodeUI*/
 					currentCode->test = "";
-					code->isActive = false;
+					state->CodeUiActive = false;
 
 
 					exit->type = N;

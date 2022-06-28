@@ -21,7 +21,6 @@ enum STAGE_ID {
 
 class GameStage {
 public:
-
 	Lab* lab;
 
 	virtual Lab* GetLab();
@@ -57,7 +56,6 @@ class PlayStage : public GameStage {
 public:
 	bool isViewingTask = false;
 	STAGE_ID GetId();
-	bool IsActiveUIs;
 
 	PlayStage();
 	void Render(Shader* a_shader, Camera* cam);
