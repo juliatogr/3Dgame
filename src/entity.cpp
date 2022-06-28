@@ -58,6 +58,17 @@ std::string ReadEntityType(std::stringstream& ss) {
 	return entityType;
 }
 
+int ReadEntityID(std::stringstream& ss) {
+
+	int entityType;
+	std::string type;
+	ss >> type;
+	if (ss.peek() == ' ') ss.ignore();
+	ss >> entityType;
+	if (ss.peek() == ' ') ss.ignore();
+	return entityType;
+}
+
 
 std::string ReadTextPath(std::stringstream& ss) {
 
@@ -131,17 +142,6 @@ void Room::LoadEntities(const char* path) {
 	}
 }
 
-int CountTypeTasks(std::vector<TaskEntity*> taskEntities, TASKTYPE type) {
-	int count = 0;
-	std::cout << "size: " << taskEntities.size() << std::endl;
-	for (int i = 0; i < taskEntities.size(); i++) {
-		if (taskEntities[i]->type == type) {
-
-			count++;
-		}
-	}
-	return count;
-}
 
 void Room::LoadTaskEntities(const char* path) {
 	std::string content = "";
@@ -152,6 +152,7 @@ void Room::LoadTaskEntities(const char* path) {
 	while (count != nEntities) {
 
 		std::string entType = ReadEntityType(ss);
+		int entId = ReadEntityID(ss);
 		std::string entImg;
 		const char* im;
 		if (entType == "Note") {
@@ -175,19 +176,18 @@ void Room::LoadTaskEntities(const char* path) {
 		TaskEntity* entity = new TaskEntity();
 
 		if (entType == "Note") {
-			int id = CountTypeTasks(taskEntities, NOTE);
-			Note* noteEnt = new Note(entity, entity->img, id);
+			Note* noteEnt = new Note(entity, entity->img, entId);
 			entity = noteEnt;
 			entity->img = Texture::Get(im);
 		}
 		if (entType == "PC") {
-			int id = CountTypeTasks(taskEntities, PC);
-			std::cout << "countTypes: " << id << std::endl;
-			Computer* pcEnt = new Computer(entity, id);
+			Computer* pcEnt = new Computer(entity, entId);
 			entity = pcEnt;
 		}
+		entity->id = entId;
 		entity->mesh = Mesh::Get(c);
 		entity->texture = Texture::Get(t);
+		entity->rot = rot;
 		Matrix44 model;
 		model.translate(pos.x, pos.y, pos.z);
 		model.rotate(rot.x * DEG2RAD, Vector3(1, 0, 0));
@@ -293,8 +293,11 @@ void TaskEntity::viewToTask(Camera* cam, float seconds_elapsed) {
 
 	Vector3 viewCenter = this->pos;
 	Vector3 viewEye = viewCenter + Vector3(0, 1, 0);
+	Vector3 viewUp;
+
+	viewUp.z = this->rot.y >= 180? 1 : -1;
 	if (cam->eye.x != viewEye.x || cam->eye.y != viewEye.y || cam->eye.z != viewEye.z) {
-		cam->lookAt(viewEye, viewCenter, Vector3(0, 0, 1));
+		cam->lookAt(viewEye, viewCenter, viewUp);
 
 	}
 }

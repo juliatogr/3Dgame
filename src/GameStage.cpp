@@ -78,10 +78,11 @@ PlayStage::PlayStage()
 	this->pum.push_back(new PopUpMessage(2, "Push E to view the object", Texture::Get("data/UI/Elements/BlockInformation.png"), Vector4(Game::instance->window_width / 2, (Game::instance->window_height / 2) + 200, Game::instance->window_width - 200, 50)));
 	this->codeUI = new CodeScreen(this->lab);
 
-	Game::instance->gameState->codes.push_back(new Code(0, "1234", lab->doors[2], lab->doors[3]));
+	Game::instance->gameState->codes.push_back(new Code(0, "4567", lab->doors[2], lab->doors[3]));
 	Game::instance->gameState->codes.push_back(new Code(1, "1618", lab->doors[4]));
 
 	Game::instance->gameState->read.push_back(new ReadNote(0, lab->doors[0], lab->doors[1]));
+	Game::instance->gameState->read.push_back(new ReadNote(0));
 }
 
 
@@ -181,7 +182,7 @@ void PlayStage::Update(double seconds_elapsed, boolean cameralocked, float speed
 {
 	GameState* state = Game::instance->gameState;
 
-	/* si al menos un tipo de UI esta activado -> que el bool IsActiveUis es true*/
+	/* si al menos un tipo de UI esta activado -> que el bool UIActive es true*/
 	if (state->OpenInventory == true || state->CodeUiActive == true) {
 		state->UIActive = true;
 	}

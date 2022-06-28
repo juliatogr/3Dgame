@@ -1,5 +1,6 @@
 Entities 1
 TYPE PC
+ID 1
 MESH data/MachineLab/Objetos/table.obj 
 TEXTURE data/MachineLab/Texturas/table.tga
 -11.50,0.600,-5.640
