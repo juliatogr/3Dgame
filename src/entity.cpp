@@ -188,6 +188,7 @@ void Room::LoadTaskEntities(const char* path) {
 		}
 		entity->mesh = Mesh::Get(c);
 		entity->texture = Texture::Get(t);
+		entity->rot = rot;
 		Matrix44 model;
 		model.translate(pos.x, pos.y, pos.z);
 		model.rotate(rot.x * DEG2RAD, Vector3(1, 0, 0));
@@ -293,8 +294,11 @@ void TaskEntity::viewToTask(Camera* cam, float seconds_elapsed) {
 
 	Vector3 viewCenter = this->pos;
 	Vector3 viewEye = viewCenter + Vector3(0, 1, 0);
+	Vector3 viewUp;
+
+	viewUp.z = this->rot.y >= 180? 1 : -1;
 	if (cam->eye.x != viewEye.x || cam->eye.y != viewEye.y || cam->eye.z != viewEye.z) {
-		cam->lookAt(viewEye, viewCenter, Vector3(0, 0, 1));
+		cam->lookAt(viewEye, viewCenter, viewUp);
 
 	}
 }
