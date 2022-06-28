@@ -38,6 +38,7 @@ public:
 	bool isSaved = false;
 
 	Vector3 pos;
+	Vector3 rot;
 	TASKTYPE type;
 	Texture* img;
 	int id;//id of the task, in this case as is a PC, the task would be Code
