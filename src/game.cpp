@@ -38,7 +38,7 @@ float no_render_distance = 1000.0f;
 
 /*Stages*/
 std::vector<Stage*> stages;
-STAGE_ID currentStage = STAGE_ID::PLAY;
+STAGE_ID currentStage = STAGE_ID::TUTORIAL;
 
 
 Stage* GetStage(STAGE_ID id) {
@@ -53,18 +53,46 @@ void SetStage(STAGE_ID id) {
 	currentStage = id;
 }
 
-void InitStages() {
-	stages.reserve(5);
-	//stages.size();//0
-	//stages.capacity();//4
-	stages.push_back(new IntroStage());
+void InitStages(GameState* state, Shader* shader, Camera* camera) {
+	bool isLoaded1 = false, isLoaded2 = false, isLoaded3 = false;
+	stages.reserve(4);
+	//cargamos el tutorial stage que sera el primero ya que servira de loading
 	stages.push_back(new TutorialStage());
-	stages.push_back(new PlayStage());
-	stages.push_back(new EndStage());
 
-	//stages.size();//4
+	while (!state->isLoaded) {
+		std::cout << "Dentro del bucle: cargando Stages" << std::endl;
+		stages[0]->Render(shader, camera);
+
+		if (!isLoaded1) {
+			std::cout << "Dentro del bucle: cargando IntroStage " << std::endl;
+
+			stages.push_back(new IntroStage());
+			isLoaded1 = true;
+		}
+		else if (!isLoaded2) {
+			std::cout << "Dentro del bucle: cargando PlayStage " << std::endl;
+
+			stages.push_back(new PlayStage());
+			isLoaded2 = true;
+
+		}
+		else if (!isLoaded3) {
+			std::cout << "Dentro del bucle: cargando EndStage " << std::endl;
+
+			stages.push_back(new EndStage());
+			isLoaded3 = true;
+
+		}
+		if (isLoaded1 && isLoaded2 && isLoaded3) {
+			std::cout << "Todo Cargado " << std::endl;
+
+			state->isLoaded = true;
+		}
+	}
+	std::cout << "All Loaded" << std::endl;
 
 }
+
 
 //SDL_GetTicks();
 
@@ -93,13 +121,14 @@ Game::Game(int window_width, int window_height, SDL_Window* window)
 	camera->lookAt(Vector3(-2.f, 1.2f, -17.6f), Vector3(-13.f, 1.2f, -12.0f), Vector3(0.f, 1.f, 0.f)); //position the camera and point to 0,0,0
 	camera->setPerspective(35.f, window_width / (float)window_height, 0.1f, 100000.f); //set the projection, we want to be perspective
 
-	//init
-	instance->gameState = new GameState();
-
-	InitStages();
 
 	// example of shader loading using the shaders manager
 	shader = Shader::Get("data/shaders/basic.vs", "data/shaders/texture.fs");
+
+	//init
+	instance->gameState = new GameState();
+	InitStages(instance->gameState, shader, camera);
+
 	//hide the cursor
 	SDL_ShowCursor(!mouse_locked); //hide or show the mouse
 }
@@ -127,9 +156,9 @@ void Game::render(void)
 	GetCurrentStage()->Render(shader, camera);
 	if (GetCurrentStage()->GetId() == PLAY) {
 		//Draw the floor grid
-		drawGrid();
 
 		if (test == true) {
+			drawGrid();
 			//render the FPS, Draw Calls, etc
 			drawText(2, 2, getGPUStats(), Vector3(1, 1, 1), 2);
 		}

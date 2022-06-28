@@ -12,6 +12,7 @@ public:
 	bool CodeUiActive;
 	bool PauseMenu;
 	bool isFinished;
+	bool isLoaded;
 
 
 	std::vector<Code*> codes;
