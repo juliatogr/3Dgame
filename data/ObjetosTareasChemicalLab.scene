@@ -1,7 +1,14 @@
-Entities 1
+Entities 2
 TYPE PC
 MESH data/MachineLab/Objetos/table.obj 
 TEXTURE data/MachineLab/Texturas/table.tga
 1.100,0.600,-5.640
 0.000,0.000,0.000 
 0.048,0.048,0.048
+TYPE Note
+IMAGE data/UI/Notes/hallNote.png
+MESH data/MachineLab/Objetos/hallNote.obj 
+TEXTURE data/MachineLab/Texturas/hallNote.tga
+2.100,0.600,-5.640
+0.000,0.000,0.000
+0.100,0.100,0.100

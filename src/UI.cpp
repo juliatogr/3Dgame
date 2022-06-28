@@ -2,9 +2,8 @@
 #include "game.h"
 #include "input.h"
 
-int count_chars(const char* c) {
+int count_chars(std::string s) {
 	int count = 0;
-	std::string s = c;
 	for (int i = 0; i < s.size(); i++)
 		count++;
 
@@ -14,7 +13,7 @@ int count_chars(const char* c) {
 UI::UI()
 {
 	this->a_shader = Shader::Get("data/shaders/basic.vs", "data/shaders/texture.fs");
-	
+
 }
 
 void UI::Render(Texture* texture, float x, float y, float w, float h, bool u) {
@@ -27,16 +26,16 @@ void UI::Render(Texture* texture, float x, float y, float w, float h, bool u) {
 	int windowWidth = Game::instance->window_width;
 	int windowHeight = Game::instance->window_height;
 	this->quad.createQuad(x, y, w, h, u);
-	
+
 	//Camera cam2D = this->cam2D;
 
-	this->cam2D.setOrthographic(0,windowWidth, windowHeight, 0, -1, 1);
+	this->cam2D.setOrthographic(0, windowWidth, windowHeight, 0, -1, 1);
 
 	if (!this->a_shader) return;
-	
+
 	//enable shader
 	this->a_shader->enable();
-	
+
 	//upload uniforms
 	this->a_shader->setUniform("u_color", Vector4(1, 1, 1, 1));
 	this->a_shader->setUniform("u_viewprojection", this->cam2D.viewprojection_matrix);
@@ -47,9 +46,9 @@ void UI::Render(Texture* texture, float x, float y, float w, float h, bool u) {
 	//this->quadModel.translate(sin(Game::instance->time)*0.20,0,0);
 	this->a_shader->setUniform("u_model", this->quadModel);
 	this->a_shader->setUniform("u_time", time);
-	
+
 	this->quad.render(GL_TRIANGLES);
-	
+
 	//disable shader
 	this->a_shader->disable();
 
@@ -70,7 +69,7 @@ void Button::RenderButtonText()
 	if (this->type == H) {
 		this->Render(this->Hover, this->xyhw.x, this->xyhw.y, this->xyhw.z, this->xyhw.w, false);
 	}
-	if(this->type == N) {
+	if (this->type == N) {
 		this->Render(this->Normal, this->xyhw.x, this->xyhw.y, this->xyhw.z, this->xyhw.w, false);
 	}
 	int nC = count_chars(this->text);
@@ -90,12 +89,12 @@ void Button::RenderButtonIcon()
 	if (this->type == N) {
 		this->Render(this->Normal, this->xyhw.x, this->xyhw.y, this->xyhw.z, this->xyhw.w, false);
 	}
-	this->Render(this->icon, this->xyhw.x, this->xyhw.y, this->xyhw.z/2, this->xyhw.w/2, false);
+	this->Render(this->icon, this->xyhw.x, this->xyhw.y, this->xyhw.z / 2, this->xyhw.w / 2, false);
 }
 
 
 
-Button::Button(BUTTONTYPE t, Vector4 v, const char* te)
+Button::Button(BUTTONTYPE t, Vector4 v, std::string te)
 {
 	this->Active = Texture::Get("data/UI/HologramInterface/Button 1/Button Active.png");
 	this->Disabled = Texture::Get("data/UI/HologramInterface/Button 1/Button Disable.png");
@@ -104,7 +103,7 @@ Button::Button(BUTTONTYPE t, Vector4 v, const char* te)
 	this->type = t;
 	this->xyhw = v;
 	this->text = te;
-	
+
 }
 
 Button::Button(BUTTONTYPE t, Vector4 v, Texture* i)
@@ -121,7 +120,7 @@ Button::Button(BUTTONTYPE t, Vector4 v, Texture* i)
 PlayMenu::PlayMenu()
 {
 	this->Card = Texture::Get("data/UI/HologramInterface/Card X1/Card X1.png");
-	this->xyhw = Vector4(Game::instance->window_width / 2, Game::instance->window_height / 2, Game::instance->window_width+50, Game::instance->window_height);
+	this->xyhw = Vector4(Game::instance->window_width / 2, Game::instance->window_height / 2, Game::instance->window_width + 50, Game::instance->window_height);
 	/*Inventory buttons, as they initialy doesn't have any object they are visible but disabled*/
 	Vector4 xywh = Vector4(100, 250, 100, 100);
 	int r = 3;
@@ -129,14 +128,14 @@ PlayMenu::PlayMenu()
 	for (int i = 0; i < r; i++) {
 		for (int j = 0; j < c; j++) {
 			//std::cout << "cell button added" << std::endl;
-		
-				this->Buttons.push_back(new Button(D, Vector4(xywh.x * (i + 1), xywh.y + (j * xywh.w), xywh.z, xywh.w), ""));
-			
+
+			this->Buttons.push_back(new Button(D, Vector4(xywh.x * (i + 1), xywh.y + (j * xywh.w), xywh.z, xywh.w), ""));
+
 		}
 	}
 	Button* exit = new Button(N, Vector4(75, 60, 50, 50), Texture::Get("data/UI/HologramInterface/Icons/21.png"));
 	this->Buttons.push_back(exit);
-	
+
 }
 
 void PlayMenu::RenderMenu()
@@ -145,18 +144,25 @@ void PlayMenu::RenderMenu()
 	int nC = count_chars("Inventory");
 	drawText(this->xyhw.x - nC * 6, 70, "Inventory", Vector3(1, 1, 1), 2);
 	/*Renderizamos todos los botones menos el de exit*/
-	for (int i=0; i < this->Buttons.size()-1; i++) {
+	for (int i = 0; i < this->Buttons.size() - 1; i++) {
 		this->Buttons[i]->RenderButtonText();
 	}
 
 
 	for (int i = 0; i < this->inventory->Notes.size(); i++) {
 		Note* current = this->inventory->Notes[i];
+		//me muestra la nota actual
 		if (current->isShowing == true) {
 			this->ShowNote(i);
+			/*me aseguro que las otras se cierren*/
+			for (int k = 0; k < this->inventory->Notes.size(); k++) {
+				if (i!=k) {
+					this->inventory->Notes[k]->isShowing = false;
+				}
+			}
 		}
 	}
-	
+
 
 }
 
@@ -165,7 +171,7 @@ void PlayMenu::UpdateMenu()
 	/*Update the data that would be shown in the menu*/
 	for (int i = 0; i < this->inventory->Notes.size(); i++) {
 		this->Buttons[i]->type = N;
-		this->Buttons[i]->text = "Nota";
+		this->Buttons[i]->text = "Nota" + std::to_string(i + 1);
 	}
 }
 
@@ -173,7 +179,7 @@ void PlayMenu::ShowNote(int id) {
 	UI* note = new UI();
 	note->a_shader = this->a_shader;
 	note->cam2D = this->cam2D;
-	note->Render(this->inventory->Notes[id]->img, (Game::instance->window_width / 2)+175, (Game::instance->window_height / 2)+50, 350, 450, false);
+	note->Render(this->inventory->Notes[id]->img, (Game::instance->window_width / 2) + 175, (Game::instance->window_height / 2) + 50, 350, 450, false);
 	this->Buttons[this->Buttons.size() - 1]->RenderButtonIcon();
 
 }
@@ -192,7 +198,7 @@ void PopUpMessage::RenderPopUp()
 {
 	this->Render(this->bg, this->xyhw.x, this->xyhw.y, this->xyhw.z, this->xyhw.w, false);
 	int nC = count_chars(this->text);
-	drawText(this->xyhw.x - nC*6, this->xyhw.y - (this->xyhw.w/10), this->text, Vector3(1, 1, 1), 2);
+	drawText(this->xyhw.x - nC * 6, this->xyhw.y - (this->xyhw.w / 10), this->text, Vector3(1, 1, 1), 2);
 
 }
 char* codeButton(int i) {
@@ -220,33 +226,33 @@ char* codeButton(int i) {
 CodeScreen::CodeScreen(Lab* lab)
 {
 	this->bg = Texture::Get("data/UI/HologramInterface/Card X1/Card X1.png");
-	this->xyhw = Vector4(Game::instance->window_width / 2, Game::instance->window_height / 2, Game::instance->window_width, Game::instance->window_height);
-	
+	this->xyhw = Vector4(Game::instance->window_width / 2, Game::instance->window_height / 2, Game::instance->window_width + 50, Game::instance->window_height);
 
-	Vector4 xywh = Vector4(100, 250, 100, 100);
+
+	Vector4 xywh = Vector4(300, 250, 100, 100);
 	int r = 3;
 	int c = 3;
 	int co = 1;
 	for (int i = 0; i < r; i++) {
 		for (int j = 0; j < c; j++) {
-			
+
 			this->Buttons.push_back(new Button(N, Vector4(xywh.x + (i * xywh.z), xywh.y + (j * xywh.w), xywh.z, xywh.w), codeButton(co)));
 			co++;
 		}
 	}
 
-	Button* exit = new Button(N, Vector4(600, 100, 50, 50), Texture::Get("data/UI/HologramInterface/Icons/21.png"));
+	Button* exit = new Button(N, Vector4(75, 60, 50, 50), Texture::Get("data/UI/HologramInterface/Icons/21.png"));
 	this->Buttons.push_back(exit);
-	std::cout << "exit pos: " << this->Buttons.size() << std::endl;
-	Button* enter = new Button(N, Vector4(100, 550, 50, 50), Texture::Get("data/UI/HologramInterface/Icons/30.png"));
+	//std::cout << "exit pos: " << this->Buttons.size() << std::endl;
+	Button* enter = new Button(N, Vector4(Game::instance->window_width / 2, 550, 50, 50), Texture::Get("data/UI/HologramInterface/Icons/30.png"));
 	this->Buttons.push_back(enter);
-	std::cout << "code butons size: " << this->Buttons.size() << std::endl;
+	//std::cout << "code butons size: " << this->Buttons.size() << std::endl;
 
 }
 
 int getIdcode(std::vector<Code*> codes) {
 	for (int i = 0; i < codes.size(); i++) {
-		if(codes[i]->isActive)
+		if (codes[i]->isActive)
 			return codes[i]->ID;
 	}
 
@@ -261,7 +267,7 @@ void CodeScreen::RenderCodeScreen(Code* code)
 	nC = count_chars(code->test.c_str());
 	drawText(this->xyhw.x - nC * 6, 70, code->test, Vector3(1, 1, 1), 2);
 
-	
+
 	for (int i = 0; i < this->Buttons.size() - 2; i++) {
 		this->Buttons[i]->RenderButtonText();
 	}
