@@ -4,12 +4,12 @@
 
 bool testMouse = true;
 
-Lab* GameStage::GetLab()
+Lab* PlayStage::GetLab()
 {
 	return this->lab;
 }
 
-void GameStage::RayPick(Camera* cam) {
+void PlayStage::RayPick(Camera* cam) {
 
 	Vector2 mouse = Input::mouse_position;
 	Game* g = Game::instance;
@@ -29,7 +29,7 @@ void GameStage::RayPick(Camera* cam) {
 		}
 	}
 }
-void GameStage::PickButton(std::vector<Button*> buttons) {
+void PlayStage::PickButton(std::vector<Button*> buttons) {
 
 	Vector2 mouse = Input::mouse_position;
 	for (int i = 0; i < buttons.size(); i++) {
@@ -52,7 +52,7 @@ void GameStage::PickButton(std::vector<Button*> buttons) {
 	}
 }
 
-void GameStage::RotateSelected(float angleDegrees) {
+void PlayStage::RotateSelected(float angleDegrees) {
 	if (this->selectedEntity == NULL) {
 		return;
 	}
@@ -441,6 +441,11 @@ STAGE_ID IntroStage::GetId()
 
 IntroStage::IntroStage()
 {
+	this->menu = new IntroMenu();
+	this->pum.reserve(3);
+	this->pum.push_back(new PopUpMessage(0, "Push R to return", Texture::Get("data/UI/Elements/BlockInformation.png"), Vector4(Game::instance->window_width / 2, (Game::instance->window_height / 2) + 200, Game::instance->window_width - 200, 50)));
+	this->pum.push_back(new PopUpMessage(1, "Push Q to save the object to Inventory", Texture::Get("data/UI/Elements/BlockInformation.png"), Vector4(Game::instance->window_width / 2, (Game::instance->window_height / 2) + 260, Game::instance->window_width - 200, 50)));
+	this->pum.push_back(new PopUpMessage(2, "Push E to view the object", Texture::Get("data/UI/Elements/BlockInformation.png"), Vector4(Game::instance->window_width / 2, (Game::instance->window_height / 2) + 200, Game::instance->window_width - 200, 50)));
 }
 
 void IntroStage::Render(Shader* a_shader, Camera* cam)
@@ -485,19 +490,3 @@ void EndStage::Update(double seconds_elapsed, boolean cameralocked, float speed,
 {
 }
 
-WinStage::WinStage()
-{
-}
-
-STAGE_ID WinStage::GetId()
-{
-	return STAGE_ID::WIN;
-}
-
-void WinStage::Render(Shader* a_shader, Camera* cam)
-{
-}
-
-void WinStage::Update(double seconds_elapsed, boolean cameralocked, float speed, Shader* a_shader, Camera* camera, bool mouse_locked)
-{
-}

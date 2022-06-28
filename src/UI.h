@@ -73,6 +73,42 @@ public:
 
 };
 
+class IntroMenu : public Menu {
+public:
+	Texture* Card;
+	std::vector<Button*> Buttons;
+	Vector4 xyhw;
+
+	IntroMenu();
+	void RenderMenu();
+	void UpdateMenu();
+
+};
+
+class TutorialMenu : public Menu {
+public:
+	Texture* Card;
+	std::vector<Button*> Buttons;
+	Vector4 xyhw;
+
+	TutorialMenu();
+	void RenderMenu();
+	void UpdateMenu();
+
+};
+
+class EndMenu : public Menu {
+public:
+	Texture* Card;
+	std::vector<Button*> Buttons;
+	Vector4 xyhw;
+
+	EndMenu();
+	void RenderMenu();
+	void UpdateMenu();
+
+};
+
 class PopUpMessage : public UI {
 public:
 	int Id;
