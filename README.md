@@ -1,39 +1,39 @@
-# TJE Framework #
+# MJ LAB #
 
-TJE Framework is a C++ layer on top of SDL and OpenGL to help create games or visual applications.
-It only provides the basic GPU abstraction (Meshes, Textures, Shaders, Application).
-It has been used for many years in the Videogame's development courses I give at the Universitat Pompeu Fabra.
+## Objective
 
-It contains the basics to do something nice:
-- Mesh, Texture, Shader and FBO classes
-- Vector2,Vector3,Vector4,Matrix44 and Quaternion classes
-- Meshes have a ray-mesh and sphere-mesh collision method (thanks to library Coldet)
-- Parser to load OBJ, PNG and TGA. Re-stores meshes in binary for faster load.
-- Supports skinned animated meshes using own format (you must use a web tool to convert them).
+You are trapped in a laboratory and you must resolve the riddles to scape.
 
-Enough to make gamejam games pretty easily.
+## How to Play
 
+When in the screen appear a UI with buttons, you can iteract with them with the mouse
+
+During the game, you can move using the following keys:
+- w: forward
+- s: backward
+- d: right
+- a: left
+
+And you can use your mouse to rotate the view you are currently visualizing.
+
+Also, you can open an inventory with the key I, and pause the game with the key m
+
+When you are close to some objects in the scene, it may appear a pop up message indicating you what keys you can use to interact with it.
+
+The principal objective is to get out the laboratory where the game takes place. 
+To do that, you must resolve the riddles to obtain the codes and open the doors.
+
+In the IntroStage and Endstage, you can close the game with the following button:
+
+![CloseButton](/data/ReadmeImages/closebutton.png)
+
+Also, in the inventory menu, if you had saved previously a note, if you click in its respective button, you can read the note from the inventory
+
+
+From the IntroStage and  TutorialStage you can start the game, but if you had already started the game, but didn't finished, if you return to these stages you can resume your game, but if you close the app, the data won't be saved, so you will start again if you run the game again.
+
+If you finish the game, you can start again the game, exit the game or read again the tutorial.
 
 ## Installation ##
 
-It comes with a Visual Studio solution, but the code should compile in any platform that supports SDL.
-
-
-## Compiling in Linux
-
-Remember to install the libraries:
-
-sudo apt-get install libsdl2-dev freeglut3 freeglut3-dev
-
-and then just use the makefile:
-
-make
-
-## Feedback
---------
-
-You can write any feedback to javi.agenjo@gmail.com
-
-
-
-
+You only have to execute the game.exe and the the game will start

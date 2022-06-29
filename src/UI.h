@@ -40,7 +40,7 @@ public:
 	//si contiene un icono
 	Texture* icon;
 	
-	void RenderButtonText();
+	void RenderButtonText(int scale);
 	void RenderButtonIcon();
 
 	Button(BUTTONTYPE t, Vector4 v, std::string te);
@@ -110,6 +110,7 @@ public:
 class TutorialMenu : public Menu {
 public:
 	Texture* Card;
+	std::vector < Texture*> instrucctions;
 	std::vector<Button*> Buttons;
 	Vector4 xyhw;
 

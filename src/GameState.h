@@ -15,12 +15,14 @@ public:
 	bool isFinished;
 	bool isLoaded;
 	bool isReLoaded;
+	bool isTutorialMenu;
 
 
 	std::vector<Code*> codes;
 	std::vector<ReadNote*> read;
 	std::vector<Code*> devs;
 	int currentTaskId;
+	int currentInstrucction;
 
 
 	GameState();

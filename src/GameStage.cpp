@@ -1,8 +1,8 @@
 #include "GameStage.h"
 #include "game.h"
 #include "input.h"
-
-bool testMouse = true;
+//para testear la posicion del mouse en las UI, y la posicion del player durante el juego
+bool testMouse = false;
 
 void PickButton(std::vector<Button*> buttons) {
 	Vector2 mouse = Input::mouse_position;
@@ -74,9 +74,9 @@ PlayStage::PlayStage()
 	this->pauseMenu = new PauseMenu();
 	this->invMenu->inventory = new Inventory();
 	this->pum.reserve(3);
-	this->pum.push_back(new PopUpMessage(0, "Push R to return", Texture::Get("data/UI/Elements/BlockInformation.png"), Vector4(Game::instance->window_width / 2, (Game::instance->window_height / 2) + 200, Game::instance->window_width - 200, 50)));
-	this->pum.push_back(new PopUpMessage(1, "Push Q to save the object to Inventory", Texture::Get("data/UI/Elements/BlockInformation.png"), Vector4(Game::instance->window_width / 2, (Game::instance->window_height / 2) + 260, Game::instance->window_width - 200, 50)));
-	this->pum.push_back(new PopUpMessage(2, "Push E to view the object", Texture::Get("data/UI/Elements/BlockInformation.png"), Vector4(Game::instance->window_width / 2, (Game::instance->window_height / 2) + 200, Game::instance->window_width - 200, 50)));
+	this->pum.push_back(new PopUpMessage(0, "Push R to return", Texture::Get("data/UI/Cards/BlockInformation.png"), Vector4(Game::instance->window_width / 2, (Game::instance->window_height / 2) + 200, Game::instance->window_width - 200, 50)));
+	this->pum.push_back(new PopUpMessage(1, "Push Q to save the object to Inventory", Texture::Get("data/UI/Cards/BlockInformation.png"), Vector4(Game::instance->window_width / 2, (Game::instance->window_height / 2) + 260, Game::instance->window_width - 200, 50)));
+	this->pum.push_back(new PopUpMessage(2, "Push E to view the object", Texture::Get("data/UI/Cards/BlockInformation.png"), Vector4(Game::instance->window_width / 2, (Game::instance->window_height / 2) + 200, Game::instance->window_width - 200, 50)));
 	this->codeUI = new CodeScreen(this->lab);
 	this->devUI = new DevelopScreen(this->lab);
 

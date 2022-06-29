@@ -10,6 +10,7 @@ GameState::GameState(){
 	this->isFinished = false;
 	this->isLoaded = false;
 	this->isReLoaded = true;
-
+	this->isTutorialMenu=true;
+	this->currentInstrucction = 0;
 
 }
