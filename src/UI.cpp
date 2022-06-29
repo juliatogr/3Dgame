@@ -422,7 +422,7 @@ void CodeScreen::RenderCodeScreen(Code* code)
 
 LoadScreen::LoadScreen()
 {
-	this->Card = Texture::Get("data/UI/LoadingScreen.png");
+	this->Card = Texture::Get("data/UI/Cards/LoadingScreen.png");
 	this->xyhw = Vector4(Game::instance->window_width / 2, Game::instance->window_height / 2, Game::instance->window_width, Game::instance->window_height);
 
 

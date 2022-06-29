@@ -39,7 +39,7 @@ float no_render_distance = 1000.0f;
 /*Stages*/
 std::vector<Stage*> stages;
 
-STAGE_ID currentStage = STAGE_ID::TUTORIAL;
+STAGE_ID currentStage = STAGE_ID::INTRO;
 
 
 
