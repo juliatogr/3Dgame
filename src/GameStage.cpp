@@ -354,6 +354,13 @@ void PlayStage::Update(double seconds_elapsed, boolean cameralocked, float speed
 			this->player->pitch += -Input::mouse_delta.y * 10.0f * seconds_elapsed;
 
 
+			if (this->player->pitch >= 90) {
+				this->player->pitch = 90;
+			}
+
+			if (this->player->pitch <= -90) {
+				this->player->pitch = -90;
+			}
 			Input::centerMouse();
 			SDL_ShowCursor(false);
 
