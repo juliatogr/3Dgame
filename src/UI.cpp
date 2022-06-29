@@ -243,6 +243,7 @@ TutorialMenu::TutorialMenu()
 	this->instrucctions.push_back(Texture::Get("data/UI/Cards/Read3.png"));
 	this->instrucctions.push_back(Texture::Get("data/UI/Cards/Read4.png"));
 	this->instrucctions.push_back(Texture::Get("data/UI/Cards/Read5.png"));
+	this->instrucctions.push_back(Texture::Get("data/UI/Cards/Read6.png"));
 
 	int offset = 35;
 	Button* right = new Button(N, Vector4((Game::instance->window_width / 2)-offset+70, 550, 50, 50), Texture::Get("data/UI/Icons/ArrowRight.png"));
