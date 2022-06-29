@@ -6,8 +6,24 @@ You are trapped in a laboratory and you must resolve the riddles to scape.
 
 ## How to Play
 
+During the game, you can move using the following keys:
+- w: forward
+- s: backward
+- d: right
+- a: left
+
+And you can use your mouse to rotate the view you are currently visualizing.
+
+Also, you can open an inventory with the key I, and pause the game with the key m
+
+When you are close to some objects in the scene, it may appear a pop up message indicating you what keys you can use to interact with it.
+
+The principal objective is to get out the laboratory where the game takes place. 
+To do that, you must resolve the riddles to obtain the codes and open the doors.
+
 In the IntroStage and Endstage, you can close the game with the following button:
-![Esta es una imagen](https://github.com/juliatogr/3Dgame/tree/master/data/ReadmeImages/closebutton.png)
+
+![CloseButton](/data/ReadmeImages/closebutton.png)
 
 Also, in the inventory menu, if you had saved previously a note, if you click in its respective button, you can read the note from the inventory
 
