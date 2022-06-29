@@ -2,7 +2,7 @@
 
 Player::Player()
 {
-	this->pos = Vector3(-2.f, 0.0f, -14.f);
-	this->yaw = 0;
-	this->pitch = 0;
+	this->pos = Vector3(-1.f, 0.0f, -16.f);
+	this->yaw = 180;
+	this->pitch = 10;
 }
