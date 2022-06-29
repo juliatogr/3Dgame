@@ -453,7 +453,7 @@ DevelopScreen::DevelopScreen(Lab* lab)
 
 void DevelopScreen::RenderDevelopScreen(Code* code)
 {
-	this->Render(this->bg, this->xyhw.x, this->xyhw.y, this->xyhw.z, this->xyhw.w, false);
+	
 	int nC = count_chars("Introduce un numero de 4 Digitos");
 	drawText(this->xyhw.x - nC * 6, 135, "Introduce un numero de 4 Digitos", Vector3(1, 1, 1), 2);
 	nC = count_chars(code->test.c_str());
@@ -461,7 +461,7 @@ void DevelopScreen::RenderDevelopScreen(Code* code)
 
 
 	for (int i = 0; i < this->Buttons.size() - 2; i++) {
-		this->Buttons[i]->RenderButtonText();
+		this->Buttons[i]->RenderButtonText(2);
 	}
 
 	this->Buttons[this->Buttons.size() - 2]->RenderButtonIcon();

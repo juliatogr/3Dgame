@@ -345,6 +345,9 @@ void PlayStage::Update(double seconds_elapsed, boolean cameralocked, float speed
 			else if (this->selectedTaskEntity->type == CONSOLE) {
 
 				if (Input::isKeyPressed(SDL_SCANCODE_E)) {
+					this->selectedTaskEntity->isViewing = true;
+					isViewingTask = true;
+					this->selectedTaskEntity->viewToTask(camera, seconds_elapsed);
 					this->pum[2]->isActive = false;
 					state->DevUiActive = true;
 					if (state->devs[this->selectedTaskEntity->id]->isCompleted == true) {
