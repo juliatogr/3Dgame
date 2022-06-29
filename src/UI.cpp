@@ -96,10 +96,10 @@ void Button::RenderButtonIcon()
 
 Button::Button(BUTTONTYPE t, Vector4 v, std::string te)
 {
-	this->Active = Texture::Get("data/UI/HologramInterface/Button 1/Button Active.png");
-	this->Disabled = Texture::Get("data/UI/HologramInterface/Button 1/Button Disable.png");
-	this->Hover = Texture::Get("data/UI/HologramInterface/Button 1/Button Hover.png");
-	this->Normal = Texture::Get("data/UI/HologramInterface/Button 1/Button Normal.png");
+	this->Active = Texture::Get("data/UI/Buttons/Button Active.png");
+	this->Disabled = Texture::Get("data/UI/Buttons/Button Disable.png");
+	this->Hover = Texture::Get("data/UI/Buttons/Button Hover.png");
+	this->Normal = Texture::Get("data/UI/Buttons/Button Normal.png");
 	this->type = t;
 	this->xyhw = v;
 	this->text = te;
@@ -108,10 +108,10 @@ Button::Button(BUTTONTYPE t, Vector4 v, std::string te)
 
 Button::Button(BUTTONTYPE t, Vector4 v, Texture* i)
 {
-	this->Active = Texture::Get("data/UI/HologramInterface/Button 1/Button Active.png");
-	this->Disabled = Texture::Get("data/UI/HologramInterface/Button 1/Button Disable.png");
-	this->Hover = Texture::Get("data/UI/HologramInterface/Button 1/Button Hover.png");
-	this->Normal = Texture::Get("data/UI/HologramInterface/Button 1/Button Normal.png");
+	this->Active = Texture::Get("data/UI/Buttons/Button Active.png");
+	this->Disabled = Texture::Get("data/UI/Buttons/Button Disable.png");
+	this->Hover = Texture::Get("data/UI/Buttons/Button Hover.png");
+	this->Normal = Texture::Get("data/UI/Buttons/Button Normal.png");
 	this->type = t;
 	this->xyhw = v;
 	this->icon = i;
@@ -119,7 +119,7 @@ Button::Button(BUTTONTYPE t, Vector4 v, Texture* i)
 
 InventoryMenu::InventoryMenu()
 {
-	this->Card = Texture::Get("data/UI/HologramInterface/Card X1/Card X1.png");
+	this->Card = Texture::Get("data/UI/Cards/Card X1.png");
 	this->xyhw = Vector4(Game::instance->window_width / 2, Game::instance->window_height / 2, Game::instance->window_width + 50, Game::instance->window_height);
 	/*Inventory buttons, as they initialy doesn't have any object they are visible but disabled*/
 	Vector4 xywh = Vector4(100, 250, 100, 100);
@@ -133,7 +133,7 @@ InventoryMenu::InventoryMenu()
 
 		}
 	}
-	Button* exit = new Button(N, Vector4(75, 60, 50, 50), Texture::Get("data/UI/HologramInterface/Icons/21.png"));
+	Button* exit = new Button(N, Vector4(75, 60, 50, 50), Texture::Get("data/UI/Icons/21.png"));
 	this->Buttons.push_back(exit);
 
 }
@@ -154,9 +154,9 @@ void InventoryMenu::RenderMenu()
 		//me muestra la nota actual
 		if (current->isShowing == true) {
 			this->ShowNote(i);
-						
+
 		}
-		
+
 	}
 
 
@@ -174,13 +174,13 @@ void InventoryMenu::UpdateMenu()
 
 IntroMenu::IntroMenu()
 {
-	this->Card = Texture::Get("data/UI/HologramInterface/Card X3/Card X6Negro.png");
+	this->Card = Texture::Get("data/UI/Cards/Card X6Negro.png");
 	this->xyhw = Vector4(Game::instance->window_width / 2, Game::instance->window_height / 2, Game::instance->window_width, Game::instance->window_height);
 	/*Inventory buttons, as they initialy doesn't have any object they are visible but disabled*/
 	Vector4 xywh = Vector4(Game::instance->window_width / 2, 220, 200, 150);
 	this->Buttons.push_back(new Button(N, Vector4(xywh.x, xywh.y, xywh.z, xywh.w), "Play"));
-	this->Buttons.push_back(new Button(N, Vector4(xywh.x, xywh.y*2, xywh.z, xywh.w), "Tutorial"));
-	Button* exit = new Button(N, Vector4(75, 60, 50, 50), Texture::Get("data/UI/HologramInterface/Icons/21.png"));
+	this->Buttons.push_back(new Button(N, Vector4(xywh.x, xywh.y * 2, xywh.z, xywh.w), "Tutorial"));
+	Button* exit = new Button(N, Vector4(75, 60, 50, 50), Texture::Get("data/UI/Icons/21.png"));
 	this->Buttons.push_back(exit);
 }
 
@@ -193,7 +193,7 @@ void IntroMenu::RenderMenu()
 	for (int i = 0; i < this->Buttons.size() - 1; i++) {
 		this->Buttons[i]->RenderButtonText();
 	}
-	this->Buttons[this->Buttons.size()-1]->RenderButtonIcon();
+	this->Buttons[this->Buttons.size() - 1]->RenderButtonIcon();
 
 }
 
@@ -203,13 +203,13 @@ void IntroMenu::UpdateMenu()
 
 PauseMenu::PauseMenu()
 {
-	this->Card = Texture::Get("data/UI/HologramInterface/Card X1/Card X1.png");
+	this->Card = Texture::Get("data/UI/Cards/Card X1.png");
 	this->xyhw = Vector4(Game::instance->window_width / 2, Game::instance->window_height / 2, Game::instance->window_width + 50, Game::instance->window_height);
 	/*Inventory buttons, as they initialy doesn't have any object they are visible but disabled*/
 	Vector4 xywh = Vector4(Game::instance->window_width / 2, 220, 200, 150);
 	this->Buttons.push_back(new Button(N, Vector4(xywh.x, xywh.y, xywh.z, xywh.w), "Continue"));
 	this->Buttons.push_back(new Button(N, Vector4(xywh.x, xywh.y * 2, xywh.z, xywh.w), "Tutorial"));
-	Button* exit = new Button(N, Vector4(75, 60, 50, 50), Texture::Get("data/UI/HologramInterface/Icons/21.png"));
+	Button* exit = new Button(N, Vector4(75, 60, 50, 50), Texture::Get("data/UI/Icons/21.png"));
 	this->Buttons.push_back(exit);
 }
 
@@ -231,13 +231,23 @@ void PauseMenu::UpdateMenu()
 
 TutorialMenu::TutorialMenu()
 {
-	this->Card = Texture::Get("data/UI/HologramInterface/Card X3/Card X6Negro.png");
+	this->Card = Texture::Get("data/UI/Cards/Card X6Negro.png");//fondo
 	this->xyhw = Vector4(Game::instance->window_width / 2, Game::instance->window_height / 2, Game::instance->window_width, Game::instance->window_height);
 	/*Inventory buttons, as they initialy doesn't have any object they are visible but disabled*/
 	Vector4 xywh = Vector4(Game::instance->window_width / 2, 220, 200, 150);
-	this->Buttons.push_back(new Button(N, Vector4(xywh.x, xywh.y, xywh.z, xywh.w), "Continue"));
+	this->Buttons.push_back(new Button(N, Vector4(xywh.x, xywh.y, xywh.z, xywh.w), "Read"));
 	this->Buttons.push_back(new Button(N, Vector4(xywh.x, xywh.y * 2, xywh.z, xywh.w), "Play"));
-	Button* exit = new Button(N, Vector4(75, 60, 50, 50), Texture::Get("data/UI/HologramInterface/Icons/21.png"));
+
+	this->instrucctions.push_back(Texture::Get("data/UI/Cards/Card X5.png"));
+	this->instrucctions.push_back(Texture::Get("data/UI/Cards/Card X6.png"));
+	this->instrucctions.push_back(Texture::Get("data/UI/Cards/LoadingScreen.png"));
+
+	int offset = 35;
+	Button* right = new Button(N, Vector4((Game::instance->window_width / 2)-offset+70, 550, 50, 50), Texture::Get("data/UI/Icons/ArrowRight.png"));
+	this->Buttons.push_back(right);
+	Button* left = new Button(N, Vector4((Game::instance->window_width / 2)- offset, 550, 50, 50), Texture::Get("data/UI/Icons/ArrowLeft.png"));
+	this->Buttons.push_back(left);
+	Button* exit = new Button(N, Vector4(75, 550, 50, 50), Texture::Get("data/UI/Icons/21.png"));
 	this->Buttons.push_back(exit);
 }
 
@@ -246,9 +256,25 @@ void TutorialMenu::RenderMenu()
 	this->Render(this->Card, this->xyhw.x, this->xyhw.y, this->xyhw.z, this->xyhw.w, false);
 	int nC = count_chars("Tutorial");
 	drawText(this->xyhw.x - nC * 6, 70, "Tutorial", Vector3(1, 1, 1), 2);
-	/*Renderizamos todos los botones menos el de exit*/
-	for (int i = 0; i < this->Buttons.size() - 1; i++) {
-		this->Buttons[i]->RenderButtonText();
+	//si es el menu de Tutorial con los botones play or Continue
+	if (!Game::instance->gameState->isTutorialMenu) {
+		//std::cout << "instrucctions menu" << std::endl;
+
+		Vector4 xywh = Vector4((Game::instance->window_width / 2), (Game::instance->window_height / 2) + 40, 500, 400);
+	
+		this->Render(this->instrucctions[Game::instance->gameState->currentInstrucction], xywh.x, xywh.y, xywh.z, xywh.w, false);
+		
+		this->Buttons[this->Buttons.size() - 1]->RenderButtonIcon();
+		this->Buttons[this->Buttons.size() - 2]->RenderButtonIcon();
+		this->Buttons[this->Buttons.size() - 3]->RenderButtonIcon();
+	}
+	else {
+		//std::cout << "tutorial menu" << std::endl;
+		/*Renderizamos todos los botones menos el de exit*/
+		for (int i = 0; i < this->Buttons.size() - 3; i++) {
+			this->Buttons[i]->RenderButtonText();
+		}
+		
 	}
 }
 
@@ -258,13 +284,13 @@ void TutorialMenu::UpdateMenu()
 
 EndingMenu::EndingMenu()
 {
-	this->Card = Texture::Get("data/UI/HologramInterface/Card X3/Card X6Negro.png");
+	this->Card = Texture::Get("data/UI/Cards/Card X6Negro.png");
 	this->xyhw = Vector4(Game::instance->window_width / 2, Game::instance->window_height / 2, Game::instance->window_width, Game::instance->window_height);
 	/*Inventory buttons, as they initialy doesn't have any object they are visible but disabled*/
 	Vector4 xywh = Vector4(Game::instance->window_width / 2, 220, 200, 150);
 	this->Buttons.push_back(new Button(N, Vector4(xywh.x, xywh.y, xywh.z, xywh.w), "Tutorial"));
 	this->Buttons.push_back(new Button(N, Vector4(xywh.x, xywh.y * 2, xywh.z, xywh.w), "Play"));
-	Button* exit = new Button(N, Vector4(75, 60, 50, 50), Texture::Get("data/UI/HologramInterface/Icons/21.png"));
+	Button* exit = new Button(N, Vector4(75, 60, 50, 50), Texture::Get("data/UI/Icons/21.png"));
 	this->Buttons.push_back(exit);
 }
 
@@ -272,7 +298,7 @@ void EndingMenu::RenderMenu()
 {
 	this->Render(this->Card, this->xyhw.x, this->xyhw.y, this->xyhw.z, this->xyhw.w, false);
 	int nC = count_chars("End");
-	drawText(this->xyhw.x - nC * 6, 70, "End", Vector3(1, 1, 1), 2);
+	drawText(this->xyhw.x - nC * 6, 60, "End", Vector3(1, 1, 1), 2);
 	nC = count_chars("Congratulations");
 	drawText(this->xyhw.x - nC * 6, 80, "Congratulations", Vector3(1, 1, 1), 2);
 	nC = count_chars("You have finished the scape room");
@@ -282,7 +308,7 @@ void EndingMenu::RenderMenu()
 	for (int i = 0; i < this->Buttons.size() - 1; i++) {
 		this->Buttons[i]->RenderButtonText();
 	}
-	this->Buttons[this->Buttons.size()-1]->RenderButtonIcon();
+	this->Buttons[this->Buttons.size() - 1]->RenderButtonIcon();
 
 }
 
@@ -341,7 +367,7 @@ char* codeButton(int i) {
 
 CodeScreen::CodeScreen(Lab* lab)
 {
-	this->bg = Texture::Get("data/UI/HologramInterface/Card X1/Card X1.png");
+	this->bg = Texture::Get("data/UI/Cards/Card X1.png");
 	this->xyhw = Vector4(Game::instance->window_width / 2, Game::instance->window_height / 2, Game::instance->window_width + 50, Game::instance->window_height);
 
 
@@ -357,10 +383,10 @@ CodeScreen::CodeScreen(Lab* lab)
 		}
 	}
 
-	Button* exit = new Button(N, Vector4(75, 60, 50, 50), Texture::Get("data/UI/HologramInterface/Icons/21.png"));
+	Button* exit = new Button(N, Vector4(75, 60, 50, 50), Texture::Get("data/UI/Icons/21.png"));
 	this->Buttons.push_back(exit);
 	//std::cout << "exit pos: " << this->Buttons.size() << std::endl;
-	Button* enter = new Button(N, Vector4(Game::instance->window_width / 2, 550, 50, 50), Texture::Get("data/UI/HologramInterface/Icons/30.png"));
+	Button* enter = new Button(N, Vector4(Game::instance->window_width / 2, 550, 50, 50), Texture::Get("data/UI/Icons/30.png"));
 	this->Buttons.push_back(enter);
 	//std::cout << "code butons size: " << this->Buttons.size() << std::endl;
 
@@ -399,19 +425,14 @@ LoadScreen::LoadScreen()
 	this->Card = Texture::Get("data/UI/LoadingScreen.png");
 	this->xyhw = Vector4(Game::instance->window_width / 2, Game::instance->window_height / 2, Game::instance->window_width, Game::instance->window_height);
 
-	Button* exit = new Button(N, Vector4(75, 60, 50, 50), Texture::Get("data/UI/HologramInterface/Icons/21.png"));
-	this->Buttons.push_back(exit);
 
-	this->isTutorial = false;
 }
 
 void LoadScreen::RenderMenu()
 {
 	//std::cout << "loaded rendered" << std::endl;
 	this->Render(this->Card, this->xyhw.x, this->xyhw.y, this->xyhw.z, this->xyhw.w, false);
-	if (Game::instance->gameState->isLoaded) {
-		this->Buttons[0]->RenderButtonIcon();
-	}
+
 
 
 }

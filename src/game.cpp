@@ -39,7 +39,7 @@ float no_render_distance = 1000.0f;
 /*Stages*/
 std::vector<Stage*> stages;
 
-STAGE_ID currentStage = STAGE_ID::INTRO;
+STAGE_ID currentStage = STAGE_ID::TUTORIAL;
 
 
 
@@ -166,7 +166,7 @@ void Game::render(void)
 		if (!Game::instance->gameState->isLoaded) {
 			GetStage(LOAD)->Render(shader, camera);
 		}
-		
+
 	}
 
 	//swap between front buffer and back buffer
@@ -417,20 +417,50 @@ void Game::onMouseButtonDown(SDL_MouseButtonEvent event)
 
 		else if (GetCurrentStage()->GetId() == TUTORIAL) {
 			TutorialStage* tutStage = (TutorialStage*)GetCurrentStage();
-			IntroMenu* introMenu = (IntroMenu*)tutStage->menu;
+			TutorialMenu* introMenu = (TutorialMenu*)tutStage->menu;
 			/*Que Ocurre si se hace click a un boton que esta dentro del menu*/
 			/*de la lista de botones, busco cual esta activo, menos el de salida*/
-			for (int i = 0; i < introMenu->Buttons.size() - 1; i++) {
-				Button* current = introMenu->Buttons[i];
-				if (current->type == H) {
-					if (current->text == "Continue") {
+			if (Game::instance->gameState->isTutorialMenu) {
+				for (int i = 0; i < introMenu->Buttons.size() - 3; i++) {
+					Button* current = introMenu->Buttons[i];
+					if (current->type == H) {
+						if (current->text == "Read") {
 
-						SetStage(LOAD);
-					}
-					else if (current->text == "Play") {
-						SetStage(PLAY);
+							Game::instance->gameState->isTutorialMenu = false;
+							std::cout << "is tutorial bool: " + Game::instance->gameState->isTutorialMenu << std::endl;
+						}
+						else if (current->text == "Play") {
+							SetStage(PLAY);
 
+						}
 					}
+				}
+			}
+			if (!Game::instance->gameState->isTutorialMenu) {
+				Button* exit = introMenu->Buttons[introMenu->Buttons.size() - 1];
+				Button* right = introMenu->Buttons[introMenu->Buttons.size() - 3];
+				Button* left = introMenu->Buttons[introMenu->Buttons.size() - 2];
+				/* y esta en hover el boton de salida*/
+				if (exit->type == H) {
+					Game::instance->gameState->isTutorialMenu = true;
+					exit->type = N;
+				}
+				if (right->type == H) {
+					Game::instance->gameState->currentInstrucction += 1;
+					std::cout << "next" << std::endl;
+					right->type = N;
+				}
+				if (left->type == H) {
+					std::cout << "ant" << std::endl;
+					Game::instance->gameState->currentInstrucction -= 1;
+					left->type = N;
+				}
+
+
+				if (Game::instance->gameState->currentInstrucction == introMenu->instrucctions.size()) {
+					Game::instance->gameState->currentInstrucction = 0;
+				}if (Game::instance->gameState->currentInstrucction < 0) {
+					Game::instance->gameState->currentInstrucction = introMenu->instrucctions.size() - 1;
 				}
 			}
 		}

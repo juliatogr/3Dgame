@@ -110,6 +110,7 @@ public:
 class TutorialMenu : public Menu {
 public:
 	Texture* Card;
+	std::vector < Texture*> instrucctions;
 	std::vector<Button*> Buttons;
 	Vector4 xyhw;
 
