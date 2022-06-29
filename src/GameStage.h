@@ -43,6 +43,7 @@ public:
 	STAGE_ID GetId();
 
 	PlayStage();
+	void RePlayStage();
 	void RayPick(Camera* cam);
 	void RotateSelected(float angleDegrees);
 	void Render(Shader* a_shader, Camera* cam);

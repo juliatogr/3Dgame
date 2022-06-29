@@ -163,6 +163,10 @@ void Game::render(void)
 			//render the FPS, Draw Calls, etc
 			drawText(2, 2, getGPUStats(), Vector3(1, 1, 1), 2);
 		}
+		if (!Game::instance->gameState->isLoaded) {
+			GetStage(LOAD)->Render(shader, camera);
+		}
+		
 	}
 
 	//swap between front buffer and back buffer
@@ -177,6 +181,14 @@ void Game::update(double seconds_elapsed)
 	if (GetCurrentStage()->GetId() == PLAY) {
 		if (this->gameState->isFinished) {
 			SetStage(END);
+		}
+		if (!Game::instance->gameState->isReLoaded) {
+			PlayStage* newPlay = (PlayStage*)GetStage(PLAY);
+			newPlay->RePlayStage();
+			this->gameState->isFinished = false;
+			SetStage(PLAY);
+
+
 		}
 	}
 	GetCurrentStage()->Update(seconds_elapsed, cameralocked, speed, shader, camera, mouse_locked);
@@ -391,6 +403,16 @@ void Game::onMouseButtonDown(SDL_MouseButtonEvent event)
 					}
 				}
 			}
+
+			Button* exit = introMenu->Buttons[introMenu->Buttons.size() - 1];
+			/* y esta en hover el boton de salida*/
+			if (exit->type == H) {
+
+				Game::instance->must_exit = true;
+
+
+				exit->type = N;
+			}
 		}
 
 		else if (GetCurrentStage()->GetId() == TUTORIAL) {
@@ -402,27 +424,28 @@ void Game::onMouseButtonDown(SDL_MouseButtonEvent event)
 				Button* current = introMenu->Buttons[i];
 				if (current->type == H) {
 					if (current->text == "Continue") {
-						
+
 						SetStage(LOAD);
 					}
 					else if (current->text == "Play") {
 						SetStage(PLAY);
+
 					}
 				}
 			}
 		}
 		else if (GetCurrentStage()->GetId() == LOAD) {
-		LoadStage* loadStage = (LoadStage*)GetCurrentStage();
-		Button* exit =loadStage->menu->Buttons[0];
-		/* y esta en hover el boton de salida*/
-		if (exit->type == H) {
-			
-			SetStage(TUTORIAL);
+			LoadStage* loadStage = (LoadStage*)GetCurrentStage();
+			Button* exit = loadStage->menu->Buttons[0];
+			/* y esta en hover el boton de salida*/
+			if (exit->type == H) {
+
+				SetStage(TUTORIAL);
 
 
-			exit->type = N;
+				exit->type = N;
+			}
 		}
-}
 
 
 		else if (GetCurrentStage()->GetId() == END) {
@@ -433,7 +456,9 @@ void Game::onMouseButtonDown(SDL_MouseButtonEvent event)
 			for (int i = 0; i < endMenu->Buttons.size() - 1; i++) {
 				Button* current = endMenu->Buttons[i];
 				if (current->type == H) {
-					if (current->text == "Read") {
+					Game::instance->gameState->isReLoaded = false;
+
+					if (current->text == "Tutorial") {
 						SetStage(TUTORIAL);
 					}
 					else if (current->text == "Play") {
@@ -441,10 +466,20 @@ void Game::onMouseButtonDown(SDL_MouseButtonEvent event)
 					}
 				}
 			}
-		}
+			Button* exit = endMenu->Buttons[endMenu->Buttons.size() - 1];
+			/* y esta en hover el boton de salida*/
+			if (exit->type == H) {
 
+				Game::instance->must_exit = true;
+
+
+				exit->type = N;
+			}
+		}
 	}
+
 }
+
 
 void Game::onMouseButtonUp(SDL_MouseButtonEvent event)
 {

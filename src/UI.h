@@ -75,6 +75,7 @@ public:
 	Texture* Card;
 	std::vector<Button*> Buttons;
 	Vector4 xyhw;
+	bool isTutorial;
 
 	LoadScreen();
 	void RenderMenu();

@@ -8,6 +8,7 @@ GameState::GameState(){
 	this->PauseMenu = false;
 	this->isFinished = false;
 	this->isLoaded = false;
+	this->isReLoaded = true;
 
 
 }

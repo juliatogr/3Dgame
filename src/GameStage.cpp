@@ -86,6 +86,30 @@ PlayStage::PlayStage()
 	Game::instance->gameState->read.push_back(new ReadNote(0));
 }
 
+void PlayStage::RePlayStage()
+{
+	this->lab = new Lab();
+	this->player = new Player();
+	this->invMenu = new InventoryMenu();
+	this->invMenu->inventory = new Inventory();
+
+	
+	Game::instance->gameState = new GameState();
+	std::vector<Code*> newCode;
+	Game::instance->gameState->codes = newCode;
+	Game::instance->gameState->codes.push_back(new Code(0, "4567", lab->doors[2], lab->doors[3]));
+	Game::instance->gameState->codes.push_back(new Code(1, "1618", lab->doors[4]));
+
+	std::vector<ReadNote*> newRead;
+	Game::instance->gameState->read = newRead;
+	Game::instance->gameState->read.push_back(new ReadNote(0, lab->doors[0], lab->doors[1]));
+	Game::instance->gameState->read.push_back(new ReadNote(0));
+
+	Game::instance->gameState->isLoaded = true;
+
+
+}
+
 
 
 void PlayStage::Render(Shader* a_shader, Camera* cam)
@@ -485,6 +509,8 @@ void IntroStage::Render(Shader* a_shader, Camera* cam)
 
 void IntroStage::Update(double seconds_elapsed, boolean cameralocked, float speed, Shader* a_shader, Camera* camera, bool mouse_locked)
 {
+	SDL_ShowCursor(true);
+
 	PickButton(this->menu->Buttons);
 }
 
@@ -521,6 +547,8 @@ void TutorialStage::Render(Shader* a_shader, Camera* cam)
 
 void TutorialStage::Update(double seconds_elapsed, boolean cameralocked, float speed, Shader* a_shader, Camera* camera, bool mouse_locked)
 {
+	SDL_ShowCursor(true);
+
 	PickButton(this->menu->Buttons);
 }
 
@@ -538,6 +566,8 @@ void EndStage::Render(Shader* a_shader, Camera* cam)
 {
 	this->menu->RenderMenu();
 
+
+
 	if (testMouse == true) {
 		/*testeo para saber posicion del mouse*/
 		Vector2 mouse = Input::mouse_position;
@@ -548,6 +578,8 @@ void EndStage::Render(Shader* a_shader, Camera* cam)
 
 void EndStage::Update(double seconds_elapsed, boolean cameralocked, float speed, Shader* a_shader, Camera* camera, bool mouse_locked)
 {
+	SDL_ShowCursor(true);
+
 	PickButton(this->menu->Buttons);
 }
 
@@ -569,6 +601,8 @@ void LoadStage::Render(Shader* a_shader, Camera* cam)
 
 void LoadStage::Update(double seconds_elapsed, boolean cameralocked, float speed, Shader* a_shader, Camera* camera, bool mouse_locked)
 {
+	SDL_ShowCursor(true);
+
 	PickButton(this->menu->Buttons);
 
 }

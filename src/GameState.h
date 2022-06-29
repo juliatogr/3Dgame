@@ -13,6 +13,7 @@ public:
 	bool PauseMenu;
 	bool isFinished;
 	bool isLoaded;
+	bool isReLoaded;
 
 
 	std::vector<Code*> codes;
