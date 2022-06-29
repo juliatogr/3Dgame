@@ -157,3 +157,14 @@ public:
 	void RenderCodeScreen(Code* code);
 
 };
+
+class DevelopScreen : public UI {
+public:
+	Texture* bg;//fondo de la ui
+	std::vector<Button*> Buttons;
+	Vector4 xyhw;
+
+	DevelopScreen(Lab* lab);
+	void RenderDevelopScreen(Code* code);
+
+};

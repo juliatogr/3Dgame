@@ -78,12 +78,15 @@ PlayStage::PlayStage()
 	this->pum.push_back(new PopUpMessage(1, "Push Q to save the object to Inventory", Texture::Get("data/UI/Elements/BlockInformation.png"), Vector4(Game::instance->window_width / 2, (Game::instance->window_height / 2) + 260, Game::instance->window_width - 200, 50)));
 	this->pum.push_back(new PopUpMessage(2, "Push E to view the object", Texture::Get("data/UI/Elements/BlockInformation.png"), Vector4(Game::instance->window_width / 2, (Game::instance->window_height / 2) + 200, Game::instance->window_width - 200, 50)));
 	this->codeUI = new CodeScreen(this->lab);
+	this->devUI = new DevelopScreen(this->lab);
 
 	Game::instance->gameState->codes.push_back(new Code(0, "4567", lab->doors[2], lab->doors[3]));
 	Game::instance->gameState->codes.push_back(new Code(1, "1618", lab->doors[4]));
 
 	Game::instance->gameState->read.push_back(new ReadNote(0, lab->doors[0], lab->doors[1]));
 	Game::instance->gameState->read.push_back(new ReadNote(0));
+
+	Game::instance->gameState->devs.push_back(new Code(0, "1234"));
 }
 
 void PlayStage::RePlayStage()
@@ -104,6 +107,9 @@ void PlayStage::RePlayStage()
 	Game::instance->gameState->read = newRead;
 	Game::instance->gameState->read.push_back(new ReadNote(0, lab->doors[0], lab->doors[1]));
 	Game::instance->gameState->read.push_back(new ReadNote(0));
+
+	std::vector<Develop*> newDevelop;
+	Game::instance->gameState->devs.push_back(new Code(0, "1234"));
 
 	Game::instance->gameState->isLoaded = true;
 
@@ -195,6 +201,16 @@ void PlayStage::Render(Shader* a_shader, Camera* cam)
 		}
 	}
 
+	if (state->DevUiActive == true) {
+		this->devUI->RenderDevelopScreen(state->devs[state->currentTaskId]);
+		if (testMouse == true) {
+			/*testeo para saber posicion del mouse*/
+			Vector2 mouse = Input::mouse_position;
+			std::string text = "Mouse Position2D: " + std::to_string((int)mouse.x) + ", " + std::to_string((int)mouse.y);
+			drawText((Game::instance->window_width) - 290, (Game::instance->window_height) - 25, text, Vector3(1, 1, 1), 2);
+		}
+	}
+
 	if (state->PauseMenu == true) {
 		this->pauseMenu->RenderMenu();
 		if (testMouse == true) {
@@ -219,7 +235,7 @@ void PlayStage::Update(double seconds_elapsed, boolean cameralocked, float speed
 	GameState* state = Game::instance->gameState;
 
 	/* si al menos un tipo de UI esta activado -> que el bool UIActive es true*/
-	if (state->OpenInventory == true || state->CodeUiActive == true || state->PauseMenu == true) {
+	if (state->OpenInventory == true || state->CodeUiActive == true || state->DevUiActive == true || state->PauseMenu == true) {
 		state->UIActive = true;
 	}
 	else {
@@ -326,6 +342,28 @@ void PlayStage::Update(double seconds_elapsed, boolean cameralocked, float speed
 				}
 			}
 
+			else if (this->selectedTaskEntity->type == CONSOLE) {
+
+				if (Input::isKeyPressed(SDL_SCANCODE_E)) {
+					this->pum[2]->isActive = false;
+					state->DevUiActive = true;
+					if (state->devs[this->selectedTaskEntity->id]->isCompleted == true) {
+						state->currentTaskId = this->selectedTaskEntity->id + 1;
+						state->devs[this->selectedTaskEntity->id + 1]->isActive = true;
+
+					}
+					else {
+						state->devs[this->selectedTaskEntity->id]->isActive = true;
+						state->currentTaskId = this->selectedTaskEntity->id;
+
+					}
+				}
+				else {
+					this->pum[2]->isActive = true;
+					//std::cout << "Push E to view the object " << this->pum[2]->isActive << std::endl;
+				}
+			}
+
 		}
 		else {
 			this->pum[0]->isActive = false;
@@ -407,6 +445,11 @@ void PlayStage::Update(double seconds_elapsed, boolean cameralocked, float speed
 			SDL_ShowCursor(true);
 
 			PickButton(this->codeUI->Buttons);
+		}
+		if (state->DevUiActive == true) {
+			SDL_ShowCursor(true);
+
+			PickButton(this->devUI->Buttons);
 		}
 		if (state->PauseMenu == true) {
 			SDL_ShowCursor(true);

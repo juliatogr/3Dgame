@@ -1,8 +1,15 @@
-Entities 1
+Entities 2
 TYPE PC
 ID 1
 MESH data/MachineLab/Objetos/table.obj 
 TEXTURE data/MachineLab/Texturas/table.tga
 -11.50,0.600,-5.640
 0.000,0.000,0.000 
+0.048,0.048,0.048
+TYPE Console
+ID 0
+MESH data/MachineLab/Objetos/table.obj 
+TEXTURE data/MachineLab/Texturas/table.tga
+-8.400,0.600,-2.000
+0.000,90.000,0.000 
 0.048,0.048,0.048

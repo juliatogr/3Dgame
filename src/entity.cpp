@@ -184,6 +184,10 @@ void Room::LoadTaskEntities(const char* path) {
 			Computer* pcEnt = new Computer(entity, entId);
 			entity = pcEnt;
 		}
+		if (entType == "Console") {
+			Console* consoleEnt = new Console(entity, entId);
+			entity = consoleEnt;
+		}
 		entity->id = entId;
 		entity->mesh = Mesh::Get(c);
 		entity->texture = Texture::Get(t);
@@ -322,5 +326,12 @@ Computer::Computer(Entity* e, int i)
 {
 	this->isShowing = false;
 	this->type = PC;
+	this->id = i;
+}
+
+Console::Console(Entity* e, int i)
+{
+	this->isShowing = false;
+	this->type = CONSOLE;
 	this->id = i;
 }

@@ -204,12 +204,6 @@ void Game::onKeyDown(SDL_KeyboardEvent event)
 	{
 	case SDLK_ESCAPE: must_exit = true; break; //ESC key, kill the app
 	case SDLK_F1: Shader::ReloadAll(); break;
-		//case SDLK_2: AddEntityInFront(camera); break;
-	//case SDLK_3: lab->doors[0]->isOpening = true; break;
-	//case SDLK_4: lab->doors[1]->isOpening = true; break;
-	//case SDLK_5: lab->doors[2]->isOpening = true; break;
-	//case SDLK_6: lab->doors[3]->isOpening = true; break;
-	case SDLK_7: if (GetCurrentStage()->GetId() == PLAY) lab->doors[4]->isOpening = true; break;
 	case SDLK_8: if (GetCurrentStage()->GetId() == PLAY) playStage->RayPick(camera); break;
 	case SDLK_KP_PLUS: if (GetCurrentStage()->GetId() == PLAY) playStage->RotateSelected(10.0f); break;
 	case SDLK_KP_MINUS: if (GetCurrentStage()->GetId() == PLAY) playStage->RotateSelected(-10.0f); break;
@@ -326,6 +320,68 @@ void Game::onMouseButtonDown(SDL_MouseButtonEvent event)
 				if (enter->type == H) {
 					if (currentCode->obj == currentCode->test) {
 						state->CodeUiActive = false;
+						currentCode->isActive = false;
+						currentCode->isCompleted = true;
+						//std::cout << "UIACTIVE: Enter Correct" << std::endl;
+						//si esta la clave correcta se abre la puerta correspondiente
+						currentCode->OpenDoors();
+
+					}
+					else {
+						currentCode->test = "";
+						//std::cout << "UIACTIVE: Enter Wrong" << std::endl;
+
+					}
+
+					enter->type = N;
+				}
+
+				Button* exit = code->Buttons[code->Buttons.size() - 2];
+				/* y esta en hover el boton de salida*/
+				if (exit->type == H) {
+					//std::cout << "UIACTIVE: Exit" << std::endl;
+					/*se cierra la CodeUI*/
+					currentCode->test = "";
+					state->CodeUiActive = false;
+
+
+					exit->type = N;
+				}
+
+			}
+
+			DevelopScreen* dev = playStage->devUI;
+			/*Que ocurre si se da click a un boton de la tarea codigo*/
+			if (state->DevUiActive) {
+				Code* currentCode;
+
+				for (int i = 0; i < state->devs.size(); i++) {
+					if (state->devs[i]->isActive == true) {
+						currentCode = state->devs[i];
+					}
+				}
+
+				//*hago click en los botones para crear un codigo de 4 digitos*/
+				for (int i = 0; i < dev->Buttons.size() - 2; i++) {
+					Button* current = dev->Buttons[i];
+					if (current->type == H) {
+						//std::cout << "UIACTIVE: " << current->text << std::endl;
+						currentCode->test = (currentCode->test + current->text);
+
+						//std::cout << "Test: " << currentCode->test << std::endl;
+
+
+						current->type = N;
+					}
+				}
+
+
+				Button* enter = dev->Buttons[dev->Buttons.size() - 1];
+				Lab* lab = playStage->lab;
+				//* y esta en hover el boton de salida*/
+				if (enter->type == H) {
+					if (currentCode->obj == currentCode->test) {
+						state->DevUiActive = false;
 						currentCode->isActive = false;
 						currentCode->isCompleted = true;
 						//std::cout << "UIACTIVE: Enter Correct" << std::endl;

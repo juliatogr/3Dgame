@@ -38,6 +38,7 @@ public:
 	PauseMenu* pauseMenu;
 	std::vector<PopUpMessage*> pum;
 	CodeScreen* codeUI;
+	DevelopScreen* devUI;
 
 	bool isViewingTask = false;
 	STAGE_ID GetId();
