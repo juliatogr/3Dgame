@@ -6,7 +6,7 @@ You are trapped in a laboratory and you must resolve the riddles to scape.
 
 ## How to Play
 
-When in the screen appear an UI with buttons, you can iteract with them with the mouse
+When in the screen appear a UI with buttons, you can iteract with them with the mouse
 
 During the game, you can move using the following keys:
 - w: forward
