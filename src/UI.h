@@ -40,7 +40,7 @@ public:
 	//si contiene un icono
 	Texture* icon;
 	
-	void RenderButtonText();
+	void RenderButtonText(int scale);
 	void RenderButtonIcon();
 
 	Button(BUTTONTYPE t, Vector4 v, std::string te);

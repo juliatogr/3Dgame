@@ -58,7 +58,7 @@ void UI::Render(Texture* texture, float x, float y, float w, float h, bool u) {
 }
 
 
-void Button::RenderButtonText()
+void Button::RenderButtonText(int scale)
 {
 	if (this->type == A) {
 		this->Render(this->Active, this->xyhw.x, this->xyhw.y, this->xyhw.z, this->xyhw.w, false);
@@ -73,7 +73,7 @@ void Button::RenderButtonText()
 		this->Render(this->Normal, this->xyhw.x, this->xyhw.y, this->xyhw.z, this->xyhw.w, false);
 	}
 	int nC = count_chars(this->text);
-	drawText(this->xyhw.x - nC * 6, this->xyhw.y - (this->xyhw.w / 10), this->text, Vector3(1, 1, 1), 2);
+	drawText(this->xyhw.x - nC * 3*scale, this->xyhw.y - (this->xyhw.w / 10), this->text, Vector3(1, 1, 1), scale);
 }
 void Button::RenderButtonIcon()
 {
@@ -145,7 +145,7 @@ void InventoryMenu::RenderMenu()
 	drawText(this->xyhw.x - nC * 6, 70, "Inventory", Vector3(1, 1, 1), 2);
 	/*Renderizamos todos los botones menos el de exit*/
 	for (int i = 0; i < this->Buttons.size() - 1; i++) {
-		this->Buttons[i]->RenderButtonText();
+		this->Buttons[i]->RenderButtonText(2);
 	}
 
 
@@ -188,10 +188,10 @@ void IntroMenu::RenderMenu()
 {
 	this->Render(this->Card, this->xyhw.x, this->xyhw.y, this->xyhw.z, this->xyhw.w, false);
 	int nC = count_chars("MJ Lab");
-	drawText(this->xyhw.x - nC * 6, 70, "MJ Lab", Vector3(1, 1, 1), 2);
+	drawText(this->xyhw.x - nC * 3*6, 70, "MJ Lab", Vector3(1, 1, 1),6);
 	/*Renderizamos todos los botones menos el de exit*/
 	for (int i = 0; i < this->Buttons.size() - 1; i++) {
-		this->Buttons[i]->RenderButtonText();
+		this->Buttons[i]->RenderButtonText(3);
 	}
 	this->Buttons[this->Buttons.size() - 1]->RenderButtonIcon();
 
@@ -217,10 +217,10 @@ void PauseMenu::RenderMenu()
 {
 	this->Render(this->Card, this->xyhw.x, this->xyhw.y, this->xyhw.z, this->xyhw.w, false);
 	int nC = count_chars("MJ Lab");
-	drawText(this->xyhw.x - nC * 6, 70, "MJ Lab", Vector3(1, 1, 1), 2);
+	drawText(this->xyhw.x - nC * 3*3, 65, "MJ Lab", Vector3(1, 1, 1), 3);
 	/*Renderizamos todos los botones menos el de exit*/
 	for (int i = 0; i < this->Buttons.size() - 1; i++) {
-		this->Buttons[i]->RenderButtonText();
+		this->Buttons[i]->RenderButtonText(3);
 	}
 	this->Buttons[this->Buttons.size() - 1]->RenderButtonIcon();
 }
@@ -238,9 +238,11 @@ TutorialMenu::TutorialMenu()
 	this->Buttons.push_back(new Button(N, Vector4(xywh.x, xywh.y, xywh.z, xywh.w), "Read"));
 	this->Buttons.push_back(new Button(N, Vector4(xywh.x, xywh.y * 2, xywh.z, xywh.w), "Play"));
 
-	this->instrucctions.push_back(Texture::Get("data/UI/Cards/Card X5.png"));
-	this->instrucctions.push_back(Texture::Get("data/UI/Cards/Card X6.png"));
-	this->instrucctions.push_back(Texture::Get("data/UI/Cards/LoadingScreen.png"));
+	this->instrucctions.push_back(Texture::Get("data/UI/Cards/Read1.png"));
+	this->instrucctions.push_back(Texture::Get("data/UI/Cards/Read2.png"));
+	this->instrucctions.push_back(Texture::Get("data/UI/Cards/Read3.png"));
+	this->instrucctions.push_back(Texture::Get("data/UI/Cards/Read4.png"));
+	this->instrucctions.push_back(Texture::Get("data/UI/Cards/Read5.png"));
 
 	int offset = 35;
 	Button* right = new Button(N, Vector4((Game::instance->window_width / 2)-offset+70, 550, 50, 50), Texture::Get("data/UI/Icons/ArrowRight.png"));
@@ -255,12 +257,12 @@ void TutorialMenu::RenderMenu()
 {
 	this->Render(this->Card, this->xyhw.x, this->xyhw.y, this->xyhw.z, this->xyhw.w, false);
 	int nC = count_chars("Tutorial");
-	drawText(this->xyhw.x - nC * 6, 70, "Tutorial", Vector3(1, 1, 1), 2);
+	drawText(20+this->xyhw.x - nC * 3*6, 70, "Tutorial", Vector3(1, 1, 1), 6);
 	//si es el menu de Tutorial con los botones play or Continue
 	if (!Game::instance->gameState->isTutorialMenu) {
 		//std::cout << "instrucctions menu" << std::endl;
 
-		Vector4 xywh = Vector4((Game::instance->window_width / 2), (Game::instance->window_height / 2) + 40, 500, 400);
+		Vector4 xywh = Vector4((Game::instance->window_width / 2), (Game::instance->window_height / 2) + 40, 500, 350);
 	
 		this->Render(this->instrucctions[Game::instance->gameState->currentInstrucction], xywh.x, xywh.y, xywh.z, xywh.w, false);
 		
@@ -272,7 +274,7 @@ void TutorialMenu::RenderMenu()
 		//std::cout << "tutorial menu" << std::endl;
 		/*Renderizamos todos los botones menos el de exit*/
 		for (int i = 0; i < this->Buttons.size() - 3; i++) {
-			this->Buttons[i]->RenderButtonText();
+			this->Buttons[i]->RenderButtonText(3);
 		}
 		
 	}
@@ -306,7 +308,7 @@ void EndingMenu::RenderMenu()
 
 	/*Renderizamos todos los botones menos el de exit*/
 	for (int i = 0; i < this->Buttons.size() - 1; i++) {
-		this->Buttons[i]->RenderButtonText();
+		this->Buttons[i]->RenderButtonText(3);
 	}
 	this->Buttons[this->Buttons.size() - 1]->RenderButtonIcon();
 
@@ -411,7 +413,7 @@ void CodeScreen::RenderCodeScreen(Code* code)
 
 
 	for (int i = 0; i < this->Buttons.size() - 2; i++) {
-		this->Buttons[i]->RenderButtonText();
+		this->Buttons[i]->RenderButtonText(2);
 	}
 
 	this->Buttons[this->Buttons.size() - 2]->RenderButtonIcon();
