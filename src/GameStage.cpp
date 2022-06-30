@@ -109,6 +109,7 @@ void PlayStage::RePlayStage()
 	Game::instance->gameState->read.push_back(new ReadNote(0));
 
 	std::vector<Develop*> newDevelop;
+	Game::instance->gameState->devs = newDevelop;
 	Game::instance->gameState->devs.push_back(new Develop(0));
 
 	Game::instance->gameState->isLoaded = true;
