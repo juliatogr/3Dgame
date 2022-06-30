@@ -59,17 +59,19 @@
     <LinkIncremental>false</LinkIncremental>
     <LibraryPath>..\libs\lib;$(LibraryPath)</LibraryPath>
     <OutDir>..\..\</OutDir>
-    <TargetName>$(ProjectName)_debug</TargetName>
+    <TargetName>$(ProjectName)</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
     <LibraryPath>..\libs\lib;$(LibraryPath)</LibraryPath>
     <OutDir>..\..\</OutDir>
+    <TargetName>$(ProjectName)</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Final|Win32'">
     <LinkIncremental>false</LinkIncremental>
     <LibraryPath>..\libs\lib;$(LibraryPath)</LibraryPath>
     <OutDir>..\..\</OutDir>
+    <TargetName>$(ProjectName)</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
