@@ -1,3 +1,16 @@
+MIEMBROS DEL EQUIPO:
+
+Mercedes Franchesca Gonzalez
+NIA: 206680
+email: mercedesfranchesca.gonzalez01@estudiant.upf.edu
+
+Júlia Tortosa
+NIA: 227215
+email: julia.tortosa01@estudiant.upf.edu
+
+Video del Juego: 
+
+
 # MJ LAB #
 
 ## Objective
@@ -37,3 +50,14 @@ If you finish the game, you can start again the game, exit the game or read agai
 ## Installation ##
 
 You only have to execute the game.exe and the the game will start
+
+
+## Spoiler ##
+
+Steps to solve the scaperoom: 
+
+    1. Read the notes
+    2. Enter the correct code on the PC (last 4 digits of the count of the number of bottles)
+    3. Take a look at the console and create the shape in it (the correct shape is visible on the console) by clicking at the buttons;
+    4. Look at the objects of the rooms
+    5. The only visible number is the correct code on the last PC.
