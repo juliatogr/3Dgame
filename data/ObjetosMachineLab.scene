@@ -200,7 +200,7 @@ TEXTURE data/MachineLab/Texturas/trashcan.png
 0.000,180.000,0.000 
 1.000,1.000,1.000
 MESH data/MachineLab/Objetos/medicalConsole.obj 
-TEXTURE data/MachineLab/Texturas/test.tga
+TEXTURE data/MachineLab/Texturas/medicalConsole.tga
 -9.800,-0.040,-2.400
 0.000,90.000,0.000 
 0.016,0.016,0.016
@@ -221,9 +221,9 @@ TEXTURE data/MachineLab/Texturas/table.tga
 0.048,0.048,0.048
 MESH data/MachineLab/Objetos/calculator1618.obj 
 TEXTURE data/MachineLab/Texturas/calculator1618.tga
--8.600,0.600,-0.200
+-8.600,0.600,-0.180
 0.000,0.000,0.000 
-0.080,0.080,0.080
+0.120,0.120,0.120
 MESH data/MachineLab/Objetos/OfficeChair.obj 
 TEXTURE data/MachineLab/Texturas/OfficeChair.tga
 -8.600,0.000,-2.400
