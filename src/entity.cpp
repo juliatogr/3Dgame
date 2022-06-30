@@ -299,7 +299,13 @@ void TaskEntity::viewToTask(Camera* cam, float seconds_elapsed) {
 	Vector3 viewEye = viewCenter + Vector3(0, 1, 0);
 	Vector3 viewUp;
 
-	viewUp.z = this->rot.y >= 180? 1 : -1;
+	viewUp.z = this->rot.y = 180? 1 : -1 ;
+	if (this->type == CONSOLE) {
+		viewUp.z = 0;
+		viewUp.y = 1;
+		viewCenter = viewCenter + Vector3(0, 0.15, 0.3);
+		viewEye = viewCenter + Vector3(-1, 0, 0);
+	}
 	if (cam->eye.x != viewEye.x || cam->eye.y != viewEye.y || cam->eye.z != viewEye.z) {
 		cam->lookAt(viewEye, viewCenter, viewUp);
 
