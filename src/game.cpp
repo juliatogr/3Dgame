@@ -353,7 +353,7 @@ void Game::onMouseButtonDown(SDL_MouseButtonEvent event)
 			DevelopScreen* dev = playStage->devUI;
 			/*Que ocurre si se da click a un boton de la tarea codigo*/
 			if (state->DevUiActive) {
-				Code* currentCode;
+				Develop* currentCode;
 
 				for (int i = 0; i < state->devs.size(); i++) {
 					if (state->devs[i]->isActive == true) {
@@ -386,7 +386,6 @@ void Game::onMouseButtonDown(SDL_MouseButtonEvent event)
 						currentCode->isCompleted = true;
 						//std::cout << "UIACTIVE: Enter Correct" << std::endl;
 						//si esta la clave correcta se abre la puerta correspondiente
-						currentCode->OpenDoors();
 
 					}
 					else {
@@ -398,13 +397,13 @@ void Game::onMouseButtonDown(SDL_MouseButtonEvent event)
 					enter->type = N;
 				}
 
-				Button* exit = code->Buttons[code->Buttons.size() - 2];
+				Button* exit = dev->Buttons[dev->Buttons.size() - 2];
 				/* y esta en hover el boton de salida*/
 				if (exit->type == H) {
 					//std::cout << "UIACTIVE: Exit" << std::endl;
 					/*se cierra la CodeUI*/
 					currentCode->test = "";
-					state->CodeUiActive = false;
+					state->DevUiActive = false;
 
 
 					exit->type = N;

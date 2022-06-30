@@ -451,9 +451,9 @@ DevelopScreen::DevelopScreen(Lab* lab)
 
 }
 
-void DevelopScreen::RenderDevelopScreen(Code* code)
+void DevelopScreen::RenderDevelopScreen(Develop* code)
 {
-	
+	//this->Render(this->bg, this->xyhw.x, this->xyhw.y, this->xyhw.z, this->xyhw.w, false);
 	int nC = count_chars("Introduce un numero de 4 Digitos");
 	drawText(this->xyhw.x - nC * 6, 135, "Introduce un numero de 4 Digitos", Vector3(1, 1, 1), 2);
 	nC = count_chars(code->test.c_str());

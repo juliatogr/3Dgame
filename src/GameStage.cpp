@@ -86,7 +86,7 @@ PlayStage::PlayStage()
 	Game::instance->gameState->read.push_back(new ReadNote(0, lab->doors[0], lab->doors[1]));
 	Game::instance->gameState->read.push_back(new ReadNote(0));
 
-	Game::instance->gameState->devs.push_back(new Code(0, "1234"));
+	Game::instance->gameState->devs.push_back(new Develop(0, "1234"));
 }
 
 void PlayStage::RePlayStage()
@@ -109,7 +109,7 @@ void PlayStage::RePlayStage()
 	Game::instance->gameState->read.push_back(new ReadNote(0));
 
 	std::vector<Develop*> newDevelop;
-	Game::instance->gameState->devs.push_back(new Code(0, "1234"));
+	Game::instance->gameState->devs.push_back(new Develop(0, "1234"));
 
 	Game::instance->gameState->isLoaded = true;
 
@@ -324,19 +324,19 @@ void PlayStage::Update(double seconds_elapsed, boolean cameralocked, float speed
 
 				if (Input::isKeyPressed(SDL_SCANCODE_E)) {
 					this->pum[2]->isActive = false;
-					state->CodeUiActive = true;
 					if (state->codes[this->selectedTaskEntity->id]->isCompleted == true) {
 						state->currentTaskId = this->selectedTaskEntity->id + 1;
 						state->codes[this->selectedTaskEntity->id + 1]->isActive = true;
 
 					}
 					else {
+						state->CodeUiActive = true;
 						state->codes[this->selectedTaskEntity->id]->isActive = true;
 						state->currentTaskId = this->selectedTaskEntity->id;
 
 					}
 				}
-				else {
+				else if (state->codes[this->selectedTaskEntity->id]->isCompleted == false) {
 					this->pum[2]->isActive = true;
 					//std::cout << "Push E to view the object " << this->pum[2]->isActive << std::endl;
 				}
@@ -345,23 +345,23 @@ void PlayStage::Update(double seconds_elapsed, boolean cameralocked, float speed
 			else if (this->selectedTaskEntity->type == CONSOLE) {
 
 				if (Input::isKeyPressed(SDL_SCANCODE_E)) {
-					this->selectedTaskEntity->isViewing = true;
-					isViewingTask = true;
-					this->selectedTaskEntity->viewToTask(camera, seconds_elapsed);
 					this->pum[2]->isActive = false;
-					state->DevUiActive = true;
 					if (state->devs[this->selectedTaskEntity->id]->isCompleted == true) {
-						state->currentTaskId = this->selectedTaskEntity->id + 1;
-						state->devs[this->selectedTaskEntity->id + 1]->isActive = true;
+						//state->currentTaskId = this->selectedTaskEntity->id + 1;
+						//state->devs[this->selectedTaskEntity->id + 1]->isActive = true;
 
 					}
 					else {
+						this->selectedTaskEntity->isViewing = true;
+						isViewingTask = true;
+						this->selectedTaskEntity->viewToTask(camera, seconds_elapsed);
+						state->DevUiActive = true;
 						state->devs[this->selectedTaskEntity->id]->isActive = true;
 						state->currentTaskId = this->selectedTaskEntity->id;
 
 					}
 				}
-				else {
+				else if (state->devs[this->selectedTaskEntity->id]->isCompleted == false) {
 					this->pum[2]->isActive = true;
 					//std::cout << "Push E to view the object " << this->pum[2]->isActive << std::endl;
 				}

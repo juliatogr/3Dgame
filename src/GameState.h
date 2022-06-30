@@ -20,7 +20,7 @@ public:
 
 	std::vector<Code*> codes;
 	std::vector<ReadNote*> read;
-	std::vector<Code*> devs;
+	std::vector<Develop*> devs;
 	int currentTaskId;
 	int currentInstrucction;
 

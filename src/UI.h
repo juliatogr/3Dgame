@@ -166,6 +166,6 @@ public:
 	Vector4 xyhw;
 
 	DevelopScreen(Lab* lab);
-	void RenderDevelopScreen(Code* code);
+	void RenderDevelopScreen(Develop* code);
 
 };
