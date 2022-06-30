@@ -10,6 +10,7 @@ public:
 	bool UIActive;
 	bool OpenInventory;
 	bool CodeUiActive;
+	bool DevUiActive;
 	bool PauseMenu;
 	bool isFinished;
 	bool isLoaded;
@@ -19,6 +20,7 @@ public:
 
 	std::vector<Code*> codes;
 	std::vector<ReadNote*> read;
+	std::vector<Develop*> devs;
 	int currentTaskId;
 	int currentInstrucction;
 

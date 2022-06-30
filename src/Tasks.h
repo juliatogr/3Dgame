@@ -5,7 +5,8 @@
 
 enum TASK_ID {
 	CODE,
-	READ
+	READ,
+	DEVELOP
 };
 class Task
 {
@@ -24,6 +25,7 @@ public:
 	Door* door2;
 	int nD;
 
+	Code(int id, std::string o);
 	Code(int id, std::string o, Door* d1, Door* d2);
 	Code(int id, std::string  o, Door* d);
 	void OpenDoors();
@@ -38,4 +40,12 @@ public:
 	ReadNote(int id, Door* d1);
 	ReadNote(int id, Door* d1, Door* d2);
 	void OpenDoors();
+};
+
+class Develop : public Task {
+public:
+	std::string obj;
+	std::string test;
+
+	Develop(int id, std::string o);
 };

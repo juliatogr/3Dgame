@@ -158,3 +158,13 @@ public:
 	void RenderCodeScreen(Code* code);
 
 };
+
+class DevelopScreen : public UI {
+public:
+	std::vector<Button*> Buttons;
+	Vector4 xyhw;
+
+	DevelopScreen(Lab* lab);
+	void RenderDevelopScreen(Develop* code);
+
+};

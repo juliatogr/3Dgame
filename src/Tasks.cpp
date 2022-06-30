@@ -25,6 +25,17 @@ Code::Code(int id, std::string o, Door* d)
 	this->nD = 1;
 }
 
+Code::Code(int id, std::string o)
+{
+	this->ID = id;
+	this->obj = o;
+	this->test = "";
+	this->type = CODE;
+	this->isCompleted = false;
+	this->isActive = false;
+	this->nD = 0;
+}
+
 void Code::OpenDoors()
 {
 	if (this->nD == 2) {
@@ -81,4 +92,15 @@ void ReadNote::OpenDoors()
 		std::cout << "doo1" << std::endl;
 
 	}
+}
+
+
+Develop::Develop(int id, std::string o)
+{
+	this->ID = id;
+	this->obj = o;
+	this->test = "";
+	this->type = DEVELOP;
+	this->isCompleted = false;
+	this->isActive = false;
 }

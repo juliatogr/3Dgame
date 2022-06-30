@@ -1,4 +1,4 @@
-Entities 48
+Entities 47
 MESH data/MachineLab/Objetos/cables.obj 
 TEXTURE data/MachineLab/Texturas/cables.tga
 -10.140,0.600,-5.700
@@ -114,11 +114,6 @@ TEXTURE data/MachineLab/Texturas/Internet_Server.tga
 -8.400,0.900,-0.800
 0.000,180.000,0.000 
 0.040,0.040,0.040
-MESH data/MachineLab/Objetos/medicalConsole.obj 
-TEXTURE data/MachineLab/Texturas/medicalConsole.tga
--9.800,-0.040,-2.400
-0.000,90.000,0.000 
-0.016,0.016,0.016
 MESH data/MachineLab/Objetos/rackServerDalam.obj 
 TEXTURE data/MachineLab/Texturas/rackServerDalam.tga
 -8.400,0.840,6.600
@@ -204,11 +199,11 @@ TEXTURE data/MachineLab/Texturas/trashcan.png
 -12.600,0.000,-5.720
 0.000,180.000,0.000 
 1.000,1.000,1.000
-MESH data/MachineLab/Objetos/table.obj 
-TEXTURE data/MachineLab/Texturas/table.tga
--8.400,0.600,-2.000
+MESH data/MachineLab/Objetos/medicalConsole.obj 
+TEXTURE data/MachineLab/Texturas/medicalConsole.tga
+-9.800,-0.040,-2.400
 0.000,90.000,0.000 
-0.048,0.048,0.048
+0.016,0.016,0.016
 MESH data/MachineLab/Objetos/table.obj 
 TEXTURE data/MachineLab/Texturas/table.tga
 -8.400,0.600,-1.000

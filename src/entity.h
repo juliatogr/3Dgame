@@ -25,7 +25,8 @@ public:
 };
 enum TASKTYPE {
 	NOTE,
-	PC
+	PC,
+	CONSOLE
 
 };
 
@@ -58,7 +59,12 @@ class Computer : public TaskEntity {
 public:
 	bool isShowing;
 	Computer(Entity* e, int i);
-	void Show(Shader* a_shader, Camera* cam);
+};
+
+class Console : public TaskEntity {
+public:
+	bool isShowing;
+	Console(Entity* e, int i);
 };
 class Ground : public Entity {
 public:

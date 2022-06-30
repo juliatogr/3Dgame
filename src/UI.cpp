@@ -365,7 +365,20 @@ char* codeButton(int i) {
 		return "8";
 	}if (i == 9) {
 		return "9";
+	}if (i == 10) {
+		return "10";
+	}if (i == 11) {
+		return "11";
+	}if (i == 12) {
+		return "12";
+	}if (i == 13) {
+		return "13";
+	}if (i == 14) {
+		return "14";
 	}
+
+
+
 }
 
 CodeScreen::CodeScreen(Lab* lab)
@@ -416,6 +429,49 @@ void CodeScreen::RenderCodeScreen(Code* code)
 	for (int i = 0; i < this->Buttons.size() - 2; i++) {
 		this->Buttons[i]->RenderButtonText(2);
 	}
+
+	this->Buttons[this->Buttons.size() - 2]->RenderButtonIcon();
+	this->Buttons[this->Buttons.size() - 1]->RenderButtonIcon();
+
+
+}
+
+
+DevelopScreen::DevelopScreen(Lab* lab)
+{
+	this->xyhw = Vector4(Game::instance->window_width / 2, Game::instance->window_height / 2, Game::instance->window_width + 50, Game::instance->window_height);
+
+
+	Vector4 xywh = Vector4(580, 352, 25, 55);
+	int r = 7;
+	int c = 2;
+	int co = 1;
+	for (int i = 0; i < r; i++) {
+		for (int j = 0; j < c; j++) {
+
+			this->Buttons.push_back(new Button(N, Vector4(xywh.x + (i * xywh.z), xywh.y + (j * xywh.w), xywh.z, xywh.w), codeButton(co)));
+			co++;
+		}
+	}
+
+	Button* exit = new Button(N, Vector4(75, 60, 50, 50), Texture::Get("data/UI/Icons/21.png"));
+	this->Buttons.push_back(exit);
+	//std::cout << "exit pos: " << this->Buttons.size() << std::endl;
+	Button* enter = new Button(N, Vector4(Game::instance->window_width / 2, 550, 50, 50), Texture::Get("data/UI/Icons/30.png"));
+	this->Buttons.push_back(enter);
+	//std::cout << "code butons size: " << this->Buttons.size() << std::endl;
+
+}
+
+void DevelopScreen::RenderDevelopScreen(Develop* code)
+{
+	//int nC = count_chars(code->test.c_str());
+	//drawText(this->xyhw.x - nC * 6, 70, code->test, Vector3(1, 1, 1), 2);
+
+
+	//for (int i = 0; i < this->Buttons.size() - 2; i++) {
+	//	this->Buttons[i]->RenderButtonText(2);
+	//}
 
 	this->Buttons[this->Buttons.size() - 2]->RenderButtonIcon();
 	this->Buttons[this->Buttons.size() - 1]->RenderButtonIcon();
