@@ -8,7 +8,7 @@ Júlia Tortosa
 NIA: 227215
 email: julia.tortosa01@estudiant.upf.edu
 
-Video del Juego: 
+Video del Juego: https://youtu.be/Slb49xdGPVI
 
 
 # MJ LAB #
