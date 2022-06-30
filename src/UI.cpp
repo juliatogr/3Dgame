@@ -390,8 +390,8 @@ CodeScreen::CodeScreen(Lab* lab)
 	int r = 3;
 	int c = 3;
 	int co = 1;
-	for (int i = 0; i < r; i++) {
-		for (int j = 0; j < c; j++) {
+	for (int j = 0; j < c; j++)  {
+		for (int i = 0; i < r; i++) {
 
 			this->Buttons.push_back(new Button(N, Vector4(xywh.x + (i * xywh.z), xywh.y + (j * xywh.w), xywh.z, xywh.w), codeButton(co)));
 			co++;
