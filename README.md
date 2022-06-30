@@ -13,8 +13,8 @@ Video del Juego:
 
 # MJ LAB #
 
-![GameScreen](/Capturas/GameScreen.png)
-![IntroScreen](/Capturas/IntroScreen.png)
+![GameScreen](/Capturas/GameScreen.PNG)
+![IntroScreen](/Capturas/IntroScreen.PNG)
 
 
 ## Objective
