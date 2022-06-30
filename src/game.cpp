@@ -96,27 +96,23 @@ void InitStages(GameState* state, Shader* shader, Camera* camera) {
 }
 
 
-//SDL_GetTicks();
-
-void PlayGameSound(const char* filename) {
-
-	//El handler para un sample
-	HSAMPLE hSample;
-
-	//El handler para un canal
-	HCHANNEL hSampleChannel;
-
-	//Cargamos un sample del disco duro (memoria, filename, offset, length, max, flags)
+HSAMPLE LoadSample(const char* fileName) {
 	//use BASS_SAMPLE_LOOP in the last param to have a looped sound
-	hSample = BASS_SampleLoad(false, filename, 0, 0, 3, 0);
+	HSAMPLE hSample = BASS_SampleLoad(false, fileName, 0, 0, 3, 0);
 	if (hSample == 0)
 	{
-		//file not found
+		std::cout << "ERROR load" << fileName << std::endl;
 	}
+	std::cout << " + AUDIO load " << fileName << std::endl;
+	return hSample;
+}
 
-	//Creamos un canal para el sample
+void PlayGameSound(const char* fileName) {
+	
+	HSAMPLE hSample = LoadSample(fileName);
+
+	HCHANNEL hSampleChannel;
 	hSampleChannel = BASS_SampleGetChannel(hSample, false);
-
 
 	//Lanzamos un sample
 	BASS_ChannelPlay(hSampleChannel, true);
@@ -164,7 +160,7 @@ Game::Game(int window_width, int window_height, SDL_Window* window)
 	{
 		std::cout << "Error inicializando audio" << std::endl;
 	}
-
+	PlayGameSound("data/Sound/Fondo/Intro.mp3");
 }
 
 
@@ -204,6 +200,8 @@ void Game::render(void)
 
 	//swap between front buffer and back buffer
 	SDL_GL_SwapWindow(this->window);
+
+	
 }
 
 
