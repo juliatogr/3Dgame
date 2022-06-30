@@ -38,7 +38,7 @@ To do that, you must resolve the riddles to obtain the codes and open the doors.
 
 In the IntroStage and Endstage, you can close the game with the following button:
 
-![CloseButton](/data/ReadmeImages/closebutton.png)
+![CloseButton](/Capturas/closebutton.png)
 
 Also, in the inventory menu, if you had saved previously a note, if you click in its respective button, you can read the note from the inventory
 
