@@ -365,7 +365,20 @@ char* codeButton(int i) {
 		return "8";
 	}if (i == 9) {
 		return "9";
+	}if (i == 10) {
+		return "10";
+	}if (i == 11) {
+		return "11";
+	}if (i == 12) {
+		return "12";
+	}if (i == 13) {
+		return "13";
+	}if (i == 14) {
+		return "14";
 	}
+
+
+
 }
 
 CodeScreen::CodeScreen(Lab* lab)
@@ -430,9 +443,9 @@ DevelopScreen::DevelopScreen(Lab* lab)
 	this->xyhw = Vector4(Game::instance->window_width / 2, Game::instance->window_height / 2, Game::instance->window_width + 50, Game::instance->window_height);
 
 
-	Vector4 xywh = Vector4(300, 250, 100, 100);
-	int r = 3;
-	int c = 3;
+	Vector4 xywh = Vector4(580, 352, 25, 55);
+	int r = 7;
+	int c = 2;
 	int co = 1;
 	for (int i = 0; i < r; i++) {
 		for (int j = 0; j < c; j++) {
