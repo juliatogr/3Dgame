@@ -44,8 +44,8 @@ public:
 
 class Develop : public Task {
 public:
-	std::string obj;
-	std::string test;
+	
 
-	Develop(int id, std::string o);
+	Develop(int id);
+	
 };

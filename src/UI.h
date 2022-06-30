@@ -33,6 +33,7 @@ public:
 	Texture* Disabled;
 	Texture* Hover;
 	Texture* Normal;
+	bool activated;
 	BUTTONTYPE type;
 	Vector4 xyhw;
 	//si contiene texto
@@ -163,8 +164,10 @@ class DevelopScreen : public UI {
 public:
 	std::vector<Button*> Buttons;
 	Vector4 xyhw;
+	std::vector<bool> correctActives;
 
 	DevelopScreen(Lab* lab);
 	void RenderDevelopScreen(Develop* code);
+	bool isCorrect(std::vector<Button*> buttons);
 
 };

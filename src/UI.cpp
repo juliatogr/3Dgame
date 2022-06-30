@@ -103,6 +103,7 @@ Button::Button(BUTTONTYPE t, Vector4 v, std::string te)
 	this->type = t;
 	this->xyhw = v;
 	this->text = te;
+	this->activated = false;
 
 }
 
@@ -115,6 +116,7 @@ Button::Button(BUTTONTYPE t, Vector4 v, Texture* i)
 	this->type = t;
 	this->xyhw = v;
 	this->icon = i;
+	this->activated = false;
 }
 
 InventoryMenu::InventoryMenu()
@@ -454,24 +456,68 @@ DevelopScreen::DevelopScreen(Lab* lab)
 	Button* exit = new Button(N, Vector4(75, 60, 50, 50), Texture::Get("data/UI/Icons/21.png"));
 	this->Buttons.push_back(exit);
 	//std::cout << "exit pos: " << this->Buttons.size() << std::endl;
-	Button* enter = new Button(N, Vector4(Game::instance->window_width / 2, 550, 50, 50), Texture::Get("data/UI/Icons/30.png"));
-	this->Buttons.push_back(enter);
-	//std::cout << "code butons size: " << this->Buttons.size() << std::endl;
 
+	for (int i = 0; i < 14; i++) {
+
+		if (i == 0 || i == 3 || i == 5 || i == 6 || i == 9 || i == 11 || i == 12) {
+			this->correctActives.push_back(true);
+		}
+		else {
+			this->correctActives.push_back(false);
+		}
+		
+	}
 }
 
 void DevelopScreen::RenderDevelopScreen(Develop* code)
 {
 	std::string text = "Not the"; 
 	drawText(100, 250, text, Vector3(1, 1, 1), 2);
-
 	text = "correct";
 	drawText(100, 275, text, Vector3(1, 1, 1), 2);
 	text = "shape";
 	drawText(100, 300, text, Vector3(1, 1, 1), 2);
 
+	for (int j = 0; j < this->Buttons.size(); j++) {
 
-	for (int i = 0; i < code->test.size(); i++) {
+		if (this->Buttons[j]->activated) {
+			int initx = 570;
+			int offsetx = 25;
+			int inity = 230;
+			int offsety = 40;
+			int sumx = 0;
+
+
+			std::string txt = this->Buttons[j]->text;
+
+			if (txt == "2" || txt == "4" || txt == "6" || txt == "8" || txt == "A" || txt == "C" || txt == "E") {
+				inity += offsety;
+			}
+
+			if (txt == "3" || txt == "4") {
+				sumx += 1;
+			}
+			if (txt == "5" || txt == "6") {
+				sumx += 2;
+			}
+			else if (txt == "7" || txt == "8") {
+				sumx += 3;
+			}
+			else if (txt == "9" || txt == "A") {
+				sumx += 4;
+			}
+			else if (txt == "B" || txt == "C") {
+				sumx += 5;
+			}
+			else if (txt == "D" || txt == "E") {
+				sumx += 6;
+			}
+			drawText(initx + offsetx * sumx, inity, "X", Vector3(1, 1, 1), 2);
+		}
+
+	}
+
+	/*for (int i = 0; i < code->test.size(); i++) {
 		std::string c = code->test.substr(i, 1);
 		int initx = 570;
 		int offsetx = 25;
@@ -501,12 +547,21 @@ void DevelopScreen::RenderDevelopScreen(Develop* code)
 		
 		drawText(initx + offsetx * sumx, inity, "X", Vector3(1, 1, 1), 2);
 		
-	}
+	}*/
 
-	this->Buttons[this->Buttons.size() - 2]->RenderButtonIcon();
 	this->Buttons[this->Buttons.size() - 1]->RenderButtonIcon();
 
 
+}
+bool DevelopScreen::isCorrect(std::vector<Button*> buttons)
+{
+	bool correct = true;
+	for (int i = 0; i < this->correctActives.size(); i++) {
+		if (this->correctActives[i] != buttons[i]->activated) {
+			correct = false;
+		}
+	}
+	return correct;
 }
 
 LoadScreen::LoadScreen()
