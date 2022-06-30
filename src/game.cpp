@@ -376,6 +376,10 @@ void Game::onMouseButtonDown(SDL_MouseButtonEvent event)
 					state->DevUiActive = false;
 					currentCode->isActive = false;
 					currentCode->isCompleted = true;
+
+					for (int i = 0; i < dev->Buttons.size(); i++) {
+						dev->Buttons[i]->activated = false;
+					}
 				}
 
 				Button* exit = dev->Buttons[dev->Buttons.size() - 1];
