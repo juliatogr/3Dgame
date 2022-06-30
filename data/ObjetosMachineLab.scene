@@ -200,7 +200,7 @@ TEXTURE data/MachineLab/Texturas/trashcan.png
 0.000,180.000,0.000 
 1.000,1.000,1.000
 MESH data/MachineLab/Objetos/medicalConsole.obj 
-TEXTURE data/MachineLab/Texturas/medicalConsole.tga
+TEXTURE data/MachineLab/Texturas/test.tga
 -9.800,-0.040,-2.400
 0.000,90.000,0.000 
 0.016,0.016,0.016

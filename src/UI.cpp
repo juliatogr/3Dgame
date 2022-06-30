@@ -366,19 +366,16 @@ char* codeButton(int i) {
 	}if (i == 9) {
 		return "9";
 	}if (i == 10) {
-		return "10";
+		return "A";
 	}if (i == 11) {
-		return "11";
+		return "B";
 	}if (i == 12) {
-		return "12";
+		return "C";
 	}if (i == 13) {
-		return "13";
+		return "D";
 	}if (i == 14) {
-		return "14";
+		return "E";
 	}
-
-
-
 }
 
 CodeScreen::CodeScreen(Lab* lab)
@@ -465,13 +462,46 @@ DevelopScreen::DevelopScreen(Lab* lab)
 
 void DevelopScreen::RenderDevelopScreen(Develop* code)
 {
-	//int nC = count_chars(code->test.c_str());
-	//drawText(this->xyhw.x - nC * 6, 70, code->test, Vector3(1, 1, 1), 2);
+	std::string text = "Not the"; 
+	drawText(100, 250, text, Vector3(1, 1, 1), 2);
+
+	text = "correct";
+	drawText(100, 275, text, Vector3(1, 1, 1), 2);
+	text = "shape";
+	drawText(100, 300, text, Vector3(1, 1, 1), 2);
 
 
-	//for (int i = 0; i < this->Buttons.size() - 2; i++) {
-	//	this->Buttons[i]->RenderButtonText(2);
-	//}
+	for (int i = 0; i < code->test.size(); i++) {
+		std::string c = code->test.substr(i, 1);
+		int initx = 570;
+		int offsetx = 25;
+		int inity = 230;
+		int offsety = 40;
+		int sumx = 0;
+
+		if (c == "2" || c == "4" || c == "6" || c == "8" || c == "A" || c == "C" || c == "E") {
+			inity += offsety;
+		}
+
+		if (c == "3" || c == "4") {
+			sumx += 1;
+		}
+		if (c == "5" || c == "6") {
+			sumx += 2;
+		} else if (c == "7" || c == "8") {
+			sumx += 3;
+		} else if (c == "9" || c == "A") {
+			sumx += 4;
+		} else if (c == "B" || c == "C") {
+			sumx += 5;
+		} else if (c == "D" || c == "E") {
+			sumx += 6;
+		}
+
+		
+		drawText(initx + offsetx * sumx, inity, "X", Vector3(1, 1, 1), 2);
+		
+	}
 
 	this->Buttons[this->Buttons.size() - 2]->RenderButtonIcon();
 	this->Buttons[this->Buttons.size() - 1]->RenderButtonIcon();

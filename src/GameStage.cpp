@@ -86,7 +86,7 @@ PlayStage::PlayStage()
 	Game::instance->gameState->read.push_back(new ReadNote(0, lab->doors[0], lab->doors[1]));
 	Game::instance->gameState->read.push_back(new ReadNote(0));
 
-	Game::instance->gameState->devs.push_back(new Develop(0, "1467101213"));
+	Game::instance->gameState->devs.push_back(new Develop(0, "1467ACD"));
 }
 
 void PlayStage::RePlayStage()
@@ -109,7 +109,7 @@ void PlayStage::RePlayStage()
 	Game::instance->gameState->read.push_back(new ReadNote(0));
 
 	std::vector<Develop*> newDevelop;
-	Game::instance->gameState->devs.push_back(new Develop(0, "1467101213"));
+	Game::instance->gameState->devs.push_back(new Develop(0, "1467ACD"));
 
 	Game::instance->gameState->isLoaded = true;
 
