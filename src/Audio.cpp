@@ -50,9 +50,9 @@ HSAMPLE Audio::LoadSample(const char* fileName, bool isLooped) {
 	return hSample;
 }
 
-void Audio::PlayGameSound(const char* fileName) {
+void Audio::PlayGameSound(const char* fileName, bool isLooped) {
 
-	HSAMPLE hSample = LoadSample(fileName);
+	HSAMPLE hSample = LoadSample(fileName, isLooped);
 
 	HCHANNEL hSampleChannel;
 	hSampleChannel = BASS_SampleGetChannel(hSample, false);

@@ -19,6 +19,6 @@ public:
 	static HCHANNEL* Play(const char* filename); //version estática para ir mas rapido
 
 	HSAMPLE LoadSample(const char* fileName, bool isLooped);
-	void PlayGameSound(const char* fileName);
+	void PlayGameSound(const char* fileName, bool isLooped);
 };
 
