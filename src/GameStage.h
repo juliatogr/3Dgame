@@ -6,6 +6,7 @@
 #include "entity.h"
 #include "Player.h"
 #include "UI.h"
+#include "Audio.h"
 
 
 enum STAGE_ID {
@@ -18,6 +19,7 @@ enum STAGE_ID {
 
 class Stage {
 public:
+	Audio* audio;
 	Menu* menu;
 	virtual STAGE_ID GetId() = 0;
 	virtual void Render(Shader* a_shader, Camera* cam) = 0;

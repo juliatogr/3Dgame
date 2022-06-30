@@ -134,8 +134,7 @@ Game::Game(int window_width, int window_height, SDL_Window* window)
 	//hide the cursor
 	SDL_ShowCursor(!mouse_locked); //hide or show the mouse
 
-	// init Audio;
-	audio = new Audio();
+	
 }
 
 

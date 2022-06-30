@@ -68,6 +68,8 @@ STAGE_ID PlayStage::GetId()
 
 PlayStage::PlayStage()
 {
+	this->audio = new Audio();
+
 	this->lab = new Lab();
 	this->player = new Player();
 	this->invMenu = new InventoryMenu();
@@ -553,6 +555,7 @@ STAGE_ID IntroStage::GetId()
 
 IntroStage::IntroStage()
 {
+	this->audio = new Audio();
 	this->menu = new IntroMenu();
 }
 
@@ -570,6 +573,11 @@ void IntroStage::Render(Shader* a_shader, Camera* cam)
 
 void IntroStage::Update(double seconds_elapsed, boolean cameralocked, float speed, Shader* a_shader, Camera* camera, bool mouse_locked)
 {
+	if (!this->audio->isPlaying) {
+		this->audio->PlayGameSound("data/Sound/Fondo/Intro.mp3", true);
+		this->audio->isPlaying = true;
+	}
+
 	SDL_ShowCursor(true);
 
 	PickButton(this->menu->Buttons);
@@ -577,7 +585,7 @@ void IntroStage::Update(double seconds_elapsed, boolean cameralocked, float spee
 
 TutorialStage::TutorialStage()
 {
-
+	this->audio = new Audio();
 	this->menu = new TutorialMenu();
 
 }
@@ -608,6 +616,11 @@ void TutorialStage::Render(Shader* a_shader, Camera* cam)
 
 void TutorialStage::Update(double seconds_elapsed, boolean cameralocked, float speed, Shader* a_shader, Camera* camera, bool mouse_locked)
 {
+	if (!this->audio->isPlaying) {
+		this->audio->PlayGameSound("data/Sound/Fondo/FondoStagesTutorialEnd.wav", true);
+		this->audio->isPlaying = true;
+	}
+
 	SDL_ShowCursor(true);
 
 	PickButton(this->menu->Buttons);
@@ -615,6 +628,7 @@ void TutorialStage::Update(double seconds_elapsed, boolean cameralocked, float s
 
 EndStage::EndStage()
 {
+	this->audio = new Audio();
 	this->menu = new EndingMenu();
 }
 
@@ -639,6 +653,11 @@ void EndStage::Render(Shader* a_shader, Camera* cam)
 
 void EndStage::Update(double seconds_elapsed, boolean cameralocked, float speed, Shader* a_shader, Camera* camera, bool mouse_locked)
 {
+	if (!this->audio->isPlaying) {
+		this->audio->PlayGameSound("data/Sound/Fondo/FondoStagesTutorialEnd.wav", true);
+		this->audio->isPlaying = true;
+	}
+
 	SDL_ShowCursor(true);
 
 	PickButton(this->menu->Buttons);

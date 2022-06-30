@@ -36,8 +36,7 @@ public:
 
 	/*GameState*/
 	GameState* gameState;
-	/*Audio*/
-	Audio* audio;
+	
 
 	Game( int window_width, int window_height, SDL_Window* window );
 
