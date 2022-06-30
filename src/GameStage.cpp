@@ -86,7 +86,7 @@ PlayStage::PlayStage()
 	Game::instance->gameState->read.push_back(new ReadNote(0, lab->doors[0], lab->doors[1]));
 	Game::instance->gameState->read.push_back(new ReadNote(0));
 
-	Game::instance->gameState->devs.push_back(new Develop(0, "1234"));
+	Game::instance->gameState->devs.push_back(new Develop(0, "1467101213"));
 }
 
 void PlayStage::RePlayStage()
@@ -109,7 +109,7 @@ void PlayStage::RePlayStage()
 	Game::instance->gameState->read.push_back(new ReadNote(0));
 
 	std::vector<Develop*> newDevelop;
-	Game::instance->gameState->devs.push_back(new Develop(0, "1234"));
+	Game::instance->gameState->devs.push_back(new Develop(0, "1467101213"));
 
 	Game::instance->gameState->isLoaded = true;
 
@@ -324,20 +324,28 @@ void PlayStage::Update(double seconds_elapsed, boolean cameralocked, float speed
 
 				if (Input::isKeyPressed(SDL_SCANCODE_E)) {
 					this->pum[2]->isActive = false;
+
 					if (state->codes[this->selectedTaskEntity->id]->isCompleted == true) {
 						state->currentTaskId = this->selectedTaskEntity->id + 1;
 						state->codes[this->selectedTaskEntity->id + 1]->isActive = true;
 
 					}
 					else {
-						state->CodeUiActive = true;
-						state->codes[this->selectedTaskEntity->id]->isActive = true;
-						state->currentTaskId = this->selectedTaskEntity->id;
+						if (this->selectedTaskEntity->id == 0 || (this->selectedTaskEntity->id == 1 && state->devs[0]->isCompleted)) {
+							state->CodeUiActive = true;
+							state->codes[this->selectedTaskEntity->id]->isActive = true;
+							state->currentTaskId = this->selectedTaskEntity->id;
+						}
+
 
 					}
 				}
 				else if (state->codes[this->selectedTaskEntity->id]->isCompleted == false) {
-					this->pum[2]->isActive = true;
+
+					if (this->selectedTaskEntity->id == 0 || (this->selectedTaskEntity->id == 1 && state->devs[0]->isCompleted)) {
+						this->pum[2]->isActive = true;
+					}
+					
 					//std::cout << "Push E to view the object " << this->pum[2]->isActive << std::endl;
 				}
 			}
@@ -347,8 +355,7 @@ void PlayStage::Update(double seconds_elapsed, boolean cameralocked, float speed
 				if (Input::isKeyPressed(SDL_SCANCODE_E)) {
 					this->pum[2]->isActive = false;
 					if (state->devs[this->selectedTaskEntity->id]->isCompleted == true) {
-						//state->currentTaskId = this->selectedTaskEntity->id + 1;
-						//state->devs[this->selectedTaskEntity->id + 1]->isActive = true;
+						//state->codes[1]->isActive = true;
 
 					}
 					else {

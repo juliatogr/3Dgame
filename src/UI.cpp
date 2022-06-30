@@ -439,7 +439,6 @@ void CodeScreen::RenderCodeScreen(Code* code)
 
 DevelopScreen::DevelopScreen(Lab* lab)
 {
-	this->bg = Texture::Get("data/UI/HologramInterface/Card X1/Card X1.png");
 	this->xyhw = Vector4(Game::instance->window_width / 2, Game::instance->window_height / 2, Game::instance->window_width + 50, Game::instance->window_height);
 
 
@@ -455,10 +454,10 @@ DevelopScreen::DevelopScreen(Lab* lab)
 		}
 	}
 
-	Button* exit = new Button(N, Vector4(75, 60, 50, 50), Texture::Get("data/UI/HologramInterface/Icons/21.png"));
+	Button* exit = new Button(N, Vector4(75, 60, 50, 50), Texture::Get("data/UI/Icons/21.png"));
 	this->Buttons.push_back(exit);
 	//std::cout << "exit pos: " << this->Buttons.size() << std::endl;
-	Button* enter = new Button(N, Vector4(Game::instance->window_width / 2, 550, 50, 50), Texture::Get("data/UI/HologramInterface/Icons/30.png"));
+	Button* enter = new Button(N, Vector4(Game::instance->window_width / 2, 550, 50, 50), Texture::Get("data/UI/Icons/30.png"));
 	this->Buttons.push_back(enter);
 	//std::cout << "code butons size: " << this->Buttons.size() << std::endl;
 
@@ -466,16 +465,13 @@ DevelopScreen::DevelopScreen(Lab* lab)
 
 void DevelopScreen::RenderDevelopScreen(Develop* code)
 {
-	//this->Render(this->bg, this->xyhw.x, this->xyhw.y, this->xyhw.z, this->xyhw.w, false);
-	int nC = count_chars("Introduce un numero de 4 Digitos");
-	drawText(this->xyhw.x - nC * 6, 135, "Introduce un numero de 4 Digitos", Vector3(1, 1, 1), 2);
-	nC = count_chars(code->test.c_str());
-	drawText(this->xyhw.x - nC * 6, 70, code->test, Vector3(1, 1, 1), 2);
+	//int nC = count_chars(code->test.c_str());
+	//drawText(this->xyhw.x - nC * 6, 70, code->test, Vector3(1, 1, 1), 2);
 
 
-	for (int i = 0; i < this->Buttons.size() - 2; i++) {
-		this->Buttons[i]->RenderButtonText(2);
-	}
+	//for (int i = 0; i < this->Buttons.size() - 2; i++) {
+	//	this->Buttons[i]->RenderButtonText(2);
+	//}
 
 	this->Buttons[this->Buttons.size() - 2]->RenderButtonIcon();
 	this->Buttons[this->Buttons.size() - 1]->RenderButtonIcon();
