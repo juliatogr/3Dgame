@@ -362,47 +362,27 @@ void Game::onMouseButtonDown(SDL_MouseButtonEvent event)
 				}
 
 				//*hago click en los botones para crear un codigo de 4 digitos*/
-				for (int i = 0; i < dev->Buttons.size() - 2; i++) {
+				for (int i = 0; i < dev->Buttons.size() - 1; i++) {
 					Button* current = dev->Buttons[i];
 					if (current->type == H) {
 						//std::cout << "UIACTIVE: " << current->text << std::endl;
-						currentCode->test = (currentCode->test + current->text);
-
+						current->activated = !current->activated;
 						//std::cout << "Test: " << currentCode->test << std::endl;
-
-
 						current->type = N;
 					}
 				}
 
-
-				Button* enter = dev->Buttons[dev->Buttons.size() - 1];
-				Lab* lab = playStage->lab;
-				//* y esta en hover el boton de salida*/
-				if (enter->type == H) {
-					if (currentCode->obj == currentCode->test) {
-						state->DevUiActive = false;
-						currentCode->isActive = false;
-						currentCode->isCompleted = true;
-						//std::cout << "UIACTIVE: Enter Correct" << std::endl;
-						//si esta la clave correcta se abre la puerta correspondiente
-
-					}
-					else {
-						currentCode->test = "";
-						//std::cout << "UIACTIVE: Enter Wrong" << std::endl;
-
-					}
-
-					enter->type = N;
+				if (dev->isCorrect(dev->Buttons)) {
+					state->DevUiActive = false;
+					currentCode->isActive = false;
+					currentCode->isCompleted = true;
 				}
 
-				Button* exit = dev->Buttons[dev->Buttons.size() - 2];
+				Button* exit = dev->Buttons[dev->Buttons.size() - 1];
 				/* y esta en hover el boton de salida*/
 				if (exit->type == H) {
 					//std::cout << "UIACTIVE: Exit" << std::endl;
 					/*se cierra la CodeUI*/
-					currentCode->test = "";
 					state->DevUiActive = false;
 
 
