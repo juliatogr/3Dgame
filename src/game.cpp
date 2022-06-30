@@ -136,6 +136,7 @@ Game::Game(int window_width, int window_height, SDL_Window* window)
 
 	// init Audio;
 	audio = new Audio();
+	audio->PlayGameSound("data/Sound/Fondo/Intro.mp3", true);
 }
 
 
@@ -185,7 +186,7 @@ void Game::update(double seconds_elapsed)
 	float speed = 0.02 * seconds_elapsed * mouse_speed; //the speed is defined by the seconds_elapsed so it goes constant
 
 	if (GetCurrentStage()->GetId() == PLAY) {
-		//audio->PlayGameSound("data/Sound/Fondo/Intro.mp3", true);
+		
 
 		if (this->gameState->isFinished) {
 			SetStage(END);
