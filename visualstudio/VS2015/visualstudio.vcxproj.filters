@@ -91,6 +91,7 @@
     <ClCompile Include="..\..\src\UI.cpp">
       <Filter>essentials</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\Audio.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\camera.h" />
@@ -179,6 +180,7 @@
     <ClInclude Include="..\..\src\UI.h">
       <Filter>essentials</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\Audio.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="extra">

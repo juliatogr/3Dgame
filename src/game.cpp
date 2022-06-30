@@ -8,7 +8,6 @@
 #include "animation.h"
 
 #include <cmath>
-#include <bass.h>
 
 #include "entity.h"
 #include "GameStage.h"
@@ -36,6 +35,7 @@ float padding = 20.0f;
 
 float lod_distance = 200.0f;
 float no_render_distance = 1000.0f;
+
 
 /*Stages*/
 std::vector<Stage*> stages;
@@ -96,28 +96,7 @@ void InitStages(GameState* state, Shader* shader, Camera* camera) {
 }
 
 
-HSAMPLE LoadSample(const char* fileName) {
-	//use BASS_SAMPLE_LOOP in the last param to have a looped sound
-	HSAMPLE hSample = BASS_SampleLoad(false, fileName, 0, 0, 3, 0);
-	if (hSample == 0)
-	{
-		std::cout << "ERROR load" << fileName << std::endl;
-	}
-	std::cout << " + AUDIO load " << fileName << std::endl;
-	return hSample;
-}
 
-void PlayGameSound(const char* fileName) {
-	
-	HSAMPLE hSample = LoadSample(fileName);
-
-	HCHANNEL hSampleChannel;
-	hSampleChannel = BASS_SampleGetChannel(hSample, false);
-
-	//Lanzamos un sample
-	BASS_ChannelPlay(hSampleChannel, true);
-
-}
 
 
 
@@ -155,12 +134,9 @@ Game::Game(int window_width, int window_height, SDL_Window* window)
 	//hide the cursor
 	SDL_ShowCursor(!mouse_locked); //hide or show the mouse
 
-	//Inicializamos BASS al arrancar el juego (id_del_device, muestras por segundo, ...)
-	if (BASS_Init(-1, 44100, 0, 0, NULL) == false) //-1 significa usar el por defecto del sistema operativo
-	{
-		std::cout << "Error inicializando audio" << std::endl;
-	}
-	PlayGameSound("data/Sound/Fondo/Intro.mp3");
+	// init Audio;
+	audio = new Audio();
+	audio->PlayGameSound("data/Sound/Fondo/Intro.mp3");
 }
 
 
