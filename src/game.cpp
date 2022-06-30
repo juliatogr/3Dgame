@@ -8,6 +8,7 @@
 #include "animation.h"
 
 #include <cmath>
+#include <bass.h>
 
 #include "entity.h"
 #include "GameStage.h"
@@ -97,6 +98,31 @@ void InitStages(GameState* state, Shader* shader, Camera* camera) {
 
 //SDL_GetTicks();
 
+void PlayGameSound(const char* filename) {
+
+	//El handler para un sample
+	HSAMPLE hSample;
+
+	//El handler para un canal
+	HCHANNEL hSampleChannel;
+
+	//Cargamos un sample del disco duro (memoria, filename, offset, length, max, flags)
+	//use BASS_SAMPLE_LOOP in the last param to have a looped sound
+	hSample = BASS_SampleLoad(false, filename, 0, 0, 3, 0);
+	if (hSample == 0)
+	{
+		//file not found
+	}
+
+	//Creamos un canal para el sample
+	hSampleChannel = BASS_SampleGetChannel(hSample, false);
+
+
+	//Lanzamos un sample
+	BASS_ChannelPlay(hSampleChannel, true);
+
+}
+
 
 
 Game::Game(int window_width, int window_height, SDL_Window* window)
@@ -132,6 +158,13 @@ Game::Game(int window_width, int window_height, SDL_Window* window)
 
 	//hide the cursor
 	SDL_ShowCursor(!mouse_locked); //hide or show the mouse
+
+	//Inicializamos BASS al arrancar el juego (id_del_device, muestras por segundo, ...)
+	if (BASS_Init(-1, 44100, 0, 0, NULL) == false) //-1 significa usar el por defecto del sistema operativo
+	{
+		std::cout << "Error inicializando audio" << std::endl;
+	}
+
 }
 
 
