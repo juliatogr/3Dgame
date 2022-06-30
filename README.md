@@ -13,6 +13,10 @@ Video del Juego:
 
 # MJ LAB #
 
+![GameScreen](/Capturas/GameScreen.png)
+![IntroScreen](/Capturas/IntroScreen.png)
+
+
 ## Objective
 
 You are trapped in a laboratory and you must resolve the riddles to scape.
